@@ -11,6 +11,23 @@
   "sections": {
     "hero_slider": {
       "type": "dji-hero-slider",
+      "blocks": {
+        "hero_slide_4bgwMC": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/f99f0deb9f72babb62524c4f3c3696ba.jpg",
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "secondary_label": "למד עוד",
+            "secondary_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "hero_slide_4bgwMC"
+      ],
       "settings": {
         "autoplay_speed": 5000
       }
