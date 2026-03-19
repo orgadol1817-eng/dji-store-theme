@@ -12,21 +12,34 @@
     "hero_slider": {
       "type": "dji-hero-slider",
       "blocks": {
-        "slide_1": {
+        "hero_slide_J9VmBM": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/f99f0deb9f72babb62524c4f3c3696ba.jpg",
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "secondary_label": "למד עוד",
+            "secondary_link": ""
+          }
+        },
+        "hero_slide_K8dBwz": {
           "type": "hero_slide",
           "settings": {
             "image": "shopify://shop_images/2d6d6972f0561f6b08b92afcd8a0ec8d_origin.jpg",
-            "title": "DJI MINI 4 PRO",
+            "title": "DJI PRODUCT",
             "subtitle": "Inspiration in Focus",
             "button_label": "קנה עכשיו",
-            "link": "shopify://collections/all",
+            "link": "",
             "secondary_label": "למד עוד",
-            "secondary_link": "shopify://collections/all"
+            "secondary_link": ""
           }
         }
       },
       "block_order": [
-        "slide_1"
+        "hero_slide_J9VmBM",
+        "hero_slide_K8dBwz"
       ],
       "settings": {
         "autoplay_speed": 5000
