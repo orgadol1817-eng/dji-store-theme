@@ -1,16 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_slider": {
       "type": "dji-hero-slider",
       "blocks": {
+        "hero_slide_firLWL": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/2d6d6972f0561f6b08b92afcd8a0ec8d_origin.jpg",
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "shopify://blogs/news",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections/all"
+          }
+        },
         "slide_1": {
           "type": "hero_slide",
           "settings": {
-            "title": "DJI MINI 4 PRO"
+            "image": "shopify://shop_images/f99f0deb9f72babb62524c4f3c3696ba.jpg",
+            "title": "DJI MINI 4 PRO",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections/all"
           }
         }
       },
       "block_order": [
+        "hero_slide_firLWL",
         "slide_1"
       ],
       "settings": {
