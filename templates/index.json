@@ -12,25 +12,20 @@
     "hero_slider": {
       "type": "dji-hero-slider",
       "blocks": {
-        "hero_slide_4bgwMC": {
-          "type": "hero_slide",
+        "slide_YTUEKW": {
+          "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/f99f0deb9f72babb62524c4f3c3696ba.jpg",
+            "image": "shopify://shop_images/mavic_4_pro.jpg",
+            "video_url": "",
             "title": "DJI PRODUCT",
-            "subtitle": "Inspiration in Focus",
-            "button_label": "קנה עכשיו",
-            "link": "",
-            "secondary_label": "למד עוד",
-            "secondary_link": ""
+            "subtitle": ""
           }
         }
       },
       "block_order": [
-        "hero_slide_4bgwMC"
+        "slide_YTUEKW"
       ],
-      "settings": {
-        "autoplay_speed": 5000
-      }
+      "settings": {}
     }
   },
   "order": [
