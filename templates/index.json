@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "hero_slider": {
+      "type": "dji-hero-slider",
+      "blocks": {
+        "slide_1": {
+          "type": "hero_slide",
+          "settings": {
+            "title": "DJI MINI 4 PRO"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1"
+      ],
+      "settings": {
+        "autoplay_speed": 5000
+      }
+    }
+  },
+  "order": [
+    "hero_slider"
+  ]
+}

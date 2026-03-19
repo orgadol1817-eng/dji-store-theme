@@ -1,0 +1,255 @@
+/* DJI / DROX Style — base.css */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap');
+
+/* =====================
+   Universal reset
+   ===================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =====================
+   Root & typography
+   ===================== */
+
+:root {
+  --font-body-family: 'Heebo', sans-serif;
+  --dji-black: #000000;
+  --dji-white: #ffffff;
+  --header-height: 72px;
+}
+
+html {
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  direction: rtl;
+  font-family: var(--font-body-family);
+  background-color: var(--dji-white);
+  color: var(--dji-black);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+main,
+#MainContent {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* =====================
+   Shopify wrapper overrides
+   — strip background & spacing from injected containers
+   ===================== */
+
+.shopify-section-group-header-group,
+.shopify-section-group-header-group header,
+.shopify-section > header {
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Positioning context for the absolutely-placed search overlay */
+#shopify-section-dji-header {
+  position: relative;
+}
+
+.announcement-bar,
+.shopify-section-group-announcement-group {
+  display: none !important;
+}
+
+/* =====================
+   Logo
+   — visible in natural colours (filter: none)
+   ===================== */
+
+.header__logo-img {
+  display: block;
+  filter: brightness(0) invert(1) !important;
+  transition: filter 0.3s ease;
+}
+
+.site-header.scrolled .header__logo-img {
+  filter: none !important;
+}
+
+/* =====================
+   Site Header
+   — transparent default, pure white on scroll
+   ===================== */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  background: transparent !important;
+  color: var(--dji-white);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.site-header.scrolled {
+  background: #ffffff !important;
+  color: var(--dji-black);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* =====================
+   Benda-style search overlay
+   — slides down from above the header on .is-active
+   ===================== */
+
+.dji-search-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  height: var(--header-height);
+  background: #ffffff;
+  direction: rtl;
+
+  /* Hidden — lives 110% above viewport so no clip needed */
+  transform: translateY(-110%);
+  visibility: hidden;
+  box-shadow: none;
+
+  /* Delay visibility change until slide-out finishes */
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 0.8s,
+    box-shadow 0.3s ease;
+}
+
+.dji-search-panel.is-active {
+  transform: translateY(0);
+  visibility: visible;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.12);
+
+  /* Visibility becomes true immediately on open */
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 0s,
+    box-shadow 0.3s ease;
+}
+
+/* Inner flex row */
+.dji-search-panel__inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 2.5rem;
+  gap: 1rem;
+  direction: rtl;
+}
+
+/* Form takes all available space */
+.dji-search-panel__form {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 0.75rem;
+  direction: rtl;
+}
+
+/* Underline-style input — clean, Benda-like */
+.dji-search-panel__input {
+  flex: 1;
+  height: 44px;
+  padding: 0 0.25rem;
+  border: none;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-body-family);
+  font-size: 1rem;
+  font-weight: 400;
+  color: #000000;
+  direction: rtl;
+  text-align: right;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.dji-search-panel__input:focus {
+  border-bottom-color: #000000;
+}
+
+.dji-search-panel__input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+  font-weight: 300;
+}
+
+/* Circular black submit button */
+.dji-search-panel__submit {
+  height: 38px;
+  width: 38px;
+  background: #000000;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.dji-search-panel__submit:hover {
+  background: #333333;
+}
+
+.dji-search-panel__submit svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Close (×) button */
+.dji-search-panel__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #000000;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+.dji-search-panel__close:hover {
+  opacity: 1;
+}
+
+.dji-search-panel__close svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

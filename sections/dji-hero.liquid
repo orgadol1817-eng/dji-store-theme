@@ -1,0 +1,126 @@
+{%- style -%}
+  .dji-hero-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 80vh; /* גובה של 80% מהמסך */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  .dji-hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  .dji-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: {{ section.settings.text_color }};
+    max-width: 800px;
+    padding: 0 20px;
+  }
+
+  .dji-hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+
+  .dji-hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .dji-hero-button {
+    display: inline-block;
+    padding: 12px 35px;
+    border: 1px solid {{ section.settings.text_color }};
+    color: {{ section.settings.text_color }};
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+
+  .dji-hero-button:hover {
+    background-color: {{ section.settings.text_color }};
+    color: #000;
+  }
+{%- endstyle -%}
+
+<section class="dji-hero-{{ section.id }}">
+  {% if section.settings.image != blank %}
+    <img src="{{ section.settings.image | image_url: width: 2000 }}" class="dji-hero-image" alt="{{ section.settings.title }}">
+  {% else %}
+    {% comment %} תמונת Placeholder אם לא נבחרה תמונה {% endcomment %}
+    {{ 'lifestyle-1' | placeholder_svg_tag: 'dji-hero-image' }}
+  {% endif %}
+
+  <div class="dji-hero-content">
+    <h1 class="dji-hero-title">{{ section.settings.title }}</h1>
+    <p class="dji-hero-subtitle">{{ section.settings.subtitle }}</p>
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link }}" class="dji-hero-button">
+        {{ section.settings.button_label }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DJI Hero Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "תמונת רקע"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "כותרת",
+      "default": "Mavic 3 Pro"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "כותרת משנה",
+      "default": "השראה בכל פריים"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "טקסט כפתור",
+      "default": "למידה נוספת"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "קישור כפתור"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "צבע טקסט",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Hero Section"
+    }
+  ]
+}
+{% endschema %}

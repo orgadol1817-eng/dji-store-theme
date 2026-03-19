@@ -1,0 +1,239 @@
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+
+    <!-- Right: Logo (hardcoded CDN, filter: none) -->
+    <a class="site-header__logo" href="{{ routes.root_url }}" aria-label="DROX">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0758/4897/4509/files/logo_drox.png?v=1773919882"
+        alt="DROX Logo"
+        class="header__logo-img"
+        style="width: 120px; height: auto; display: block;"
+      >
+    </a>
+
+    <!-- Center: Navigation -->
+    <nav class="site-header__nav" aria-label="{{ 'sections.header.nav_label' | t }}">
+      <a class="site-header__nav-item" href="#">רחפנים מקצועיים</a>
+      <a class="site-header__nav-item" href="#">רחפני צילום</a>
+      <a class="site-header__nav-item" href="#">צילום ומולטימדיה</a>
+      <a class="site-header__nav-item" href="#">תמיכה ויצירת קשר</a>
+    </nav>
+
+    <!-- Left: Search + Cart -->
+    <div class="site-header__tools">
+      <button
+        class="site-header__icon"
+        id="header-search-btn"
+        aria-label="{{ 'sections.header.search' | t }}"
+        aria-expanded="false"
+        aria-controls="dji-search-panel"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+
+      <a
+        class="site-header__icon"
+        href="{{ routes.cart_url }}"
+        aria-label="{{ 'sections.header.cart' | t }}"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<!-- Benda-style search overlay — slides down over header on .is-active -->
+<div
+  class="dji-search-panel"
+  id="dji-search-panel"
+  role="dialog"
+  aria-label="{{ 'sections.header.search' | t }}"
+  aria-hidden="true"
+>
+  <div class="dji-search-panel__inner">
+    <form
+      action="{{ routes.search_url }}"
+      method="get"
+      class="dji-search-panel__form"
+      role="search"
+    >
+      <input
+        type="search"
+        name="q"
+        id="dji-search-input"
+        class="dji-search-panel__input"
+        placeholder="חיפוש מוצרים, דגמים..."
+        autocomplete="off"
+        aria-label="{{ 'sections.header.search' | t }}"
+      >
+      <button
+        type="submit"
+        class="dji-search-panel__submit"
+        aria-label="{{ 'sections.header.search' | t }}"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+    </form>
+
+    <button
+      class="dji-search-panel__close"
+      id="dji-search-close"
+      aria-label="סגור חיפוש"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* ---- Header inner layout ---- */
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 72px;
+    width: 100%;
+    box-sizing: border-box;
+    direction: rtl;
+  }
+
+  .site-header__logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /* ---- Navigation ---- */
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    direction: rtl;
+  }
+
+  .site-header__nav-item {
+    text-decoration: none;
+    color: inherit;
+    padding: 0 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    line-height: 72px;
+    transition: opacity 0.2s ease;
+  }
+
+  .site-header__nav-item:hover {
+    opacity: 0.7;
+  }
+
+  /* ---- Tools (search + cart) ---- */
+  .site-header__tools {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .site-header__icon {
+    background: none;
+    border: none;
+    padding: 0.3rem;
+    cursor: pointer;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .site-header__icon:hover {
+    opacity: 0.7;
+  }
+
+  .site-header__icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var openBtn = document.getElementById('header-search-btn');
+    var closeBtn = document.getElementById('dji-search-close');
+    var panel = document.getElementById('dji-search-panel');
+    var input = document.getElementById('dji-search-input');
+
+    if (!openBtn || !panel) return;
+
+    function openSearch() {
+      panel.classList.add('is-active');
+      panel.setAttribute('aria-hidden', 'false');
+      openBtn.setAttribute('aria-expanded', 'true');
+      if (input) input.focus();
+    }
+
+    function closeSearch() {
+      panel.classList.remove('is-active');
+      panel.setAttribute('aria-hidden', 'true');
+      openBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    openBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      panel.classList.contains('is-active') ? closeSearch() : openSearch();
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeSearch);
+    }
+
+    document.addEventListener('click', function (e) {
+      if (
+        panel.classList.contains('is-active') &&
+        !panel.contains(e.target) &&
+        !openBtn.contains(e.target)
+      ) {
+        closeSearch();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeSearch();
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:general.header"
+    }
+  ]
+}
+{% endschema %}

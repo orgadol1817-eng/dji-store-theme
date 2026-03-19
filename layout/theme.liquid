@@ -1,0 +1,58 @@
+<!doctype html>
+<html class="no-js" lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    <title>{{ page_title }}</title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% comment %} חיבור ה-CSS של DJI שייצרנו בשלב הקודם {% endcomment %}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {% comment %} חובה לשופיפיי - טוען סקריפטים של המערכת ואפליקציות {% endcomment %}
+    {{ content_for_header }}
+
+  </head>
+
+  <body class="gradient">
+    {% section 'dji-header' %}
+
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% comment %} כאן יופיע ה-Footer שנבנה בהמשך {% endcomment %}
+
+    <script>
+      window.shopUrl = '{{ request.origin }}';
+      window.routes = {
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        cart_url: '{{ routes.cart_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}'
+      };
+    </script>
+
+    <script>
+      (function () {
+        var header = document.getElementById('site-header');
+        if (!header) return;
+        window.addEventListener('scroll', function () {
+          if (window.scrollY > 5) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        }, { passive: true });
+      })();
+    </script>
+  </body>
+</html>

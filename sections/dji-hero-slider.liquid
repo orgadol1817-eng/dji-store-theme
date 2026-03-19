@@ -1,0 +1,160 @@
+{%- style -%}
+  .dji-slider-wrapper { 
+    position: relative; width: 100vw; height: 100vh; overflow: hidden; 
+    margin-left: calc(-50vw + 50%); direction: ltr !important; background: #000;
+  }
+  .dji-slider-item { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    opacity: 0; visibility: hidden; transition: opacity 1s ease-in-out; z-index: 1;
+  }
+  .dji-slider-item.is-active { opacity: 1; visibility: visible; z-index: 2; }
+  .dji-slider-image { width: 100%; height: 100%; object-fit: cover; }
+  
+  .dji-slider-content { 
+    position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%); 
+    text-align: center; color: #fff; z-index: 10; width: 90%; 
+  }
+  .dji-slider-title { font-size: clamp(30px, 5vw, 70px); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+  .dji-slider-subtitle { font-size: 18px; opacity: 0.9; margin-bottom: 25px; font-weight: 300; }
+
+  .dji-btn-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+  .dji-btn { 
+    display: inline-block; padding: 10px 40px; border: 1px solid #fff; color: #fff; 
+    text-decoration: none; border-radius: 50px; font-size: 15px; transition: 0.3s;
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(4px);
+  }
+  .dji-btn:hover { background: #fff; color: #000; }
+  .dji-btn.secondary { background: transparent; }
+  .dji-btn.secondary:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+  .slider-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 100;
+    background: rgba(0,0,0,0.2); color: white; border: none; font-size: 30px; 
+    cursor: pointer; padding: 20px; border-radius: 50%; transition: 0.3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .slider-arrow:hover { background: rgba(0,0,0,0.5); }
+  .arrow-prev { left: 30px; }
+  .arrow-next { right: 30px; }
+
+  @media screen and (max-width: 768px) {
+    .dji-slider-content { top: 25%; }
+    .dji-btn { padding: 8px 30px; font-size: 14px; width: 80%; }
+  }
+{%- endstyle -%}
+
+<div class="dji-slider-wrapper" id="DjiSlider-{{ section.id }}" data-autoplay="{{ section.settings.autoplay_speed }}">
+  <div class="slider-items">
+    {% for block in section.blocks %}
+      <div class="dji-slider-item {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          <img src="{{ block.settings.image | image_url: width: 2400 }}" class="dji-slider-image">
+        {% else %}
+          <div style="background:#222;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#555;">נא להעלות תמונה</div>
+        {% endif %}
+        
+        <div class="dji-slider-content">
+          <h2 class="dji-slider-title">{{ block.settings.title }}</h2>
+          <p class="dji-slider-subtitle">{{ block.settings.subtitle }}</p>
+          
+          <div class="dji-btn-container">
+            {% if block.settings.link != blank %}
+              <a href="{{ block.settings.link }}" class="dji-btn"> << {{ block.settings.button_label }}</a>
+            {% endif %}
+            
+            {% if block.settings.secondary_link != blank %}
+              <a href="{{ block.settings.secondary_link }}" class="dji-btn secondary"> << {{ block.settings.secondary_label }}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.blocks.size > 1 %}
+    <button class="slider-arrow arrow-prev" type="button">❮</button>
+    <button class="slider-arrow arrow-next" type="button">❯</button>
+  {% endif %}
+</div>
+
+<script>
+  function initSlider() {
+    const container = document.querySelector('#DjiSlider-{{ section.id }}');
+    if (!container) return;
+    const items = container.querySelectorAll('.dji-slider-item');
+    if (items.length <= 1) return;
+
+    let current = 0;
+    let autoplayTimer;
+    const speed = parseInt(container.dataset.autoplay) || 5000;
+    const nextBtn = container.querySelector('.arrow-next');
+    const prevBtn = container.querySelector('.arrow-prev');
+
+    function showSlide(index) {
+      items[current].classList.remove('is-active');
+      current = (index + items.length) % items.length;
+      items[current].classList.add('is-active');
+      resetAutoplay(); // מאפס את הטיימר בלחיצה ידנית
+    }
+
+    function resetAutoplay() {
+      clearInterval(autoplayTimer);
+      autoplayTimer = setInterval(() => {
+        showSlide(current + 1);
+      }, speed);
+    }
+
+    nextBtn.onclick = (e) => { e.preventDefault(); showSlide(current + 1); };
+    prevBtn.onclick = (e) => { e.preventDefault(); showSlide(current - 1); };
+
+    // הפעלת האוטומציה רק אם לא נמצאים במצב עריכה של שופיפיי (או תמיד אם תרצה)
+    resetAutoplay();
+  }
+
+  document.addEventListener('DOMContentLoaded', initSlider);
+  document.addEventListener('shopify:section:load', initSlider);
+</script>
+
+{% schema %}
+{
+  "name": "DJI Global Hero Slider",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2000,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms",
+      "label": "מהירות החלפה אוטומטית (במילי-שניות)",
+      "default": 5000
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero_slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "תמונה ראשית" },
+        { "type": "text", "id": "title", "label": "כותרת", "default": "DJI PRODUCT" },
+        { "type": "text", "id": "subtitle", "label": "תת כותרת", "default": "Inspiration in Focus" },
+        { "type": "header", "content": "כפתור ראשון (קנה עכשיו)" },
+        { "type": "text", "id": "button_label", "label": "טקסט כפתור", "default": "קנה עכשיו" },
+        { "type": "url", "id": "link", "label": "קישור" },
+        { "type": "header", "content": "כפתור שני (למד עוד)" },
+        { "type": "text", "id": "secondary_label", "label": "טקסט כפתור שני", "default": "למד עוד" },
+        { "type": "url", "id": "secondary_link", "label": "קישור כפתור שני" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Global Hero Slider",
+      "blocks": [
+        { "type": "hero_slide", "settings": {"title": "רחפן 1"} }
+      ]
+    }
+  ]
+}
+{% endschema %}
