@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "header": {
@@ -9,6 +18,10 @@
       "slide_label": "Slide {{ index }}",
       "previous_slide": "Previous slide",
       "next_slide": "Next slide"
+    },
+    "bento_grid": {
+      "learn_more": "Learn more",
+      "buy_now": "Buy now"
     }
   },
   "404": {

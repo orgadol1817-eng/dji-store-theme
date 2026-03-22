@@ -1,24 +1,176 @@
 {
   "sections": {
-    "hero_slider": {
+    "hero-slider": {
       "type": "dji-hero-slider",
       "blocks": {
-        "slide_1": {
+        "hero_slide_aQTMcW": {
           "type": "hero_slide",
           "settings": {
-            "title": "DJI MINI 4 PRO"
+            "image": "shopify://shop_images/043f75382ee5ee7b0d078a593c272a0e_origin.jpg",
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections"
+          }
+        },
+        "slide-1": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/f99f0deb9f72babb62524c4f3c3696ba.jpg",
+            "title": "DJI MATRICE 400",
+            "subtitle": "Engineered for Excellence, Designed for Versatility",
+            "button_label": "קנה עכשיו",
+            "link": "shopify://collections/all",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections/all"
+          }
+        },
+        "hero_slide_8kjL6D": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/2d6d6972f0561f6b08b92afcd8a0ec8d_origin.jpg",
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections/all"
+          }
+        },
+        "hero_slide_bNYViM": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/1e5e6f3d47b73eea4395199f786f8030_origin.jpg",
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "secondary_label": "למד עוד",
+            "secondary_link": ""
+          }
+        },
+        "hero_slide_qJ3C7T": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/d4e8e295ca6f4e4146b744943ea6a9fd.jpg",
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "shopify://collections/all",
+            "secondary_label": "למד עוד",
+            "secondary_link": ""
           }
         }
       },
       "block_order": [
-        "slide_1"
+        "hero_slide_aQTMcW",
+        "slide-1",
+        "hero_slide_8kjL6D",
+        "hero_slide_bNYViM",
+        "hero_slide_qJ3C7T"
       ],
       "settings": {
-        "autoplay_speed": 5000
+        "autoplay_speed": 6000
+      }
+    },
+    "premium-composite": {
+      "type": "dji-premium-composite",
+      "blocks": {
+        "hdr-1": {
+          "type": "premium_header",
+          "settings": {
+            "label": "NEW",
+            "title": "DJI AVATA 360",
+            "subtitle": "Above It All, See It All"
+          }
+        },
+        "gp-1": {
+          "type": "grid_product",
+          "settings": {
+            "label": "360°",
+            "title": "Osmo 360",
+            "subtitle": "All in One"
+          }
+        },
+        "gp-2": {
+          "type": "grid_product",
+          "settings": {
+            "label": "FPV",
+            "title": "DJI Neo 2",
+            "subtitle": "Fly Your Way"
+          }
+        },
+        "gp-3": {
+          "type": "grid_product",
+          "settings": {
+            "label": "STABILIZER",
+            "title": "Osmo Mobile 8",
+            "subtitle": "In Tune With Every Move"
+          }
+        },
+        "gp-4": {
+          "type": "grid_product",
+          "settings": {
+            "label": "COMPARE",
+            "title": "Compare Camera Drones",
+            "subtitle": "Find the right drone for you"
+          }
+        }
+      },
+      "block_order": ["hdr-1", "gp-1", "gp-2", "gp-3", "gp-4"],
+      "settings": {}
+    },
+    "bento-grid": {
+      "type": "dji-bento-grid",
+      "blocks": {
+        "card-1": {
+          "type": "product_card",
+          "settings": {
+            "label": "NEW",
+            "title": "DJI Air 3S",
+            "subtitle": "Chase the View",
+            "text_color": "dark"
+          }
+        },
+        "card-2": {
+          "type": "product_card",
+          "settings": {
+            "label": "Enterprise",
+            "title": "DJI Matrice 400",
+            "subtitle": "Engineered for Excellence, Designed for Versatility",
+            "text_color": "dark"
+          }
+        },
+        "card-3": {
+          "type": "product_card",
+          "settings": {
+            "label": "HANDHELD",
+            "title": "DJI RS 5",
+            "subtitle": "Lead the Scene",
+            "text_color": "dark"
+          }
+        },
+        "card-4": {
+          "type": "product_card",
+          "settings": {
+            "label": "ACTION",
+            "title": "Osmo Action 6",
+            "subtitle": "Square Up, Nail the Move",
+            "text_color": "dark"
+          }
+        }
+      },
+      "block_order": ["card-1", "card-2", "card-3", "card-4"],
+      "settings": {
+        "columns_mobile": "1"
       }
     }
   },
   "order": [
-    "hero_slider"
+    "hero-slider",
+    "premium-composite",
+    "bento-grid"
   ]
 }

@@ -8,5 +8,14 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {}
+  "current": {
+    "background_color": "#ffffff",
+    "sections": {
+      "dji-header": {
+        "type": "dji-header",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  }
 }
