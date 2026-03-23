@@ -211,7 +211,11 @@
         "gp-2": {
           "type": "grid_product",
           "settings": {
+<<<<<<< HEAD
             "image": "shopify://shop_images/1e5e6f3d47b73eea4395199f786f8030_origin.jpg",
+=======
+            "image": "shopify://shop_images/6efb1b00647c9b1da4623a9c8591729c_origin.jpg",
+>>>>>>> 15d94cf5450d78ea0c64a1d91f4d9b7ef5c45d5b
             "image_link": "",
             "image_zoom": 100,
             "image_pos_x": 50,
@@ -226,8 +230,13 @@
             "bg_opacity_learn": 0,
             "border_color_learn": "#ffffff",
             "text_buy": "קנה עכשיו",
+<<<<<<< HEAD
             "link_buy": "",
             "show_arrow_buy": false,
+=======
+            "link_buy": "shopify://collections/all",
+            "show_arrow_buy": true,
+>>>>>>> 15d94cf5450d78ea0c64a1d91f4d9b7ef5c45d5b
             "text_color_buy": "#ffffff",
             "bg_color_buy": "#1a1a1a",
             "bg_opacity_buy": 100,
@@ -352,7 +361,10 @@
         "card-3",
         "card-4"
       ],
+<<<<<<< HEAD
       "disabled": true,
+=======
+>>>>>>> 15d94cf5450d78ea0c64a1d91f4d9b7ef5c45d5b
       "settings": {
         "section_title": "",
         "columns_mobile": "1"
