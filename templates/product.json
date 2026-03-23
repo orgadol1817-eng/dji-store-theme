@@ -9,12 +9,25 @@
  */
 {
   "sections": {
+    "subnav": {
+      "type": "dji-product-subnav",
+      "settings": {}
+    },
+    "main_carousel": {
+      "type": "dji-center-carousel",
+      "settings": {
+        "margin_top": -50,
+        "slide_gap": -20
+      }
+    },
     "main": {
-      "type": "product",
+      "type": "main-product",
       "settings": {}
     }
   },
   "order": [
+    "subnav",
+    "main_carousel",
     "main"
   ]
 }

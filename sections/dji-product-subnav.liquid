@@ -1,0 +1,35 @@
+{%- comment -%} DJI Style Sticky Sub-Nav {%- endcomment -%}
+{%- style -%}
+  .dji-subnav-{{ section.id }} {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #fff; direction: rtl; font-family: 'Heebo', sans-serif;
+  }
+  .dji-subnav-wrapper {
+    max-width: 1200px; margin: 0 auto; padding: 0 20px;
+    height: 60px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .dji-subnav-name { font-size: 18px; font-weight: 700; }
+  .dji-subnav-btn {
+    background: #0070d5; color: #fff; padding: 8px 20px;
+    border-radius: 20px; text-decoration: none; font-size: 14px;
+  }
+{%- endstyle -%}
+
+<div class="dji-subnav-{{ section.id }}">
+  <div class="dji-subnav-wrapper">
+    <div class="dji-subnav-name">{{ section.settings.product_name }}</div>
+    <a href="#buy" class="dji-subnav-btn">קנה עכשיו</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DroX Product Subnav",
+  "settings": [
+    { "type": "text", "id": "product_name", "label": "שם המוצר", "default": "Matrice 4" }
+  ],
+  "presets": [{ "name": "DroX Product Subnav" }]
+}
+{% endschema %}

@@ -1,0 +1,378 @@
+{%- comment -%}
+  DroX Ultimate Benda-Style Footer (Floating Bottom Bar + Full Mobile Support)
+{%- endcomment -%}
+
+{%- style -%}
+  /* ── Section-level spacing ───────────────────────────────────── */
+  #shopify-section-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    position: relative;
+    z-index: 10;
+    overflow: visible; /* prevent translateY lift from being clipped */
+  }
+
+  /* ── Footer base ─────────────────────────────────────────────── */
+  .benda-footer-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    direction: rtl;
+    font-family: 'Heebo', sans-serif;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    overflow: visible; /* ensure the lifted bottom bar is never clipped */
+  }
+
+  .benda-footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+    overflow: visible;
+  }
+
+  .benda-footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr;
+    gap: 40px;
+    overflow: visible;
+  }
+
+  .benda-col-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 30px 0;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Brand column (non-transform properties) ─────────────────── */
+  .benda-brand-col { position: relative; }
+
+  .benda-logo-wrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 11;
+  }
+
+  .benda-logo-wrapper img {
+    max-width: {{ section.settings.logo_width }}px;
+    height: auto;
+    display: block;
+    {% if section.settings.logo_invert %}
+      filter: invert(1) brightness({{ section.settings.logo_brightness }}%);
+    {% else %}
+      filter: brightness({{ section.settings.logo_brightness }}%);
+    {% endif %}
+    transition: all 0.3s ease;
+  }
+
+  .benda-contact-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 10;
+    padding-top: 100px;
+  }
+
+  .benda-brand-bio { font-size: 15px; font-weight: 300; opacity: 0.7; line-height: 1.6; margin: 0 0 24px 0; }
+  .benda-contact-info { font-size: 15px; font-weight: 300; line-height: 1.8; opacity: 0.85; margin-bottom: 24px; }
+  .benda-contact-info strong { font-weight: 500; color: #ffffff; }
+  .benda-social-icons { display: flex; gap: 12px; margin-bottom: 24px; }
+
+  .benda-social-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3); color: #ffffff;
+    transition: all 0.3s ease;
+  }
+  .benda-social-icon:hover { background: #ffffff; color: #000000; transform: translateY(-3px); }
+
+  .benda-contact-logo-extra img { max-width: {{ section.settings.contact_logo_extra_width }}px; height: auto; margin-top: 15px; display: block; }
+
+  /* ── Menu columns (non-transform properties) ─────────────────── */
+  .benda-col, .benda-secure-col { transition: transform 0.3s ease; }
+
+  .benda-menu-list { list-style: none; padding: 0; margin: 0; }
+  .benda-menu-item { margin-bottom: 16px; }
+  .benda-menu-link { color: {{ section.settings.text_color }}; text-decoration: none; font-size: 15px; opacity: 0.85; transition: all 0.3s; display: inline-block; }
+  .benda-menu-link:hover { color: #ffffff; transform: translateX(-4px); }
+
+  .benda-secure-col { display: flex; flex-direction: column; align-items: flex-start; }
+  .benda-secure-text { font-size: 15px; font-weight: 300; opacity: 0.8; line-height: 1.6; margin-bottom: 24px; }
+  .benda-trust-icons { display: flex; flex-direction: column; gap: 18px; }
+  .benda-trust-item { display: flex; align-items: center; gap: 12px; font-size: 15px; color: #ffffff; }
+  .benda-trust-item svg { width: 28px; height: 28px; fill: #ffffff; }
+
+  /* ── Payment bar (non-transform properties) ──────────────────── */
+  .benda-payment-bar {
+    position: relative;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    z-index: 20;
+    transition: transform 0.3s ease;
+  }
+
+  .benda-footer-copyright { font-size: 14px; font-weight: 300; opacity: 0.5; }
+  .benda-payment-icons { display: flex; gap: 10px; align-items: center; opacity: 0.7; filter: grayscale(1) brightness(1.3); }
+  .benda-payment-icons svg { height: 26px; width: auto; }
+
+  /* ── Desktop-only: all X/Y position transforms ───────────────────
+     Wrapping in min-width keeps mobile layout clean without needing
+     !important overrides. Schema settings for logo_x/y, col1_x/y,
+     menus_x/y, and lift_bottom_bar only apply at >= 769 px.
+  ────────────────────────────────────────────────────────────────── */
+  @media (min-width: 769px) {
+    .benda-logo-wrapper {
+      transform: translate({{ section.settings.logo_x }}px, {{ section.settings.logo_y }}px);
+    }
+    .benda-contact-wrapper {
+      transform: translate({{ section.settings.col1_x }}px, {{ section.settings.col1_y }}px);
+    }
+    .benda-col, .benda-secure-col {
+      transform: translate({{ section.settings.menus_x }}px, {{ section.settings.menus_y }}px);
+    }
+    .benda-payment-bar {
+      transform: translateY({{ section.settings.lift_bottom_bar }}px);
+      margin-top: {{ section.settings.bottom_bar_gap }}px;
+    }
+  }
+
+  /* ── Mobile reset ─────────────────────────────────────────────────
+     All transforms off. Layout becomes a clean single-column stack.
+     mobile_padding_top / mobile_padding_bottom applied here only.
+  ────────────────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .benda-footer-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      text-align: center;
+    }
+
+    .benda-footer-grid {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .benda-brand-col,
+    .benda-contact-wrapper,
+    .benda-col,
+    .benda-secure-col {
+      transform: none !important;
+      position: static !important;
+      align-items: center !important;
+      padding-top: 0 !important;
+    }
+
+    .benda-logo-wrapper {
+      position: static !important;
+      transform: none !important;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .benda-social-icons { justify-content: center; }
+
+    .benda-contact-logo-extra img { margin: 15px auto 0 auto; }
+
+    .benda-menu-link:hover { transform: none; }
+
+    .benda-payment-bar {
+      transform: none !important;
+      flex-direction: column;
+      text-align: center;
+      margin-top: 40px;
+      gap: 15px;
+    }
+  }
+{%- endstyle -%}
+
+<footer class="benda-footer-{{ section.id }}">
+  <div class="benda-footer-container">
+    <div class="benda-footer-grid">
+      
+      <div class="benda-brand-col">
+        <div class="benda-logo-wrapper">
+          {% if section.settings.logo != blank %}
+            {{ section.settings.logo | image_url: width: 600 | image_tag: loading: 'lazy', alt: shop.name }}
+          {% else %}
+            <h2 style="color: #fff; margin: 0; font-size: 26px;">{{ shop.name }}</h2>
+          {% endif %}
+        </div>
+        <div class="benda-contact-wrapper">
+          <h3 class="benda-col-title">{{ section.settings.col_contact_title }}</h3>
+          {% if section.settings.brand_bio != blank %}<p class="benda-brand-bio">{{ section.settings.brand_bio }}</p>{% endif %}
+          <div class="benda-contact-info">{{ section.settings.contact_info }}</div>
+          <div class="benda-social-icons">
+            {% if settings.social_facebook_link != blank %}
+              <a href="{{ settings.social_facebook_link }}" class="benda-social-icon"><svg viewBox="0 0 24 24"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14-3.042 0-4.965 1.777-4.965 5.11V9.5H7v4h2.678V22h4.322v-8.5z"/></svg></a>
+            {% endif %}
+            {% if settings.social_instagram_link != blank %}
+              <a href="{{ settings.social_instagram_link }}" class="benda-social-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            {% endif %}
+          </div>
+          {% if section.settings.contact_logo_extra != blank %}
+            <div class="benda-contact-logo-extra">
+              {{ section.settings.contact_logo_extra | image_url: width: 300 | image_tag: loading: 'lazy' }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="benda-col">
+        <h3 class="benda-col-title">{{ section.settings.col_1_title }}</h3>
+        <ul class="benda-menu-list">
+          {% for i in (1..7) %}
+            {% capture t %}prod_text_{{ i }}{% endcapture %}{% capture u %}prod_url_{{ i }}{% endcapture %}
+            {% if section.settings[t] != blank %}<li class="benda-menu-item"><a href="{{ section.settings[u] }}" class="benda-menu-link">{{ section.settings[t] }}</a></li>{% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="benda-col">
+        <h3 class="benda-col-title">{{ section.settings.col_2_title }}</h3>
+        <ul class="benda-menu-list">
+          {% for i in (1..7) %}
+            {% capture t %}srv_text_{{ i }}{% endcapture %}{% capture u %}srv_url_{{ i }}{% endcapture %}
+            {% if section.settings[t] != blank %}<li class="benda-menu-item"><a href="{{ section.settings[u] }}" class="benda-menu-link">{{ section.settings[t] }}</a></li>{% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="benda-col">
+        <h3 class="benda-col-title">{{ section.settings.col_3_title }}</h3>
+        <ul class="benda-menu-list">
+          {% for i in (1..7) %}
+            {% capture t %}info_text_{{ i }}{% endcapture %}{% capture u %}info_url_{{ i }}{% endcapture %}
+            {% if section.settings[t] != blank %}<li class="benda-menu-item"><a href="{{ section.settings[u] }}" class="benda-menu-link">{{ section.settings[t] }}</a></li>{% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="benda-secure-col">
+        <h3 class="benda-col-title">{{ section.settings.col_secure_title }}</h3>
+        <div class="benda-secure-text">{{ section.settings.secure_text }}</div>
+        <div class="benda-trust-icons">
+          <div class="benda-trust-item"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg><span>תשלום מאובטח PCI-DSS</span></div>
+          <div class="benda-trust-item"><svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg><span>משלוח אקספרס עד הבית</span></div>
+          <div class="benda-trust-item"><svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM6.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>12 חודשי אחריות רשמית</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="benda-payment-bar">
+      <div class="benda-footer-copyright">&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. כל הזכויות שמורות.</div>
+      {% if section.settings.show_payment_icons %}<div class="benda-payment-icons">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'icon' }}{% endfor %}</div>{% endif %}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "DroX Benda-Style Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "הזזות מדויקות דסקטופ (X/Y בפיקסלים)"
+    },
+    { "type": "number", "id": "margin_top", "label": "משיכת כל הפוטר למעלה", "default": 0 },
+    { "type": "number", "id": "margin_bottom", "label": "משיכת הסקשן הבא למעלה (מינוס)", "default": 0 },
+    { "type": "number", "id": "lift_bottom_bar", "label": "הקפצת פס תחתון למעלה (מינוס)", "default": 0 },
+    { "type": "number", "id": "col1_x", "label": "הזזת עמודת קשר - ימינה/שמאלה", "default": 0 },
+    { "type": "number", "id": "col1_y", "label": "הזזת עמודת קשר - למעלה/למטה", "default": 0 },
+    { "type": "number", "id": "menus_x", "label": "הזזת שאר התפריטים - ימינה/שמאלה", "default": 0 },
+    { "type": "number", "id": "menus_y", "label": "הזזת שאר התפריטים - למעלה/למטה", "default": 0 },
+    {
+      "type": "header",
+      "content": "צבעים וריווחים"
+    },
+    { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#1a1a1a" },
+    { "type": "color", "id": "text_color", "label": "צבע טקסט", "default": "#d1d1d1" },
+    { "type": "number", "id": "padding_top", "label": "ריווח פנימי עליון דסקטופ", "default": 120 },
+    { "type": "number", "id": "padding_bottom", "label": "ריווח פנימי תחתון דסקטופ", "default": 40 },
+    { "type": "number", "id": "mobile_padding_top", "label": "ריווח פנימי עליון מובייל", "default": 60 },
+    { "type": "number", "id": "mobile_padding_bottom", "label": "ריווח פנימי תחתון מובייל", "default": 40 },
+    { "type": "number", "id": "bottom_bar_gap", "label": "רווח מעל פס התשלומים דסקטופ", "default": 60 },
+    {
+      "type": "header",
+      "content": "שליטה בלוגו הראשי"
+    },
+    { "type": "image_picker", "id": "logo", "label": "בחר לוגו DroX" },
+    { "type": "range", "id": "logo_width", "min": 50, "max": 600, "step": 10, "unit": "px", "label": "גודל הלוגו", "default": 200 },
+    { "type": "number", "id": "logo_x", "label": "הזזת הלוגו ימינה/שמאלה (דסקטופ)", "default": 0 },
+    { "type": "number", "id": "logo_y", "label": "הזזת הלוגו למעלה/למטה (דסקטופ)", "default": -50 },
+    { "type": "checkbox", "id": "logo_invert", "label": "הפוך צבע לוגו", "default": false },
+    { "type": "range", "id": "logo_brightness", "min": 0, "max": 500, "step": 10, "unit": "%", "label": "בהירות הלוגו", "default": 100 },
+    {
+      "type": "header",
+      "content": "עמודה 1: שומרים על קשר"
+    },
+    { "type": "text", "id": "col_contact_title", "label": "כותרת", "default": "שומרים על קשר" },
+    { "type": "textarea", "id": "brand_bio", "label": "תיאור האתר" },
+    { "type": "richtext", "id": "contact_info", "label": "פרטי התקשרות", "default": "<p><strong>טלפון:</strong> 050-0000000<br>א-ה 09:00-18:00</p>" },
+    { "type": "image_picker", "id": "contact_logo_extra", "label": "לוגו נוסף (Bit)" },
+    { "type": "range", "id": "contact_logo_extra_width", "min": 20, "max": 200, "step": 5, "unit": "px", "label": "גודל לוגו נוסף", "default": 60 },
+    {
+      "type": "header",
+      "content": "עמודה 2: מוצרים"
+    },
+    { "type": "text", "id": "col_1_title", "label": "כותרת", "default": "מוצרים מובילים" },
+    { "type": "text", "id": "prod_text_1", "label": "תגית 1", "default": "סדרת DJI Mavic" },
+    { "type": "url", "id": "prod_url_1", "label": "קישור 1" },
+    { "type": "text", "id": "prod_text_2", "label": "תגית 2", "default": "סדרת DJI Mini" },
+    { "type": "url", "id": "prod_url_2", "label": "קישור 2" },
+    { "type": "text", "id": "prod_text_3", "label": "תגית 3", "default": "מצלמות אקשן" },
+    { "type": "url", "id": "prod_url_3", "label": "קישור 3" },
+    { "type": "text", "id": "prod_text_4", "label": "תגית 4", "default": "מייצבים" },
+    { "type": "url", "id": "prod_url_4", "label": "קישור 4" },
+    { "type": "text", "id": "prod_text_5", "label": "תגית 5", "default": "אביזרים" },
+    { "type": "url", "id": "prod_url_5", "label": "קישור 5" },
+    {
+      "type": "header",
+      "content": "עמודה 3: שירות"
+    },
+    { "type": "text", "id": "col_2_title", "label": "כותרת", "default": "שירות לקוחות" },
+    { "type": "text", "id": "srv_text_1", "label": "תגית 1", "default": "סטטוס הזמנה" },
+    { "type": "url", "id": "srv_url_1", "label": "קישור 1" },
+    { "type": "text", "id": "srv_text_2", "label": "תגית 2", "default": "מעבדת תיקונים" },
+    { "type": "url", "id": "srv_url_2", "label": "קישור 2" },
+    { "type": "text", "id": "srv_text_3", "label": "תגית 3", "default": "מדיניות משלוחים" },
+    { "type": "url", "id": "srv_url_3", "label": "קישור 3" },
+    { "type": "text", "id": "srv_text_4", "label": "תגית 4", "default": "החזרות" },
+    { "type": "url", "id": "srv_url_4", "label": "קישור 4" },
+    { "type": "text", "id": "srv_text_5", "label": "תגית 5", "default": "שאלות נפוצות" },
+    { "type": "url", "id": "srv_url_5", "label": "קישור 5" },
+    {
+      "type": "header",
+      "content": "עמודה 4: מידע"
+    },
+    { "type": "text", "id": "col_3_title", "label": "כותרת", "default": "מידע שימושי" },
+    { "type": "text", "id": "info_text_1", "label": "תגית 1", "default": "אודות" },
+    { "type": "url", "id": "info_url_1", "label": "קישור 1" },
+    { "type": "text", "id": "info_text_2", "label": "תגית 2", "default": "תקנון" },
+    { "type": "url", "id": "info_url_2", "label": "קישור 2" },
+    { "type": "text", "id": "info_text_3", "label": "תגית 3", "default": "פרטיות" },
+    { "type": "url", "id": "info_url_3", "label": "קישור 3" },
+    { "type": "text", "id": "info_text_4", "label": "תגית 4", "default": "נגישות" },
+    { "type": "url", "id": "info_url_4", "label": "קישור 4" },
+    {
+      "type": "header",
+      "content": "עמודה 5: קנייה בטוחה"
+    },
+    { "type": "text", "id": "col_secure_title", "label": "כותרת", "default": "קנייה בטוחה ומשלוחים" },
+    { "type": "textarea", "id": "secure_text", "label": "טקסט", "default": "האתר מאובטח בטכנולוגיית 3DS." },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "הצג אייקוני אשראי", "default": true }
+  ]
+}
+{% endschema %}

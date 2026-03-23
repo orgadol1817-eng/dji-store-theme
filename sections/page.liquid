@@ -1,17 +1,14 @@
-{% comment %}
-  This section is used in the page template to render store pages like About us
-  or Contact us.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/page
-{% endcomment %}
-
-<h1>{{ page.title }}</h1>
-
-{{ page.content }}
+<div class="page-template" dir="rtl" style="background-color: #000; color: #fff; padding: 60px 20px;">
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <h1 style="text-align: center; font-family: 'Heebo', sans-serif;">{{ page.title }}</h1>
+    <div style="font-family: 'Heebo', sans-serif; line-height: 1.8;">{{ page.content }}</div>
+  </div>
+</div>
 
 {% schema %}
 {
-  "name": "t:general.page",
-  "settings": []
+  "name": "Page Content",
+  "settings": [],
+  "presets": [{ "name": "Default Page" }]
 }
 {% endschema %}

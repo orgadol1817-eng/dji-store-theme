@@ -1,77 +1,726 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+<header class="site-header" id="site-header">
+  <div class="sh-inner">
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      <shopify-account menu="{{ section.settings.customer_account_menu }}">
-        {{ 'icon-account.svg' | inline_asset_content }}
-      </shopify-account>
-    {% endif %}
-
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
-
-      {{ 'icon-cart.svg' | inline_asset_content }}
+    <!-- Logo -->
+    <a class="sh-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0758/4897/4509/files/logo_drox.png?v=1773919882"
+        alt="DROX"
+        class="header__logo-img"
+        width="120"
+        height="40"
+        loading="eager"
+      >
     </a>
+
+    <!-- Desktop navigation -->
+    <nav class="sh-nav" aria-label="ניווט ראשי">
+      {%- assign mega_keyword = section.settings.mega_keyword | default: 'מקצוע' -%}
+      {%- for link in section.settings.menu.links -%}
+        {%- if link.title contains mega_keyword -%}
+          <div class="sh-mega-trigger" id="sh-mega-trigger" aria-expanded="false">
+            <span class="sh-nav__link sh-nav__link--mega">{{ link.title }}</span>
+          </div>
+        {%- else -%}
+          <a class="sh-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- else -%}
+        <div class="sh-mega-trigger" id="sh-mega-trigger" aria-expanded="false">
+          <span class="sh-nav__link sh-nav__link--mega">רחפנים מקצועיים</span>
+        </div>
+        <a class="sh-nav__link" href="/collections/camera-drones">רחפני צילום</a>
+        <a class="sh-nav__link" href="/collections/multimedia">צילום ומולטימדיה</a>
+        <a class="sh-nav__link" href="/pages/contact">תמיכה ויצירת קשר</a>
+      {%- endfor -%}
+    </nav>
+
+    <!-- Tools: search · cart · hamburger -->
+    <div class="sh-tools">
+      <button class="sh-tool-btn sh-search-btn" id="sh-search-btn" aria-label="חיפוש" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+
+      <a class="sh-tool-btn sh-cart-btn" href="{{ routes.cart_url }}" aria-label="עגלת קניות">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="sh-cart-count">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+
+      <button class="sh-tool-btn sh-hamburger" id="sh-hamburger" aria-label="תפריט" aria-expanded="false" aria-controls="sh-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
   </div>
 </header>
 
+<!-- ── Mega-menu panel ── -->
+<div class="sh-mega-panel" id="sh-mega-panel" role="region" aria-label="תפריט מקצועי" aria-hidden="true">
+  <div class="sh-mega-inner">
+    <div class="sh-mega-columns">
+      <div class="sh-mega-col">
+        <span class="sh-mega-col__heading">חקלאות</span>
+        <ul>
+          <li><a href="#">ציוד לחקלאים</a></li>
+          <li><a href="#">רחפני ריסוס</a></li>
+          <li><a href="#">מערכות ניהול</a></li>
+        </ul>
+      </div>
+      <div class="sh-mega-col">
+        <span class="sh-mega-col__heading">מדידה ומיפוי</span>
+        <ul>
+          <li><a href="#">Mavic 3 Enterprise</a></li>
+          <li><a href="#">Matrice 350 RTK</a></li>
+          <li><a href="#">מטע"דים</a></li>
+        </ul>
+      </div>
+      <div class="sh-mega-col">
+        <span class="sh-mega-col__heading">ביטחון והצלה</span>
+        <ul>
+          <li><a href="#">רחפנים תרמיים</a></li>
+          <li><a href="#">Matrice 30 Series</a></li>
+        </ul>
+      </div>
+      <div class="sh-mega-col">
+        <span class="sh-mega-col__heading">תשתיות</span>
+        <ul>
+          <li><a href="#">בדיקת תשתיות</a></li>
+          <li><a href="#">מגדלי תקשורת</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Search overlay ── -->
+<div class="sh-search-panel" id="sh-search-panel" role="search" aria-hidden="true">
+  <div class="sh-search-panel__inner">
+    <form action="/search" method="get" class="sh-search-form">
+      <input
+        type="search"
+        name="q"
+        id="sh-search-input"
+        class="sh-search-input"
+        placeholder="חפש מוצרים..."
+        autocomplete="off"
+        dir="rtl"
+        aria-label="שדה חיפוש"
+      >
+      <button type="submit" class="sh-search-submit" aria-label="חפש">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </form>
+    <button class="sh-search-close" id="sh-search-close" aria-label="סגור חיפוש">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- ── Mobile drawer overlay ── -->
+<div class="sh-drawer-overlay" id="sh-drawer-overlay" aria-hidden="true"></div>
+
+<!-- ── Mobile drawer ── -->
+<nav class="sh-drawer" id="sh-drawer" aria-label="תפריט נייד" aria-modal="true" role="dialog">
+  <div class="sh-drawer__header">
+    <span class="sh-drawer__logo">DROX</span>
+    <button class="sh-drawer__close" id="sh-drawer-close" aria-label="סגור תפריט">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <ul class="sh-drawer__links">
+    {%- for link in section.settings.menu.links -%}
+      <li><a href="{{ link.url }}" class="sh-drawer__link">{{ link.title }}</a></li>
+    {%- else -%}
+      <li><a href="/collections/professional-drones" class="sh-drawer__link">רחפנים מקצועיים</a></li>
+      <li>
+        <details class="sh-drawer__sub">
+          <summary class="sh-drawer__link">קטגוריות</summary>
+          <ul class="sh-drawer__sub-links">
+            <li><a href="#">חקלאות</a></li>
+            <li><a href="#">מדידה ומיפוי</a></li>
+            <li><a href="#">ביטחון והצלה</a></li>
+          </ul>
+        </details>
+      </li>
+      <li><a href="/collections/camera-drones" class="sh-drawer__link">רחפני צילום</a></li>
+      <li><a href="/collections/multimedia" class="sh-drawer__link">צילום ומולטימדיה</a></li>
+      <li><a href="/pages/contact" class="sh-drawer__link">תמיכה ויצירת קשר</a></li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
 {% stylesheet %}
-  header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  header a {
-    position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
-  }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
-    display: flex;
-    gap: 1rem;
-  }
+/* ── Site Header ──────────────────────────────────────────── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 72px;
+  z-index: 9000;
+  background: transparent;
+  transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
+  font-family: 'Heebo', sans-serif;
+  direction: rtl;
+}
+
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+}
+
+.sh-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 3%;
+}
+
+/* ── Logo ── */
+.sh-logo { display: flex; align-items: center; flex-shrink: 0; }
+
+.header__logo-img {
+  width: 120px;
+  height: auto;
+  display: block;
+  filter: invert(1);
+  transition: filter 0.35s ease;
+}
+
+.site-header.scrolled .header__logo-img {
+  filter: none;
+}
+
+/* ── Desktop Nav ── */
+.sh-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 100%;
+}
+
+.sh-nav__link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.25s ease, opacity 0.25s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.sh-nav__link--mega::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  margin-right: 6px;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.sh-mega-trigger[aria-expanded="true"] .sh-nav__link--mega::after {
+  transform: rotate(-135deg);
+}
+
+.site-header.scrolled .sh-nav__link { color: #1a1a1a; }
+.sh-nav__link:hover { opacity: 0.75; }
+
+/* ── Tools ── */
+.sh-tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sh-tool-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 50%;
+  transition: color 0.25s ease, background 0.25s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.site-header.scrolled .sh-tool-btn { color: #1a1a1a; }
+.sh-tool-btn:hover { background: rgba(128,128,128,0.12); }
+
+.sh-cart-count {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: #0070d5;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Heebo', sans-serif;
+}
+
+/* Hamburger */
+.sh-hamburger {
+  flex-direction: column;
+  gap: 4px;
+  display: none;
+}
+
+.sh-hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ── Mega Panel ── */
+.sh-mega-panel {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  z-index: 8990;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.28s ease, visibility 0.28s ease, transform 0.28s ease;
+  direction: rtl;
+}
+
+.sh-mega-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sh-mega-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 36px 3%;
+}
+
+.sh-mega-columns {
+  display: flex;
+  gap: 48px;
+  direction: rtl;
+}
+
+.sh-mega-col { flex: 1; min-width: 140px; }
+
+.sh-mega-col__heading {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+  margin-bottom: 14px;
+  font-family: 'Heebo', sans-serif;
+}
+
+.sh-mega-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sh-mega-col ul a {
+  font-size: 15px;
+  font-weight: 400;
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-family: 'Heebo', sans-serif;
+}
+
+.sh-mega-col ul a:hover { color: #0070d5; }
+
+/* ── Search Panel ── */
+.sh-search-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 9100;
+  transform: translateY(-110%);
+  visibility: hidden;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.sh-search-panel.is-open {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.sh-search-panel__inner {
+  display: flex;
+  align-items: center;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 18px 5%;
+  gap: 12px;
+  direction: rtl;
+}
+
+.sh-search-form {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  border-bottom: 2px solid #1a1a1a;
+  gap: 8px;
+}
+
+.sh-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-family: 'Heebo', sans-serif;
+  padding: 8px 4px;
+  background: transparent;
+  direction: rtl;
+}
+
+.sh-search-submit {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+}
+
+.sh-search-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #1a1a1a;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Mobile Drawer ── */
+.sh-drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9050;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sh-drawer-overlay.is-open {
+  opacity: 1;
+}
+
+.sh-drawer {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  max-width: 90vw;
+  height: 100%;
+  background: #111;
+  color: #fff;
+  z-index: 9100;
+  overflow-y: auto;
+  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  direction: rtl;
+  font-family: 'Heebo', sans-serif;
+}
+
+.sh-drawer.is-open { right: 0; }
+
+.sh-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sh-drawer__logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.sh-drawer__close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.sh-drawer__links {
+  list-style: none;
+  margin: 0;
+  padding: 16px 0;
+}
+
+.sh-drawer__link {
+  display: block;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.sh-drawer__link:hover { background: rgba(255,255,255,0.05); }
+
+.sh-drawer__sub summary.sh-drawer__link { cursor: pointer; list-style: none; }
+.sh-drawer__sub summary.sh-drawer__link::-webkit-details-marker { display: none; }
+
+.sh-drawer__sub-links {
+  list-style: none;
+  padding: 0 0 0 20px;
+  margin: 0;
+}
+
+.sh-drawer__sub-links li a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .sh-nav { display: none; }
+  .sh-hamburger { display: flex; }
+  .header__logo-img { width: 90px !important; }
+  .sh-inner { padding: 0 5%; }
+}
+
+@media (min-width: 769px) {
+  .sh-hamburger { display: none; }
+  .sh-drawer { display: none; }
+}
+
+/* ── Visually hidden (skip link) ── */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.visually-hidden:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 8px 16px;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
 {% endstylesheet %}
+
+{% javascript %}
+(function () {
+  /* ── Scroll: transparent → white ── */
+  var header = document.getElementById('site-header');
+  if (header) {
+    window.addEventListener('scroll', function () {
+      header.classList.toggle('scrolled', window.scrollY > 5);
+    }, { passive: true });
+  }
+
+  /* ── Mega menu ── */
+  var trigger   = document.getElementById('sh-mega-trigger');
+  var megaPanel = document.getElementById('sh-mega-panel');
+  var megaTimer;
+
+  function openMega() {
+    clearTimeout(megaTimer);
+    if (!trigger || !megaPanel) return;
+    megaPanel.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    megaPanel.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeMega() {
+    megaTimer = setTimeout(function () {
+      if (!megaPanel) return;
+      megaPanel.classList.remove('is-open');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      megaPanel.setAttribute('aria-hidden', 'true');
+    }, 120);
+  }
+
+  if (trigger && megaPanel) {
+    trigger.addEventListener('mouseenter', openMega);
+    trigger.addEventListener('mouseleave', closeMega);
+    megaPanel.addEventListener('mouseenter', function () { clearTimeout(megaTimer); });
+    megaPanel.addEventListener('mouseleave', closeMega);
+    trigger.addEventListener('click', function () {
+      var open = megaPanel.classList.contains('is-open');
+      open ? closeMega() : openMega();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && megaPanel) closeMega();
+  });
+
+  /* ── Search panel ── */
+  var searchBtn   = document.getElementById('sh-search-btn');
+  var searchPanel = document.getElementById('sh-search-panel');
+  var searchClose = document.getElementById('sh-search-close');
+  var searchInput = document.getElementById('sh-search-input');
+
+  function openSearch() {
+    if (!searchPanel) return;
+    searchPanel.classList.add('is-open');
+    searchPanel.setAttribute('aria-hidden', 'false');
+    if (searchBtn) searchBtn.setAttribute('aria-expanded', 'true');
+    setTimeout(function () { if (searchInput) searchInput.focus(); }, 80);
+  }
+
+  function closeSearch() {
+    if (!searchPanel) return;
+    searchPanel.classList.remove('is-open');
+    searchPanel.setAttribute('aria-hidden', 'true');
+    if (searchBtn) searchBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (searchBtn)   searchBtn.addEventListener('click', function (e) { e.stopPropagation(); openSearch(); });
+  if (searchClose) searchClose.addEventListener('click', closeSearch);
+
+  document.addEventListener('click', function (e) {
+    if (searchPanel && searchPanel.classList.contains('is-open')) {
+      if (!searchPanel.contains(e.target) && e.target !== searchBtn) closeSearch();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSearch();
+  });
+
+  /* ── Mobile drawer ── */
+  var hamburger = document.getElementById('sh-hamburger');
+  var drawer    = document.getElementById('sh-drawer');
+  var overlay   = document.getElementById('sh-drawer-overlay');
+  var drawerClose = document.getElementById('sh-drawer-close');
+
+  function openDrawer() {
+    if (!drawer) return;
+    drawer.classList.add('is-open');
+    if (overlay) { overlay.style.display = 'block'; requestAnimationFrame(function () { overlay.classList.add('is-open'); }); }
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    if (!drawer) return;
+    drawer.classList.remove('is-open');
+    if (overlay) {
+      overlay.classList.remove('is-open');
+      setTimeout(function () { overlay.style.display = 'none'; }, 350);
+    }
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  if (hamburger)   hamburger.addEventListener('click', openDrawer);
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (overlay)     overlay.addEventListener('click', closeDrawer);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  /* ── Re-init on Shopify section reload ── */
+  document.addEventListener('shopify:section:load', function () {
+    if (header) header.classList.toggle('scrolled', window.scrollY > 5);
+  });
+})();
+{% endjavascript %}
 
 {% schema %}
 {
-  "name": "t:general.header",
+  "name": "Header",
   "settings": [
     {
       "type": "link_list",
       "id": "menu",
-      "label": "t:labels.menu"
+      "label": "Navigation menu",
+      "default": "main-menu"
     },
     {
-      "type": "link_list",
-      "id": "customer_account_menu",
-      "label": "t:labels.customer_account_menu",
-      "default": "customer-account-main-menu"
+      "type": "text",
+      "id": "mega_keyword",
+      "label": "Mega menu trigger keyword",
+      "default": "מקצוע"
     }
+  ],
+  "presets": [
+    { "name": "Header" }
   ]
 }
 {% endschema %}

@@ -1,0 +1,198 @@
+{%- comment -%}
+  DJI Enterprise Style Cinematic Gallery with Navigation Arrows
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-cinema-{{ section.id }} {
+    background-color: #000;
+    width: 100%;
+    height: 90vh;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  .dji-cinema-media-container {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+  }
+
+  .dji-cinema-item {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0; transition: opacity 1.2s ease-in-out;
+    object-fit: cover; display: block;
+  }
+
+  .dji-cinema-item.active { opacity: {{ section.settings.overlay_opacity }}; }
+
+  /* DJI Navigation Arrows */
+  .dji-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 20px;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dji-nav-arrow:hover { opacity: 0.7; }
+  .dji-nav-prev { left: 30px; }
+  .dji-nav-next { right: 30px; }
+
+  .dji-nav-arrow svg {
+    width: 30px;
+    height: 30px;
+    stroke: #fff;
+    stroke-width: 1.5px;
+    fill: none;
+  }
+
+  .dji-cinema-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    text-align: center;
+    width: 90%;
+    pointer-events: none;
+  }
+
+  .dji-cinema-content h2 {
+    font-size: clamp(40px, 8vw, 90px);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .dji-cinema-content p {
+    font-size: clamp(16px, 1.5vw, 22px);
+    margin-top: 20px;
+    opacity: 0.8;
+  }
+
+  /* Bottom Dots (DJI Style) */
+  .dji-cinema-dots {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 15px;
+  }
+
+  .dji-dot {
+    width: 35px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .dji-dot.active { background: #fff; }
+
+  @media (max-width: 768px) {
+    .dji-nav-arrow { display: none; } /* מחביאים חצים במובייל לטובת סוואיפ */
+  }
+{%- endstyle -%}
+
+<div class="dji-cinema-{{ section.id }}" id="CinemaGallery-{{ section.id }}">
+  <button class="dji-nav-arrow dji-nav-prev" onclick="prevSlide-{{ section.id }}()" aria-label="Previous">
+    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  
+  <button class="dji-nav-arrow dji-nav-next" onclick="nextSlide-{{ section.id }}()" aria-label="Next">
+    <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+
+  <div class="dji-cinema-media-container">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'video' -%}
+        <video class="dji-cinema-item {% if forloop.first %}active{% endif %}" autoplay muted loop playsinline>
+          <source src="{{ block.settings.video_url }}" type="video/mp4">
+        </video>
+      {%- else -%}
+        <img class="dji-cinema-item {% if forloop.first %}active{% endif %}" src="{{ block.settings.image | image_url: width: 2000 }}">
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="dji-cinema-content">
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.subtext }}</p>
+  </div>
+
+  <div class="dji-cinema-dots">
+    {%- for block in section.blocks -%}
+      <button class="dji-dot {% if forloop.first %}active{% endif %}" onclick="goToSlide-{{ section.id }}({{ forloop.index0 }})"></button>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  let currentSlide-{{ section.id }} = 0;
+  const slides-{{ section.id }} = document.querySelectorAll('#CinemaGallery-{{ section.id }} .dji-cinema-item');
+  const dots-{{ section.id }} = document.querySelectorAll('#CinemaGallery-{{ section.id }} .dji-dot');
+
+  function updateGallery-{{ section.id }}(index) {
+    slides-{{ section.id }}.forEach(s => s.classList.remove('active'));
+    dots-{{ section.id }}.forEach(d => d.classList.remove('active'));
+    
+    slides-{{ section.id }}[index].classList.add('active');
+    dots-{{ section.id }}[index].classList.add('active');
+    currentSlide-{{ section.id }} = index;
+  }
+
+  function nextSlide-{{ section.id }}() {
+    let next = (currentSlide-{{ section.id }} + 1) % slides-{{ section.id }}.length;
+    updateGallery-{{ section.id }}(next);
+  }
+
+  function prevSlide-{{ section.id }}() {
+    let prev = (currentSlide-{{ section.id }} - 1 + slides-{{ section.id }}.length) % slides-{{ section.id }}.length;
+    updateGallery-{{ section.id }}(prev);
+  }
+
+  function goToSlide-{{ section.id }}(index) {
+    updateGallery-{{ section.id }}(index);
+  }
+
+  // Auto Play
+  {% if section.settings.enable_auto %}
+    setInterval(nextSlide-{{ section.id }}, {{ section.settings.speed | times: 1000 }});
+  {% endif %}
+</script>
+
+{% schema %}
+{
+  "name": "DroX Cinematic Gallery",
+  "settings": [
+    { "type": "text", "id": "title", "label": "כותרת", "default": "Matrice 4" },
+    { "type": "textarea", "id": "subtext", "label": "טקסט משנה" },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 1, "step": 0.1, "label": "בהירות מדיה", "default": 0.7 },
+    { "type": "checkbox", "id": "enable_auto", "label": "החלפה אוטומטית", "default": true },
+    { "type": "range", "id": "speed", "min": 3, "max": 10, "step": 1, "unit": "sec", "label": "מהירות", "default": 5 }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "וידאו",
+      "settings": [ { "type": "text", "id": "video_url", "label": "לינק MP4" } ]
+    },
+    {
+      "type": "image",
+      "name": "תמונה",
+      "settings": [ { "type": "image_picker", "id": "image", "label": "תמונה" } ]
+    }
+  ],
+  "presets": [ { "name": "DroX Cinematic Gallery" } ]
+}
+{% endschema %}

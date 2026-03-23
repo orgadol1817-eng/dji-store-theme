@@ -1,0 +1,40 @@
+{%- comment -%} Standard Product Main Section (Restored) {%- endcomment -%}
+<section class="product-main-wrapper" style="background-color: #000; color: #fff; padding: 50px 0;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 0 20px;">
+    
+    {%- comment -%} Product Media (Images) {%- endcomment -%}
+    <div class="product-media" style="flex: 1; min-width: 300px;">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}" style="width: 100%; border-radius: 8px;">
+      {% endif %}
+    </div>
+
+    {%- comment -%} Product Details {%- endcomment -%}
+    <div class="product-info" style="flex: 1; min-width: 300px; direction: rtl;">
+      <h1 style="font-size: 32px; font-weight: 800;">{{ product.title }}</h1>
+      <div style="font-size: 24px; color: #0070d5; margin: 20px 0;">{{ product.price | money }}</div>
+      
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" style="background: #0070d5; color: #fff; padding: 15px 40px; border: none; border-radius: 30px; cursor: pointer; font-size: 18px; width: 100%;">
+          הוספה לסל
+        </button>
+      {% endform %}
+
+      <div style="margin-top: 30px; line-height: 1.6; opacity: 0.8;">
+        {{ product.description }}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "settings": [],
+  "blocks": [
+    { "type": "@app" }
+  ]
+}
+{% endschema %}
