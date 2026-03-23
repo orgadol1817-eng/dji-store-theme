@@ -1,0 +1,467 @@
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+
+    <a class="site-header__logo" href="{{ routes.root_url }}" aria-label="DROX">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0758/4897/4509/files/logo_drox.png?v=1773919882"
+        alt="DROX Logo"
+        class="header__logo-img"
+        width="120"
+        height="40"
+        style="width: 120px; height: auto; display: block;"
+        loading="eager"
+      >
+    </a>
+
+    <nav class="site-header__nav" aria-label="{{ 'sections.header.nav_label' | t }}">
+      <a class="site-header__nav-item" href="#">רחפנים מקצועיים</a>
+      <a class="site-header__nav-item" href="#">רחפני צילום</a>
+      <a class="site-header__nav-item" href="#">צילום ומולטימדיה</a>
+      <a class="site-header__nav-item" href="#">תמיכה ויצירת קשר</a>
+    </nav>
+
+    <div class="site-header__tools">
+      <button
+        class="site-header__icon"
+        id="header-search-btn"
+        aria-label="{{ 'sections.header.search' | t }}"
+        aria-expanded="false"
+        aria-controls="dji-search-panel"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+
+      <a
+        class="site-header__icon"
+        href="{{ routes.cart_url }}"
+        aria-label="{{ 'sections.header.cart' | t }}"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </a>
+
+      <button
+        class="site-header__hamburger"
+        id="header-hamburger"
+        aria-label="פתח תפריט"
+        aria-expanded="false"
+        aria-controls="mobile-nav-drawer"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<div
+  class="dji-search-panel"
+  id="dji-search-panel"
+  role="dialog"
+  aria-label="{{ 'sections.header.search' | t }}"
+  aria-hidden="true"
+>
+  <div class="dji-search-panel__inner">
+    <form
+      action="{{ routes.search_url }}"
+      method="get"
+      class="dji-search-panel__form"
+      role="search"
+    >
+      <input
+        type="search"
+        name="q"
+        id="dji-search-input"
+        class="dji-search-panel__input"
+        placeholder="חיפוש מוצרים, דגמים..."
+        autocomplete="off"
+        aria-label="{{ 'sections.header.search' | t }}"
+      >
+      <button
+        type="submit"
+        class="dji-search-panel__submit"
+        aria-label="{{ 'sections.header.search' | t }}"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+    </form>
+
+    <button
+      class="dji-search-panel__close"
+      id="dji-search-close"
+      aria-label="סגור חיפוש"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true"></div>
+
+<nav
+  class="mobile-nav-drawer"
+  id="mobile-nav-drawer"
+  role="dialog"
+  aria-label="תפריט ניווט"
+  aria-hidden="true"
+  aria-modal="true"
+>
+  <div class="mobile-nav-drawer__header">
+    <a href="{{ routes.root_url }}" class="mobile-nav-drawer__logo" aria-label="DROX">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0758/4897/4509/files/logo_drox.png?v=1773919882"
+        alt="DROX Logo"
+        width="90"
+        height="30"
+        style="height: 30px; width: auto;"
+      >
+    </a>
+    <button class="mobile-nav-drawer__close" id="mobile-nav-close" aria-label="סגור תפריט">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mobile-nav-drawer__nav">
+    <a class="mobile-nav-drawer__nav-item" href="#">רחפנים מקצועיים</a>
+    <a class="mobile-nav-drawer__nav-item" href="#">רחפני צילום</a>
+    <a class="mobile-nav-drawer__nav-item" href="#">צילום ומולטימדיה</a>
+    <a class="mobile-nav-drawer__nav-item" href="#">תמיכה ויצירת קשר</a>
+  </div>
+
+  <div class="mobile-nav-drawer__tools">
+    <a href="{{ routes.cart_url }}" class="mobile-nav-drawer__tool-link">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span>{{ 'sections.header.cart' | t }}</span>
+    </a>
+  </div>
+</nav>
+
+{% stylesheet %}
+  /* ---- Header inner layout ---- */
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 72px;
+    width: 100%;
+    box-sizing: border-box;
+    direction: rtl;
+  }
+
+  .site-header__logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /* ---- Navigation ---- */
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    direction: rtl;
+  }
+
+  .site-header__nav-item {
+    text-decoration: none;
+    color: inherit;
+    padding: 0 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    line-height: 72px;
+    transition: opacity 0.2s ease;
+  }
+
+  .site-header__nav-item:hover {
+    opacity: 0.7;
+  }
+
+  /* ---- Tools (search + cart) ---- */
+  .site-header__tools {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .site-header__icon {
+    background: none;
+    border: none;
+    padding: 0.3rem;
+    cursor: pointer;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .site-header__icon:hover {
+    opacity: 0.7;
+  }
+
+  .site-header__icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---- Hamburger button (hidden on desktop) ---- */
+  .site-header__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 6px;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .site-header__hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+  }
+
+  .site-header__hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .site-header__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .site-header__hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ---- Mobile overlay ---- */
+  .mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1400;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-nav-overlay.is-open {
+    display: block;
+  }
+
+  /* ---- Mobile drawer ---- */
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0;
+    right: -110%;
+    width: min(320px, 88vw);
+    height: 100%;
+    background: #fff;
+    z-index: 1500;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -6px 0 32px rgba(0, 0, 0, 0.12);
+    direction: rtl;
+  }
+
+  .mobile-nav-drawer.is-open { right: 0; }
+
+  .mobile-nav-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    height: 72px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .mobile-nav-drawer__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .mobile-nav-drawer__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #111;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-nav-drawer__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+
+  .mobile-nav-drawer__nav-item {
+    display: block;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background 0.15s ease;
+  }
+
+  .mobile-nav-drawer__nav-item:hover { background: #f7f7f7; }
+
+  .mobile-nav-drawer__tools {
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-nav-drawer__tool-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #111;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.6rem 0;
+  }
+
+  /* ---- Responsive: mobile nav ---- */
+  @media (max-width: 768px) {
+    .site-header__inner { padding: 0 1.25rem; }
+    .site-header__nav { display: none; }
+    .site-header__hamburger { display: flex; }
+    .header__logo-img { width: 90px !important; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    /* ---------- Search panel ---------- */
+    var openBtn = document.getElementById('header-search-btn');
+    var closeBtn = document.getElementById('dji-search-close');
+    var panel = document.getElementById('dji-search-panel');
+    var input = document.getElementById('dji-search-input');
+
+    if (openBtn && panel) {
+      function openSearch() {
+        panel.classList.add('is-active');
+        panel.setAttribute('aria-hidden', 'false');
+        openBtn.setAttribute('aria-expanded', 'true');
+        if (input) input.focus();
+      }
+
+      function closeSearch() {
+        panel.classList.remove('is-active');
+        panel.setAttribute('aria-hidden', 'true');
+        openBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      openBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        panel.classList.contains('is-active') ? closeSearch() : openSearch();
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+
+      document.addEventListener('click', function (e) {
+        if (
+          panel.classList.contains('is-active') &&
+          !panel.contains(e.target) &&
+          !openBtn.contains(e.target)
+        ) {
+          closeSearch();
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSearch();
+      });
+    }
+
+    /* ---------- Mobile drawer ---------- */
+    var hamburger  = document.getElementById('header-hamburger');
+    var drawer     = document.getElementById('mobile-nav-drawer');
+    var overlay    = document.getElementById('mobile-nav-overlay');
+    var drawerClose = document.getElementById('mobile-nav-close');
+
+    if (hamburger && drawer) {
+      function openDrawer() {
+        drawer.classList.add('is-open');
+        drawer.setAttribute('aria-hidden', 'false');
+        hamburger.classList.add('is-open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        overlay.classList.add('is-open');
+        requestAnimationFrame(function () { overlay.style.opacity = '1'; });
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDrawer() {
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden', 'true');
+        hamburger.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        overlay.style.opacity = '0';
+        setTimeout(function () { overlay.classList.remove('is-open'); }, 300);
+        document.body.style.overflow = '';
+      }
+
+      hamburger.addEventListener('click', openDrawer);
+      if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+      if (overlay) overlay.addEventListener('click', closeDrawer);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeDrawer();
+      });
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:general.header"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,353 @@
+{%- comment -%} theme-check-disable RemoteAsset {%- endcomment -%}
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+{%- comment -%} theme-check-enable RemoteAsset {%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .dpc-spacing-wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: 'Heebo', sans-serif !important;
+  }
+
+  #shopify-section-{{ section.id }} .dpc-grid {
+    margin-top: {{ section.settings.gap_between }}px;
+  }
+
+  /* יישום הצבעים, השקיפות, והזום לכל בלוק בנפרד */
+  {%- for block in section.blocks -%}
+    {%- assign alpha_learn = block.settings.bg_opacity_learn | divided_by: 100.0 -%}
+    {%- assign bg_learn_rgba = block.settings.bg_color_learn | color_modify: 'alpha', alpha_learn -%}
+    
+    {%- assign alpha_buy = block.settings.bg_opacity_buy | divided_by: 100.0 -%}
+    {%- assign bg_buy_rgba = block.settings.bg_color_buy | color_modify: 'alpha', alpha_buy -%}
+
+    #shopify-section-{{ section.id }} [data-block-id="{{ block.id }}"] .dpc-link-learn {
+      color: {{ block.settings.text_color_learn }} !important;
+      background-color: {{ bg_learn_rgba }} !important;
+      border: 1px solid {{ block.settings.border_color_learn }} !important;
+    }
+    #shopify-section-{{ section.id }} [data-block-id="{{ block.id }}"] .dpc-btn-buy {
+      color: {{ block.settings.text_color_buy }} !important;
+      background-color: {{ bg_buy_rgba }} !important;
+      border: 1px solid {{ block.settings.border_color_buy }} !important;
+    }
+    
+    #shopify-section-{{ section.id }} [data-block-id="{{ block.id }}"] .dpc-link-learn:hover,
+    #shopify-section-{{ section.id }} [data-block-id="{{ block.id }}"] .dpc-btn-buy:hover {
+      background-color: {{ block.settings.text_color_learn }} !important;
+      color: #000 !important;
+      border-color: {{ block.settings.text_color_learn }} !important;
+    }
+
+    /* שליטה במיקום ובזום של התמונה לכל קוביה! */
+    #shopify-section-{{ section.id }} [data-block-id="{{ block.id }}"] .dpc-img-target {
+      object-position: {{ block.settings.image_pos_x }}% {{ block.settings.image_pos_y }}% !important;
+      transform: scale({{ block.settings.image_zoom | divided_by: 100.0 }}) !important;
+    }
+    
+    /* אפקט הריחוף של DJI - זום עדין וקולנועי */
+    #shopify-section-{{ section.id }} [data-block-id="{{ block.id }}"]:hover .dpc-img-target {
+      transform: scale({{ block.settings.image_zoom | divided_by: 100.0 | plus: 0.04 }}) !important;
+    }
+  {%- endfor -%}
+
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .dpc-spacing-wrapper {
+      padding-top: {{ section.settings.padding_top | divided_by: 2 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 2 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% stylesheet %}
+  .dpc-section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    direction: rtl; /* אכיפת כיוון עברית */
+  }
+
+  /* =========================================
+     PREMIUM HEADER (התמונה הגדולה למעלה)
+     ========================================= */
+  .dpc-header { position: relative; width: 100%; overflow: hidden; }
+
+  .dpc-header::before, .dpc-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+    z-index: 5; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  
+  .dpc-header:hover::before, .dpc-card:hover::before {
+    opacity: 0.85; /* מתכהה באלגנטיות בהובר */
+  }
+
+  .dpc-header__img-wrap { width: 100%; aspect-ratio: 21 / 9; overflow: hidden; }
+
+  .dpc-img-target {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .dpc-card-link { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 8; text-decoration: none; }
+
+  .dpc-header__overlay {
+    position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 900px; text-align: center; z-index: 10; pointer-events: none;
+  }
+
+  .dpc-header__overlay *, .dpc-card__text * { pointer-events: auto; }
+
+  .dpc-header__title {
+    font-size: clamp(32px, 5vw, 56px); font-weight: 700; color: #fff !important;
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0px;
+  }
+  .dpc-header__subtitle { font-size: clamp(16px, 2vw, 22px); color: #fff !important; font-weight: 300; }
+
+  /* =========================================
+     GRID CARDS (הקוביות הקטנות) - 16:9
+     ========================================= */
+  .dpc-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px; 
+    width: 100%; 
+    margin: 0; 
+    padding: 0; 
+  }
+  
+  .dpc-card { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background-color: #000; width: 100%; }
+
+  .dpc-card__text { position: absolute; top: 12%; left: 0; width: 100%; text-align: center; z-index: 10; pointer-events: none; }
+  .dpc-card__title { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: #fff !important; text-transform: uppercase; margin-bottom: 6px; }
+  .dpc-card__subtitle { font-size: 15px; color: rgba(255, 255, 255, 0.9) !important; margin: 0 0 15px 0; font-weight: 300; }
+
+  /* =========================================
+     כפתורים וחצים כפולים (RTL)
+     ========================================= */
+  .dpc-actions { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 15px; }
+
+  .dpc-link-learn, .dpc-btn-buy {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    padding: 7px 20px; border-radius: 30px; font-size: 15px; font-weight: 500;
+    box-sizing: border-box; backdrop-filter: blur(4px);
+  }
+
+  .dpc-arrow-double {
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform 0.3s ease; width: 16px; height: 16px; flex-shrink: 0;
+  }
+
+  .dpc-link-learn:hover .dpc-arrow-double, .dpc-btn-buy:hover .dpc-arrow-double {
+    transform: translateX(-5px); 
+  }
+
+  @media (max-width: 768px) {
+    .dpc-grid { grid-template-columns: 1fr; gap: 8px; }
+    .dpc-header__img-wrap { aspect-ratio: 4 / 3; }
+    .dpc-card { aspect-ratio: 16 / 10; }
+  }
+{% endstylesheet %}
+
+<div class="dpc-spacing-wrapper">
+  <section class="dpc-section">
+    {% for block in section.blocks %}
+      {% if block.type == 'premium_header' %}
+        <div class="dpc-header" {{ block.shopify_attributes }} data-block-id="{{ block.id }}">
+          
+          {% if block.settings.image_link != blank %}
+            <a href="{{ block.settings.image_link }}" class="dpc-card-link" aria-label="{{ block.settings.title }}"></a>
+          {% endif %}
+
+          <div class="dpc-header__img-wrap">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 3200 | image_tag: loading: 'eager', widths: '800, 1600, 2400, 3200', class: 'dpc-img-target' }}
+            {% else %}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'dpc-img-target' }}
+            {% endif %}
+          </div>
+          
+          <div class="dpc-header__overlay">
+            {% if block.settings.title != blank %}<h2 class="dpc-header__title">{{ block.settings.title }}</h2>{% endif %}
+            {% if block.settings.subtitle != blank %}<p class="dpc-header__subtitle">{{ block.settings.subtitle }}</p>{% endif %}
+            
+            <div class="dpc-actions">
+              {% if block.settings.text_learn != blank and block.settings.link_learn != blank %}
+                <a href="{{ block.settings.link_learn }}" class="dpc-link-learn">
+                  <span>{{ block.settings.text_learn }}</span>
+                  {% if block.settings.show_arrow_learn %}
+                    <span class="dpc-arrow-double">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/>
+                      </svg>
+                    </span>
+                  {% endif %}
+                </a>
+              {% endif %}
+              
+              {% if block.settings.text_buy != blank and block.settings.link_buy != blank %}
+                <a href="{{ block.settings.link_buy }}" class="dpc-btn-buy">
+                  <span>{{ block.settings.text_buy }}</span>
+                  {% if block.settings.show_arrow_buy %}
+                    <span class="dpc-arrow-double">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/>
+                      </svg>
+                    </span>
+                  {% endif %}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <div class="dpc-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'grid_product' %}
+          <div class="dpc-card" {{ block.shopify_attributes }} data-block-id="{{ block.id }}">
+            
+            {% if block.settings.image_link != blank %}
+              <a href="{{ block.settings.image_link }}" class="dpc-card-link" aria-label="{{ block.settings.title }}"></a>
+            {% endif %}
+
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', widths: '600, 1000, 1500, 2000', class: 'dpc-img-target' }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'dpc-img-target' }}
+            {% endif %}
+            
+            <div class="dpc-card__text">
+              {% if block.settings.title != blank %}<h3 class="dpc-card__title">{{ block.settings.title }}</h3>{% endif %}
+              {% if block.settings.subtitle != blank %}<p class="dpc-card__subtitle" style="color: rgba(255, 255, 255, 0.9);">{{ block.settings.subtitle }}</p>{% endif %}
+              
+              <div class="dpc-actions">
+                {% if block.settings.text_learn != blank and block.settings.link_learn != blank %}
+                  <a href="{{ block.settings.link_learn }}" class="dpc-link-learn">
+                    <span>{{ block.settings.text_learn }}</span>
+                    {% if block.settings.show_arrow_learn %}
+                      <span class="dpc-arrow-double">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/>
+                        </svg>
+                      </span>
+                    {% endif %}
+                  </a>
+                {% endif %}
+                
+                {% if block.settings.text_buy != blank and block.settings.link_buy != blank %}
+                  <a href="{{ block.settings.link_buy }}" class="dpc-btn-buy">
+                    <span>{{ block.settings.text_buy }}</span>
+                    {% if block.settings.show_arrow_buy %}
+                      <span class="dpc-arrow-double">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/>
+                        </svg>
+                      </span>
+                    {% endif %}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "DJI Premium Composite",
+  "settings": [
+    { "type": "header", "content": "Spacing (מרחקים)" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top Padding", "default": 16 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom Padding", "default": 16 },
+    { "type": "range", "id": "gap_between", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "Gap between Header & Grid", "default": 12 }
+  ],
+  "blocks": [
+    {
+      "type": "premium_header",
+      "name": "Premium Header",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Large Image" },
+        { "type": "url", "id": "image_link", "label": "Image Link (קישור לכל התמונה)" },
+        
+        { "type": "header", "content": "Image Adjustments (דיוק תמונה)" },
+        { "type": "range", "id": "image_zoom", "min": 100, "max": 180, "step": 1, "unit": "%", "label": "זום (Zoom)", "default": 100 },
+        { "type": "range", "id": "image_pos_x", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אופקי (X)", "default": 50 },
+        { "type": "range", "id": "image_pos_y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אנכי (Y)", "default": 50 },
+
+        { "type": "text", "id": "title", "label": "Title", "default": "MAVIC 4 PRO" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Inspiration in Focus" },
+        
+        { "type": "header", "content": "Button 1 (סקירה מלאה)" },
+        { "type": "text", "id": "text_learn", "label": "טקסט הכפתור", "default": "סקירה מלאה" },
+        { "type": "url", "id": "link_learn", "label": "קישור" },
+        { "type": "checkbox", "id": "show_arrow_learn", "label": "הצג חץ כפול (>>)", "default": true },
+        { "type": "color", "id": "text_color_learn", "label": "צבע טקסט", "default": "#ffffff" },
+        { "type": "color", "id": "bg_color_learn", "label": "צבע רקע", "default": "#ffffff" },
+        { "type": "range", "id": "bg_opacity_learn", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "אטימות רקע (0 = שקוף לגמרי)", "default": 0 },
+        { "type": "color", "id": "border_color_learn", "label": "צבע מסגרת", "default": "#ffffff" },
+        
+        { "type": "header", "content": "Button 2 (קנה עכשיו)" },
+        { "type": "text", "id": "text_buy", "label": "טקסט הכפתור", "default": "קנה עכשיו" },
+        { "type": "url", "id": "link_buy", "label": "קישור" },
+        { "type": "checkbox", "id": "show_arrow_buy", "label": "הצג חץ כפול (>>)", "default": false },
+        { "type": "color", "id": "text_color_buy", "label": "צבע טקסט", "default": "#ffffff" },
+        { "type": "color", "id": "bg_color_buy", "label": "צבע רקע", "default": "#1a1a1a" },
+        { "type": "range", "id": "bg_opacity_buy", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "אטימות רקע (100 = אטום)", "default": 100 },
+        { "type": "color", "id": "border_color_buy", "label": "צבע מסגרת", "default": "#1a1a1a" }
+      ]
+    },
+    {
+      "type": "grid_product",
+      "name": "Grid Product",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Product Image" },
+        { "type": "url", "id": "image_link", "label": "Image Link (קישור לכל התמונה)" },
+
+        { "type": "header", "content": "Image Adjustments (דיוק תמונה)" },
+        { "type": "range", "id": "image_zoom", "min": 100, "max": 180, "step": 1, "unit": "%", "label": "זום (Zoom)", "default": 100 },
+        { "type": "range", "id": "image_pos_x", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אופקי (X)", "default": 50 },
+        { "type": "range", "id": "image_pos_y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אנכי (Y)", "default": 50 },
+
+        { "type": "text", "id": "title", "label": "Product Name", "default": "DJI NEO 2" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Fly Your Way" },
+        
+        { "type": "header", "content": "Button 1 (סקירה מלאה)" },
+        { "type": "text", "id": "text_learn", "label": "טקסט הכפתור", "default": "סקירה מלאה" },
+        { "type": "url", "id": "link_learn", "label": "קישור" },
+        { "type": "checkbox", "id": "show_arrow_learn", "label": "הצג חץ כפול (>>)", "default": true },
+        { "type": "color", "id": "text_color_learn", "label": "צבע טקסט", "default": "#ffffff" },
+        { "type": "color", "id": "bg_color_learn", "label": "צבע רקע", "default": "#ffffff" },
+        { "type": "range", "id": "bg_opacity_learn", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "אטימות רקע (0 = שקוף לגמרי)", "default": 0 },
+        { "type": "color", "id": "border_color_learn", "label": "צבע מסגרת", "default": "#ffffff" },
+        
+        { "type": "header", "content": "Button 2 (קנה עכשיו)" },
+        { "type": "text", "id": "text_buy", "label": "טקסט הכפתור", "default": "קנה עכשיו" },
+        { "type": "url", "id": "link_buy", "label": "קישור" },
+        { "type": "checkbox", "id": "show_arrow_buy", "label": "הצג חץ כפול (>>)", "default": false },
+        { "type": "color", "id": "text_color_buy", "label": "צבע טקסט", "default": "#ffffff" },
+        { "type": "color", "id": "bg_color_buy", "label": "צבע רקע", "default": "#1a1a1a" },
+        { "type": "range", "id": "bg_opacity_buy", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "אטימות רקע (100 = אטום)", "default": 100 },
+        { "type": "color", "id": "border_color_buy", "label": "צבע מסגרת", "default": "#1a1a1a" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Premium Composite",
+      "blocks": [
+        { "type": "premium_header" },
+        { "type": "grid_product" },
+        { "type": "grid_product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

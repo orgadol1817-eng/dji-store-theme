@@ -6,285 +6,362 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "hero-slider": {
+      "type": "dji-hero-slider",
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "hero_slide_aQTMcW": {
+          "type": "hero_slide",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "image": "shopify://shop_images/043f75382ee5ee7b0d078a593c272a0e_origin.jpg",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "show_arrow_1": true,
+            "text_color_1": "#ffffff",
+            "bg_color_1": "#ffffff",
+            "bg_opacity_1": 10,
+            "border_color_1": "#ffffff",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections",
+            "show_arrow_2": true,
+            "text_color_2": "#ffffff",
+            "bg_color_2": "#ffffff",
+            "bg_opacity_2": 0,
+            "border_color_2": "#ffffff"
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "slide-1": {
+          "type": "hero_slide",
           "settings": {
-            "label": "Shop all",
+            "image": "shopify://shop_images/f99f0deb9f72babb62524c4f3c3696ba.jpg",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "DJI MATRICE 400",
+            "subtitle": "Engineered for Excellence, Designed for Versatility",
+            "button_label": "קנה עכשיו",
             "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-secondary",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "show_arrow_1": true,
+            "text_color_1": "#ffffff",
+            "bg_color_1": "#ffffff",
+            "bg_opacity_1": 10,
+            "border_color_1": "#ffffff",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections/all",
+            "show_arrow_2": true,
+            "text_color_2": "#ffffff",
+            "bg_color_2": "#ffffff",
+            "bg_opacity_2": 0,
+            "border_color_2": "#ffffff"
+          }
+        },
+        "hero_slide_8kjL6D": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/2d6d6972f0561f6b08b92afcd8a0ec8d_origin.jpg",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "show_arrow_1": true,
+            "text_color_1": "#ffffff",
+            "bg_color_1": "#ffffff",
+            "bg_opacity_1": 10,
+            "border_color_1": "#ffffff",
+            "secondary_label": "למד עוד",
+            "secondary_link": "shopify://collections/all",
+            "show_arrow_2": true,
+            "text_color_2": "#ffffff",
+            "bg_color_2": "#ffffff",
+            "bg_opacity_2": 0,
+            "border_color_2": "#ffffff"
+          }
+        },
+        "hero_slide_bNYViM": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/1e5e6f3d47b73eea4395199f786f8030_origin.jpg",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "",
+            "show_arrow_1": true,
+            "text_color_1": "#ffffff",
+            "bg_color_1": "#ffffff",
+            "bg_opacity_1": 10,
+            "border_color_1": "#ffffff",
+            "secondary_label": "למד עוד",
+            "secondary_link": "",
+            "show_arrow_2": true,
+            "text_color_2": "#ffffff",
+            "bg_color_2": "#ffffff",
+            "bg_opacity_2": 0,
+            "border_color_2": "#ffffff"
+          }
+        },
+        "hero_slide_qJ3C7T": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "shopify://shop_images/d4e8e295ca6f4e4146b744943ea6a9fd.jpg",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "DJI PRODUCT",
+            "subtitle": "Inspiration in Focus",
+            "button_label": "קנה עכשיו",
+            "link": "shopify://collections/all",
+            "show_arrow_1": true,
+            "text_color_1": "#ffffff",
+            "bg_color_1": "#ffffff",
+            "bg_opacity_1": 10,
+            "border_color_1": "#ffffff",
+            "secondary_label": "למד עוד",
+            "secondary_link": "",
+            "show_arrow_2": true,
+            "text_color_2": "#ffffff",
+            "bg_color_2": "#ffffff",
+            "bg_opacity_2": 0,
+            "border_color_2": "#ffffff"
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
+        "hero_slide_aQTMcW",
+        "slide-1",
+        "hero_slide_8kjL6D",
+        "hero_slide_bNYViM",
+        "hero_slide_qJ3C7T"
       ],
-      "name": "t:names.hero",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "autoplay_speed": 6000,
+        "arrow_icon_color": "#ffffff",
+        "arrow_bg_color": "#ffffff",
+        "arrow_bg_opacity": 10,
+        "arrow_border_color": "#ffffff",
+        "arrow_border_width": 1
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "premium-composite": {
+      "type": "dji-premium-composite",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "hdr-1": {
+          "type": "premium_header",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "image": "shopify://shop_images/f384d2286ea002458baa31f8f8805953_1.jpg",
+            "image_link": "",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "DJI AVATA 360",
+            "subtitle": "Above It All, See It All",
+            "text_learn": "סקירה מלאה",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_color_learn": "#ffffff",
+            "bg_color_learn": "#ffffff",
+            "bg_opacity_learn": 0,
+            "border_color_learn": "#ffffff",
+            "text_buy": "קנה עכשיו",
+            "link_buy": "",
+            "show_arrow_buy": false,
+            "text_color_buy": "#ffffff",
+            "bg_color_buy": "#1a1a1a",
+            "bg_opacity_buy": 100,
+            "border_color_buy": "#1a1a1a"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "gp-1": {
+          "type": "grid_product",
           "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "image_link": "",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "Osmo 360",
+            "subtitle": "All in One",
+            "text_learn": "סקירה מלאה",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_color_learn": "#ffffff",
+            "bg_color_learn": "#ffffff",
+            "bg_opacity_learn": 0,
+            "border_color_learn": "#ffffff",
+            "text_buy": "קנה עכשיו",
+            "link_buy": "",
+            "show_arrow_buy": false,
+            "text_color_buy": "#ffffff",
+            "bg_color_buy": "#1a1a1a",
+            "bg_opacity_buy": 100,
+            "border_color_buy": "#1a1a1a"
+          }
+        },
+        "gp-2": {
+          "type": "grid_product",
+          "settings": {
+            "image": "shopify://shop_images/1e5e6f3d47b73eea4395199f786f8030_origin.jpg",
+            "image_link": "",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "מצלמה מעולה",
+            "subtitle": "Fly Your Way",
+            "text_learn": "סקירה מלאה",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_color_learn": "#ffffff",
+            "bg_color_learn": "#ffffff",
+            "bg_opacity_learn": 0,
+            "border_color_learn": "#ffffff",
+            "text_buy": "קנה עכשיו",
+            "link_buy": "",
+            "show_arrow_buy": false,
+            "text_color_buy": "#ffffff",
+            "bg_color_buy": "#1a1a1a",
+            "bg_opacity_buy": 100,
+            "border_color_buy": "#1a1a1a"
+          }
+        },
+        "gp-3": {
+          "type": "grid_product",
+          "settings": {
+            "image_link": "",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "Osmo Mobile 8",
+            "subtitle": "In Tune With Every Move",
+            "text_learn": "סקירה מלאה",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_color_learn": "#ffffff",
+            "bg_color_learn": "#ffffff",
+            "bg_opacity_learn": 0,
+            "border_color_learn": "#ffffff",
+            "text_buy": "קנה עכשיו",
+            "link_buy": "",
+            "show_arrow_buy": false,
+            "text_color_buy": "#ffffff",
+            "bg_color_buy": "#1a1a1a",
+            "bg_opacity_buy": 100,
+            "border_color_buy": "#1a1a1a"
+          }
+        },
+        "gp-4": {
+          "type": "grid_product",
+          "settings": {
+            "image_link": "",
+            "image_zoom": 100,
+            "image_pos_x": 50,
+            "image_pos_y": 50,
+            "title": "Compare Camera Drones",
+            "subtitle": "Find the right drone for you",
+            "text_learn": "סקירה מלאה",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_color_learn": "#ffffff",
+            "bg_color_learn": "#ffffff",
+            "bg_opacity_learn": 0,
+            "border_color_learn": "#ffffff",
+            "text_buy": "קנה עכשיו",
+            "link_buy": "",
+            "show_arrow_buy": false,
+            "text_color_buy": "#ffffff",
+            "bg_color_buy": "#1a1a1a",
+            "bg_opacity_buy": 100,
+            "border_color_buy": "#1a1a1a"
+          }
         }
       },
-      "name": "Featured collection",
+      "block_order": [
+        "hdr-1",
+        "gp-1",
+        "gp-2",
+        "gp-3",
+        "gp-4"
+      ],
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding_top": 16,
+        "padding_bottom": 16,
+        "gap_between": 12
+      }
+    },
+    "bento-grid": {
+      "type": "dji-bento-grid",
+      "blocks": {
+        "card-1": {
+          "type": "product_card",
+          "settings": {
+            "label": "NEW",
+            "title": "DJI Air 3S",
+            "subtitle": "Chase the View",
+            "link_learn": "",
+            "link_buy": "",
+            "text_color": "dark"
+          }
+        },
+        "card-2": {
+          "type": "product_card",
+          "settings": {
+            "label": "Enterprise",
+            "title": "DJI Matrice 400",
+            "subtitle": "Engineered for Excellence, Designed for Versatility",
+            "link_learn": "",
+            "link_buy": "",
+            "text_color": "dark"
+          }
+        },
+        "card-3": {
+          "type": "product_card",
+          "settings": {
+            "label": "HANDHELD",
+            "title": "DJI RS 5",
+            "subtitle": "Lead the Scene",
+            "link_learn": "",
+            "link_buy": "",
+            "text_color": "dark"
+          }
+        },
+        "card-4": {
+          "type": "product_card",
+          "settings": {
+            "label": "ACTION",
+            "title": "Osmo Action 6",
+            "subtitle": "Square Up, Nail the Move",
+            "link_learn": "",
+            "link_buy": "",
+            "text_color": "dark"
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3",
+        "card-4"
+      ],
+      "disabled": true,
+      "settings": {
+        "section_title": "",
+        "columns_mobile": "1"
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "hero-slider",
+    "premium-composite",
+    "bento-grid"
   ]
 }
