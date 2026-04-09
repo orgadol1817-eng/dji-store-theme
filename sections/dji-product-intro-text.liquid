@@ -1,0 +1,176 @@
+{%- comment -%}
+  DJI Enterprise Intro Text - v2.0 (Architect Edition)
+  Features: Dual-color heading, XY Precision Positioning, Adjustable Section Height
+{%- endcomment -%}
+
+{%- style -%}
+  :root {
+    --intro-x-pos: {{ section.settings.horizontal_pos }}%;
+    --intro-y-pos: {{ section.settings.vertical_pos }}%;
+  }
+
+  .dji-intro-v2 {
+    position: relative;
+    background-color: #000000;
+    width: 100%;
+    /* שליטה בגובה הסקשן כדי לאפשר תנועה */
+    height: {{ section.settings.section_height }}px;
+    min-height: 400px;
+    overflow: hidden;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  .dji-intro-content-wrapper {
+    position: absolute;
+    top: var(--intro-y-pos);
+    left: var(--intro-x-pos);
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    text-align: {{ section.settings.text_alignment }};
+    direction: rtl;
+  }
+
+  /* הטקסט הלבן הקטן */
+  .dji-intro-paragraph {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: clamp(14px, 1.2vw, 18px);
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  /* הכותרת הדו-צבעונית */
+  .dji-intro-heading {
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin: 0;
+  }
+
+  .dji-heading-accent {
+    color: #0070d5 !important;
+    display: block;
+    font-size: clamp(36px, 6vw, 75px);
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+
+  .dji-heading-main {
+    color: #ffffff !important;
+    font-size: clamp(34px, 5vw, 70px);
+    font-weight: 300;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .dji-intro-v2 {
+      height: auto;
+      padding: 60px 20px;
+    }
+    .dji-intro-content-wrapper {
+      position: relative;
+      top: 0 !important;
+      left: 0 !important;
+      transform: none;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+{%- endstyle -%}
+
+<div class="dji-intro-v2">
+  <div class="dji-intro-content-wrapper">
+    {%- if section.settings.intro_text != blank -%}
+      <div class="dji-intro-paragraph">
+        {{ section.settings.intro_text }}
+      </div>
+    {%- endif -%}
+
+    <h2 class="dji-intro-heading">
+      <span class="dji-heading-accent">{{ section.settings.blue_text }}</span>
+      <span class="dji-heading-main">{{ section.settings.white_text }}</span>
+    </h2>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DJI Product Intro Text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "תוכן הטקסט"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "טקסט הקדמה (לבן קטן)",
+      "default": "<p>Introducing the DJI Matrice 4 Series, a new compact and intelligent multi-sensor flagship drone series for enterprise industries.</p>"
+    },
+    {
+      "type": "text",
+      "id": "blue_text",
+      "label": "טקסט כחול מודגש",
+      "default": "Two Models,"
+    },
+    {
+      "type": "text",
+      "id": "white_text",
+      "label": "טקסט לבן דק",
+      "default": "Countless Applications"
+    },
+    {
+      "type": "header",
+      "content": "מיקום (XY Positioning)"
+    },
+    {
+      "type": "range",
+      "id": "horizontal_pos",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "מיקום אופקי (X)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "vertical_pos",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "מיקום אנכי (Y)",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "יישור טקסט",
+      "options": [
+        { "value": "left", "label": "שמאל" },
+        { "value": "center", "label": "מרכז" },
+        { "value": "right", "label": "ימין" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "גובה הסקשן",
+      "default": 500
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Product Intro Text"
+    }
+  ]
+}
+{% endschema %}

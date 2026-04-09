@@ -1,0 +1,218 @@
+{%- comment -%}
+  DJI Stacked Media Showcase - v15.0 "The Separated Layout"
+  Logic: Flexbox column layout. Text genuinely sits above the media.
+  Features: Independent Width/Height for media, object-fit for proportions, XY offsets for both.
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-v15-wrapper-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ממרכז את האלמנטים */
+    overflow: hidden;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+
+  /* --- גוש הטקסט (מופרד לחלוטין) --- */
+  .dji-v15-text-block {
+    width: 90%;
+    max-width: 1000px;
+    text-align: {{ section.settings.text_alignment }};
+    /* שליטה במיקום הטקסט לכל הכיוונים (Offset) */
+    transform: translate({{ section.settings.text_offset_x }}%, {{ section.settings.text_offset_y }}px);
+    margin-bottom: {{ section.settings.space_between }}px;
+    z-index: 2;
+  }
+
+  .dji-v15-top-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .dji-v15-headline {
+    font-size: clamp(32px, 5vw, {{ section.settings.headline_size }}px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: {{ section.settings.color_text }};
+  }
+
+  .dji-v15-desc {
+    font-size: clamp(16px, 1.8vw, 22px);
+    font-weight: 300;
+    margin: 15px 0 0;
+    color: {{ section.settings.color_description }};
+    line-height: 1.5;
+  }
+
+  /* --- גוש המדיה (מופרד לחלוטין) --- */
+  .dji-v15-media-block {
+    /* שליטה עצמאית ברוחב ובגובה! */
+    width: {{ section.settings.media_width }}%;
+    height: {{ section.settings.media_height }}vh;
+    border-radius: {{ section.settings.media_radius }}px;
+    position: relative;
+    overflow: hidden;
+    /* שליטה במיקום הוידאו לכל הכיוונים (Offset) */
+    transform: translate({{ section.settings.media_offset_x }}%, {{ section.settings.media_offset_y }}px);
+    z-index: 1;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  }
+
+  /* המדיה עצמה שומרת על פרופורציות מושלמות */
+  .dji-v15-media-element {
+    width: 100%;
+    height: 100%;
+    /* הקסם ששומר על פרופורציות בלי למעוך את התמונה */
+    object-fit: cover; 
+    /* פוקוס (Focal Point) */
+    object-position: {{ section.settings.media_focus_x }}% {{ section.settings.media_focus_y }}%;
+    /* מנוע הזום שביקשת */
+    transform: scale({{ section.settings.media_zoom | divided_by: 100.0 }});
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .dji-v15-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: {{ section.settings.media_overlay }};
+    pointer-events: none;
+  }
+
+  @media (max-width: 990px) {
+    .dji-v15-wrapper-{{ section.id }} { padding: 50px 0; }
+    .dji-v15-text-block { transform: none; margin-bottom: 30px; text-align: center; }
+    .dji-v15-media-block { width: 95%; height: 40vh; transform: none; }
+  }
+{%- endstyle -%}
+
+<section class="dji-v15-wrapper-{{ section.id }}">
+  
+  <div class="dji-v15-text-block">
+    {%- if section.settings.top_label != blank -%}
+      <div class="dji-v15-top-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2v20M2 12h20"/></svg>
+        <span>{{ section.settings.top_label }}</span>
+      </div>
+    {%- endif -%}
+    <h2 class="dji-v15-headline">{{ section.settings.headline }}</h2>
+    <p class="dji-v15-desc">{{ section.settings.description }}</p>
+  </div>
+
+  <div class="dji-v15-media-block">
+    <div class="dji-v15-overlay"></div>
+    {%- if section.settings.media_type == 'video' -%}
+      {%- if section.settings.video_url != blank -%}
+        <video class="dji-v15-media-element" autoplay muted loop playsinline preload="auto">
+          <source src="{{ section.settings.video_url }}" type="video/mp4">
+        </video>
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'dji-v15-media-element placeholder-svg' }}
+      {%- endif -%}
+    {%- else -%}
+      {%- if section.settings.bg_image != blank -%}
+        {{ section.settings.bg_image | image_url: width: 2500 | image_tag: loading: 'lazy', class: 'dji-v15-media-element' }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'dji-v15-media-element placeholder-svg' }}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "DJI Video Hero Showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "הגדרות סקשן כלליות"
+    },
+    { "type": "color", "id": "bg_color", "label": "צבע רקע הסקשן", "default": "#000000" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 150, "step": 5, "unit": "px", "label": "רווח פנימי עליון", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 150, "step": 5, "unit": "px", "label": "רווח פנימי תחתוו", "default": 80 },
+    { "type": "range", "id": "space_between", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "המרחק בין הטקסט לוידאו", "default": 40 },
+
+    {
+      "type": "header",
+      "content": "תוכן וטיפוגרפיה (Text)"
+    },
+    { "type": "text", "id": "top_label", "label": "תווית עליונה קטנה", "default": "תפעול חכם" },
+    { "type": "text", "id": "headline", "label": "כותרת ראשית", "default": "יעילות תפעולית גבוהה" },
+    { "type": "textarea", "id": "description", "label": "תת-כותרת", "default": "פונקציות הטיסה והצילום החדשות משפרות באופן דרמטי את היעילות והפרודוקטיביות התפעולית." },
+    { "type": "range", "id": "headline_size", "min": 30, "max": 100, "step": 1, "unit": "px", "label": "גודל כותרת", "default": 60 },
+    { "type": "color", "id": "color_text", "label": "צבע כותרת", "default": "#ffffff" },
+    { "type": "color", "id": "color_description", "label": "צבע תת-כותרת", "default": "#dddddd" },
+    { "type": "select", "id": "text_alignment", "label": "יישור טקסט", "options": [
+      {"value": "right", "label": "ימין"},
+      {"value": "center", "label": "מרכז"},
+      {"value": "left", "label": "שמאל"}
+    ], "default": "center" },
+
+    {
+      "type": "header",
+      "content": "הזזת הטקסט (Text Offset XY)"
+    },
+    { "type": "range", "id": "text_offset_x", "min": -50, "max": 50, "step": 1, "unit": "%", "label": "הזזה אופקית (X)", "default": 0 },
+    { "type": "range", "id": "text_offset_y", "min": -100, "max": 100, "step": 5, "unit": "px", "label": "הזזה אנכית (Y)", "default": 0 },
+
+    {
+      "type": "header",
+      "content": "שליטה במדיה (Video/Image)"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "סוג מדיה",
+      "options": [
+        { "value": "image", "label": "תמונה" },
+        { "value": "video", "label": "וידאו" }
+      ],
+      "default": "video"
+    },
+    { "type": "image_picker", "id": "bg_image", "label": "בחר תמונה" },
+    { "type": "text", "id": "video_url", "label": "קישור לוידאו (MP4 URL)" },
+    
+    {
+      "type": "header",
+      "content": "גאומטריה של המדיה (Width/Height)"
+    },
+    { "type": "range", "id": "media_width", "min": 30, "max": 100, "step": 1, "unit": "%", "label": "רוחב המדיה", "default": 90 },
+    { "type": "range", "id": "media_height", "min": 20, "max": 100, "step": 5, "unit": "vh", "label": "גובה המדיה", "default": 70 },
+    { "type": "range", "id": "media_radius", "min": 0, "max": 50, "step": 1, "unit": "px", "label": "עיגול פינות", "default": 12 },
+    
+    {
+      "type": "header",
+      "content": "מנוע זום ופוקוס (Zoom & Focus)"
+    },
+    { "type": "range", "id": "media_zoom", "min": 100, "max": 250, "step": 5, "unit": "%", "label": "רמת זום (הגדלת המדיה בתוך המסגרת)", "default": 100 },
+    { "type": "range", "id": "media_focus_x", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "פוקוס אופקי של המדיה (X)", "default": 50 },
+    { "type": "range", "id": "media_focus_y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "פוקוס אנכי של המדיה (Y)", "default": 50 },
+    { "type": "color_background", "id": "media_overlay", "label": "הצללה על המדיה", "default": "rgba(0,0,0,0)" },
+
+    {
+      "type": "header",
+      "content": "הזזת המדיה (Media Offset XY)"
+    },
+    { "type": "range", "id": "media_offset_x", "min": -50, "max": 50, "step": 1, "unit": "%", "label": "הזזה אופקית (X)", "default": 0 },
+    { "type": "range", "id": "media_offset_y", "min": -100, "max": 100, "step": 5, "unit": "px", "label": "הזזה אנכית (Y)", "default": 0 }
+  ],
+  "presets": [{ "name": "DJI Video Hero Showcase" }]
+}
+{% endschema %}

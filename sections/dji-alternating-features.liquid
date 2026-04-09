@@ -1,0 +1,206 @@
+{%- comment -%}
+  DJI Alternating Features Pro - v1.2.2
+  - Block-based: Add/Remove as many rows as you want.
+  - Alternating layout: Choose direction for each row.
+  - Fixed: Range steps adjusted to avoid Shopify's 101-step limit.
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-alt-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+
+  .dji-alt-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.row_gap }}px;
+    padding: 0 4%;
+  }
+
+  .dji-alt-row {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+  }
+
+  /* חלוקת עמודות */
+  .dji-alt-media, .dji-alt-text {
+    flex: 1;
+    width: 50%;
+  }
+
+  .dji-alt-media {
+    position: relative;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .dji-alt-media img, .dji-alt-media video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dji-alt-headline {
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: pre-line;
+    margin-bottom: 20px;
+  }
+
+  .dji-alt-desc {
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 990px) {
+    .dji-alt-row {
+      flex-direction: column !important;
+      gap: 30px;
+    }
+    .dji-alt-media, .dji-alt-text {
+      width: 100%;
+      text-align: center !important;
+      transform: none !important;
+    }
+    .dji-alt-desc { margin: 0 auto; }
+  }
+{%- endstyle -%}
+
+<section class="dji-alt-{{ section.id }}">
+  <div class="dji-alt-wrapper">
+    
+    {%- for block in section.blocks -%}
+      <div class="dji-alt-row" style="flex-direction: {{ block.settings.layout_direction }};" {{ block.shopify_attributes }}>
+        
+        <div class="dji-alt-text" style="
+          text-align: {{ block.settings.text_align }};
+          transform: translate({{ block.settings.offset_x }}px, {{ block.settings.offset_y }}px);
+        ">
+          <h2 class="dji-alt-headline" style="
+            font-size: {{ block.settings.headline_size }}px;
+            color: {{ block.settings.headline_color }};
+            margin-bottom: {{ block.settings.content_gap }}px;
+          ">
+            {{ block.settings.headline }}
+          </h2>
+          <div class="dji-alt-desc" style="color: {{ block.settings.desc_color }};">
+            {{ block.settings.description }}
+          </div>
+        </div>
+
+        <div class="dji-alt-media" style="border-radius: {{ block.settings.radius }}px;">
+          {%- if block.settings.media_type == 'video' -%}
+            {%- if block.settings.video_url != blank -%}
+              <video autoplay muted loop playsinline preload="auto">
+                <source src="{{ block.settings.video_url }}" type="video/mp4">
+              </video>
+            {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          {%- else -%}
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1500 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+
+      </div>
+    {%- endfor -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DJI Alternating Features",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "צבע רקע סקשן", "default": "#000000" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "רווח עליון", "default": 100 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "רווח תחתוו", "default": 100 },
+    { "type": "range", "id": "row_gap", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "מרחק בין שורות", "default": 100 }
+  ],
+  "blocks": [
+    {
+      "type": "feature_row",
+      "name": "שורת תכונה",
+      "settings": [
+        {
+          "type": "select",
+          "id": "layout_direction",
+          "label": "כיוון שורה (דסקטופ)",
+          "options": [
+            { "value": "row", "label": "טקסט ימין / מדיה שמאל" },
+            { "value": "row-reverse", "label": "מדיה ימין / טקסט שמאל" }
+          ],
+          "default": "row-reverse"
+        },
+        {
+          "type": "header",
+          "content": "תוכן"
+        },
+        { "type": "textarea", "id": "headline", "label": "כותרת (Enter לירידת שורה)", "default": "כותרת תכונה\nחדשה ומדויקת" },
+        { "type": "richtext", "id": "description", "label": "תיאור", "default": "<p>פירוט טכני על התכונה של הרחפן. כאן המקום להסביר על היתרונות המקצועיים.</p>" },
+        { "type": "range", "id": "headline_size", "min": 20, "max": 80, "step": 1, "unit": "px", "label": "גודל כותרת", "default": 40 },
+        { "type": "color", "id": "headline_color", "label": "צבע כותרת", "default": "#8BA0D0" },
+        { "type": "color", "id": "desc_color", "label": "צבע תיאור", "default": "#ffffff" },
+        { "type": "range", "id": "content_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "מרחק בין כותרת לתיאור", "default": 20 },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "יישור טקסט",
+          "options": [
+            { "value": "right", "label": "ימין" },
+            { "value": "center", "label": "מרכז" },
+            { "value": "left", "label": "שמאל" }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "header",
+          "content": "מיקום והזזה (Offset XY)"
+        },
+        { "type": "range", "id": "offset_x", "min": -150, "max": 150, "step": 3, "unit": "px", "label": "הזזה אופקית (X)", "default": 0 },
+        { "type": "range", "id": "offset_y", "min": -150, "max": 150, "step": 3, "unit": "px", "label": "הזזה אנכית (Y)", "default": 0 },
+        {
+          "type": "header",
+          "content": "מדיה"
+        },
+        {
+          "type": "select",
+          "id": "media_type",
+          "label": "סוג מדיה",
+          "options": [
+            { "value": "image", "label": "תמונה" },
+            { "value": "video", "label": "וידאו" }
+          ],
+          "default": "image"
+        },
+        { "type": "image_picker", "id": "image", "label": "בחר תמונה" },
+        { "type": "text", "id": "video_url", "label": "קישור לוידאו (MP4 URL)" },
+        { "type": "range", "id": "radius", "min": 0, "max": 60, "step": 1, "unit": "px", "label": "עיגול פינות", "default": 0 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Alternating Features",
+      "blocks": [
+        { "type": "feature_row", "settings": { "layout_direction": "row-reverse" } },
+        { "type": "feature_row", "settings": { "layout_direction": "row" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

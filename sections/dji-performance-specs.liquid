@@ -1,0 +1,192 @@
+{%- comment -%}
+  DJI Enterprise Performance Specs Grid - v1.0
+  Author: AI Senior Architect
+  Logic: Flexible grid for technical product highlights
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-specs-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding: 100px 4%;
+    color: #ffffff;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+
+  .dji-specs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: 40px;
+  }
+
+  .dji-spec-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    opacity: 0; /* לאנימציה */
+    transform: translateY(20px);
+  }
+
+  .dji-spec-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .dji-spec-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dji-spec-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.2px;
+    color: {{ section.settings.accent_color }};
+  }
+
+  .dji-spec-value {
+    font-size: clamp(24px, 2.5vw, 36px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+    color: #ffffff;
+  }
+
+  .dji-spec-label {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+    max-width: 200px;
+  }
+
+  @media (max-width: 1024px) {
+    .dji-specs-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .dji-specs-{{ section.id }} {
+      padding: 60px 20px;
+    }
+    .dji-specs-container {
+      gap: 30px;
+    }
+    .dji-spec-value {
+      font-size: 22px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="dji-specs-{{ section.id }}">
+  <div class="dji-specs-container">
+    {%- for block in section.blocks -%}
+      <div class="dji-spec-item" {{ block.shopify_attributes }} id="spec-{{ block.id }}">
+        <div class="dji-spec-icon">
+          {%- if block.settings.custom_svg != blank -%}
+            {{ block.settings.custom_svg }}
+          {%- else -%}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="7" width="16" height="10" rx="2" />
+              <line x1="21" y1="10" x2="21" y2="14" />
+            </svg>
+          {%- endif -%}
+        </div>
+        <div class="dji-spec-value">{{ block.settings.value }}</div>
+        <div class="dji-spec-label">{{ block.settings.label }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.dji-spec-item').forEach(item => {
+      observer.observe(item);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "DJI Performance Specs",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "צבע רקע",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "צבע אייקונים",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "מספר טורים בדסקטופ",
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "נתון טכני (Spec)",
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "קוד SVG של האייקון",
+          "info": "הדבק כאן קוד SVG למראה נקי"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "הנתון (למשל: 42 min)",
+          "default": "42 min"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "תיאור הנתון",
+          "default": "Max Flight Time"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Performance Specs",
+      "blocks": [
+        { "type": "spec", "settings": { "value": "42 min", "label": "Max Flight Time" } },
+        { "type": "spec", "settings": { "value": "15 km", "label": "Transmission Range" } },
+        { "type": "spec", "settings": { "value": "IP54", "label": "Ingress Protection" } },
+        { "type": "spec", "settings": { "value": "-20° to 50°C", "label": "Operating Temp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

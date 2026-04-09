@@ -1,35 +1,159 @@
-{%- comment -%} DJI Style Sticky Sub-Nav {%- endcomment -%}
+{%- comment -%}
+  DJI Enterprise Sub-Nav - ULTIMATE MOBILE + DESKTOP VERSION
+  Author: AI Senior Architect
+{%- endcomment -%}
+
 {%- style -%}
-  .dji-subnav-{{ section.id }} {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    color: #fff; direction: rtl; font-family: 'Heebo', sans-serif;
+  /* --- 1. הזרקת CSS כוחני להדר DROX (נשמר כפי שביקשת) --- */
+  .shopify-section-group-header-group, sticky-header, .header-wrapper, #site-header, header {
+    background-color: #000000 !important; 
+    position: relative !important; 
+    top: 0 !important;
+    z-index: 9999 !important;
+    border: none !important;
   }
-  .dji-subnav-wrapper {
-    max-width: 1200px; margin: 0 auto; padding: 0 20px;
-    height: 60px; display: flex; justify-content: space-between; align-items: center;
+  .header__menu-item, .header__menu-item span, .header__active-menu-item, .header__heading-link, .header__icon, .header__icon span, .list-menu__item, .header__heading, .header__heading span, .header__icon svg {
+    color: #ffffff !important; 
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
   }
-  .dji-subnav-name { font-size: 18px; font-weight: 700; }
-  .dji-subnav-btn {
-    background: #0070d5; color: #fff; padding: 8px 20px;
-    border-radius: 20px; text-decoration: none; font-size: 14px;
+  body, .gradient, #MainContent { padding-top: 0 !important; margin-top: 0 !important; }
+
+  /* --- 2. משתני CSS והזחות --- */
+  #shopify-section-{{ section.id }} {
+    --subnav-bg: {{ section.settings.bar_bg_color }};
+    --subnav-border: {{ section.settings.bar_border_color }};
+    --subnav-title: {{ section.settings.title_color }};
+    --subnav-link: {{ section.settings.link_color }};
+    --subnav-link-hover: {{ section.settings.link_hover_color }};
+    {%- assign sticky_alpha = section.settings.sticky_bg_opacity | divided_by: 100.0 -%}
+    --subnav-sticky-bg: {{ section.settings.sticky_bg_color | color_modify: 'alpha', sticky_alpha }};
   }
+
+  /* הזחות דסקטופ */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .dji-subnav-right { transform: translateX({{ section.settings.title_nudge }}px); }
+    #shopify-section-{{ section.id }} .dji-subnav-left { transform: translateX({{ section.settings.links_nudge }}px); }
+    .dji-subnav-title { font-size: 18px; }
+    .dji-subnav-container { padding: 0 3%; }
+  }
+
+  /* הזחות ועיצוב מובייל (NEW!) */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .dji-subnav-right { transform: translateX({{ section.settings.title_nudge_mobile }}px); }
+    #shopify-section-{{ section.id }} .dji-subnav-left { transform: translateX({{ section.settings.links_nudge_mobile }}px); }
+    .dji-subnav-title { font-size: {{ section.settings.mobile_font_size_title }}px !important; }
+    .dji-subnav-link, .dji-subnav-btn { font-size: {{ section.settings.mobile_font_size_links }}px !important; }
+    .dji-subnav-container { padding: 0 5%; }
+    .dji-subnav-links { gap: 10px !important; }
+    .dji-subnav-btn { padding: 4px 12px !important; }
+  }
+
+  /* --- 3. מבנה הסאב-נאב --- */
+  .dji-subnav-ghost { display: none; height: {{ section.settings.bar_height }}px; width: 100%; }
+  .dji-subnav-bar {
+    width: 100%; height: {{ section.settings.bar_height }}px;
+    background: var(--subnav-bg) !important; border-bottom: 1px solid var(--subnav-border);
+    font-family: 'Heebo', sans-serif; direction: rtl; z-index: 999999 !important; 
+    display: flex; align-items: center; transition: all 0.2s ease;
+  }
+  .dji-subnav-bar.is-fixed {
+    position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important;
+    background: var(--subnav-sticky-bg) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .dji-subnav-container { max-width: 1400px; margin: 0 auto; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; }
+  .dji-subnav-right { display: flex; align-items: center; white-space: nowrap; }
+  .dji-subnav-title { color: var(--subnav-title) !important; font-weight: 700; margin: 0; }
+  .dji-subnav-left { display: flex; align-items: center; gap: 15px; }
+  .dji-subnav-links { display: flex; align-items: center; gap: 15px; list-style: none; margin: 0; padding: 0; }
+  .dji-subnav-link { color: var(--subnav-link) !important; text-decoration: none; font-weight: 500; transition: color 0.2s ease; white-space: nowrap; }
+  .dji-subnav-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 20px; border-radius: 30px; font-weight: 600; text-decoration: none; transition: all 0.25s ease; white-space: nowrap; }
 {%- endstyle -%}
 
-<div class="dji-subnav-{{ section.id }}">
-  <div class="dji-subnav-wrapper">
-    <div class="dji-subnav-name">{{ section.settings.product_name }}</div>
-    <a href="#buy" class="dji-subnav-btn">קנה עכשיו</a>
+<div class="dji-subnav-ghost" id="dji-ghost-{{ section.id }}"></div>
+<div class="dji-subnav-bar" id="dji-subnav-bar-{{ section.id }}">
+  <div class="dji-subnav-container">
+    <div class="dji-subnav-right">
+      <h2 class="dji-subnav-title">{% if section.settings.custom_title != blank %}{{ section.settings.custom_title }}{% else %}{{ product.title }}{% endif %}</h2>
+    </div>
+    <div class="dji-subnav-left">
+      <ul class="dji-subnav-links">
+        {%- for block in section.blocks -%}
+          <li>
+            {%- if block.settings.is_button -%}
+              {% style %}.btn-{{ block.id }} { background: {{ block.settings.btn_bg_color }} !important; color: {{ block.settings.btn_text_color }} !important; border: 1px solid {{ block.settings.btn_border_color }} !important; }{% endstyle %}
+              <a href="{{ block.settings.link_url | default: '#' }}" class="dji-subnav-btn btn-{{ block.id }}">{{ block.settings.link_text }}</a>
+            {%- else -%}
+              <a href="{{ block.settings.link_url | default: '#' }}" class="dji-subnav-link">{{ block.settings.link_text }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
   </div>
 </div>
 
+<script>
+  (function() {
+    function masterHeaderReset() {
+      const headers = document.querySelectorAll('.shopify-section-group-header-group, sticky-header, .header-wrapper, #site-header, header');
+      headers.forEach(h => { h.style.setProperty('position', 'relative', 'important'); h.style.setProperty('top', '0', 'important'); h.style.setProperty('background-color', '#000000', 'important'); });
+      document.querySelectorAll('.header__menu-item, .header__heading-link, .header__icon, .header__heading, list-menu__item').forEach(el => el.style.setProperty('color', '#ffffff', 'important'));
+      document.querySelectorAll('.header__icon svg, .header__heading-logo svg').forEach(svg => { svg.style.setProperty('fill', '#ffffff', 'important'); svg.style.setProperty('stroke', '#ffffff', 'important'); });
+    }
+    masterHeaderReset(); window.addEventListener('load', masterHeaderReset);
+    function initSubNav() {
+      const bar = document.getElementById('dji-subnav-bar-{{ section.id }}'), ghost = document.getElementById('dji-ghost-{{ section.id }}');
+      if (!bar || !ghost) return;
+      const offsetTop = bar.offsetTop;
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset >= offsetTop) { bar.classList.add('is-fixed'); ghost.style.display = 'block'; } 
+        else { bar.classList.remove('is-fixed'); ghost.style.display = 'none'; }
+      }, { passive: true });
+    }
+    window.addEventListener('load', initSubNav);
+  })();
+</script>
 {% schema %}
 {
-  "name": "DroX Product Subnav",
+  "name": "DJI Product Sub-Nav",
   "settings": [
-    { "type": "text", "id": "product_name", "label": "שם המוצר", "default": "Matrice 4" }
+    { "type": "header", "content": "Desktop Alignment (יישור למחשב)" },
+    { "type": "range", "id": "title_nudge", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "הזחת כותרת", "default": 0 },
+    { "type": "range", "id": "links_nudge", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "הזחת קישורים", "default": 0 },
+    
+    { "type": "header", "content": "Mobile Alignment (יישור למובייל)" },
+    { "type": "range", "id": "title_nudge_mobile", "min": -50, "max": 50, "step": 1, "unit": "px", "label": "הזחת כותרת (מובייל)", "default": 0 },
+    { "type": "range", "id": "links_nudge_mobile", "min": -50, "max": 50, "step": 1, "unit": "px", "label": "הזחת קישורים (מובייל)", "default": 0 },
+    { "type": "range", "id": "mobile_font_size_title", "min": 10, "max": 22, "step": 1, "unit": "px", "label": "גודל כותרת במובייל", "default": 14 },
+    { "type": "range", "id": "mobile_font_size_links", "min": 9, "max": 16, "step": 1, "unit": "px", "label": "גודל קישורים במובייל", "default": 11 },
+
+    { "type": "header", "content": "General Settings" },
+    { "type": "text", "id": "custom_title", "label": "כותרת מותאמת אישית" },
+    { "type": "color", "id": "title_color", "label": "צבע כותרת", "default": "#ffffff" },
+    { "type": "range", "id": "bar_height", "min": 40, "max": 100, "step": 2, "unit": "px", "label": "גובה הסרגל", "default": 60 },
+    { "type": "color", "id": "bar_bg_color", "label": "צבע רקע", "default": "#1a1a1a" },
+    { "type": "color", "id": "bar_border_color", "label": "צבע קו הפרדה", "default": "#333333" },
+    { "type": "color", "id": "sticky_bg_color", "label": "צבע רקע נגלל", "default": "#1a1a1a" },
+    { "type": "range", "id": "sticky_bg_opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "אפקט זכוכית (אטימות)", "default": 90 },
+    { "type": "color", "id": "link_color", "label": "צבע קישור", "default": "#b3b3b3" },
+    { "type": "color", "id": "link_hover_color", "label": "צבע Hover", "default": "#ffffff" }
   ],
-  "presets": [{ "name": "DroX Product Subnav" }]
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Link",
+      "settings": [
+        { "type": "text", "id": "link_text", "label": "טקסט", "default": "Overview" },
+        { "type": "url", "id": "link_url", "label": "קישור" },
+        { "type": "checkbox", "id": "is_button", "label": "עצב ככפתור", "default": false },
+        { "type": "color", "id": "btn_bg_color", "label": "רקע כפתור", "default": "#0070d5" },
+        { "type": "color", "id": "btn_text_color", "label": "טקסט כפתור", "default": "#ffffff" },
+        { "type": "color", "id": "btn_border_color", "label": "מסגרת כפתור", "default": "#0070d5" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "DJI Product Sub-Nav" }]
 }
 {% endschema %}

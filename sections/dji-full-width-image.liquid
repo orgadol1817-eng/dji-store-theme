@@ -1,0 +1,189 @@
+{%- comment -%}
+  DJI Full-Width Cinematic Image - v3.0 (The Framing Master)
+  Logic: Zero-margin, edge-to-edge image with advanced framing (zoom & pan)
+  Added: Upper and Lower padding control to extend the frame.
+{%- endcomment -%}
+
+{%- style -%}
+  :root {
+    /* המרת אחוזי הסליידרים למספרים עשרוניים עבור ה-CSS */
+    --img-zoom-level: {{ section.settings.zoom_level | divided_by: 100.0 }};
+    --img-x-pos: {{ section.settings.horizontal_pos }}%;
+    --img-y-pos: {{ section.settings.vertical_pos }}%;
+    
+    /* הגדרות המסגרת החדשות */
+    --img-frame-top: {{ section.settings.upper_padding }}px;
+    --img-frame-bottom: {{ section.settings.lower_padding }}px;
+  }
+
+  .dji-full-image-v3 {
+    width: 100%;
+    background-color: #000000;
+    margin: 0;
+    /* המסגרת השחורה עוטפת את התמונה */
+    padding-top: var(--img-frame-top);
+    padding-bottom: var(--img-frame-bottom);
+    line-height: 0;
+    overflow: hidden; /* קריטי כדי שהזום וההזזה לא יפרצו החוצה */
+    position: relative;
+    transition: padding 0.3s ease; /* אנימציה חלקה לשינוי המסגרת */
+  }
+
+  .dji-image-framing-wrapper {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    /* אנימציה חלקה לשינויים ב-Customizer */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* מנגנון ה-Framing המרכזי */
+    transform: translate(var(--img-x-pos), var(--img-y-pos)) scale(var(--img-zoom-level));
+    transform-origin: center center; /* נקודת העיגון לזום */
+  }
+
+  .dji-image-framing-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; /* מבטיח שהתמונה תמלא את הפריים לפני הזום */
+  }
+
+  /* אופציונלי: הוספת הצללה עדינה לשילוב טוב יותר */
+  {%- if section.settings.show_shadow -%}
+  .dji-full-image-v3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    pointer-events: none;
+    z-index: 5;
+  }
+  {%- endif -%}
+
+  @media (max-width: 768px) {
+    .dji-full-image-v3 {
+      /* במובייל אנחנו מבטלים את המסגרת האגרסיבית של הדסקטופ */
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_top }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="dji-full-image-v3">
+  <div class="dji-image-framing-wrapper">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 3840 | image_tag: 
+        loading: 'lazy', 
+        widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+        alt: section.settings.image.alt | default: "DJI Matrice 4 Cinematic Shot"
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DJI Full-Width Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "בחר תמונה רחבה"
+    },
+    {
+      "type": "header",
+      "content": "גובה המסגרת השחורה (Frame Paddings)"
+    },
+    {
+      "type": "range",
+      "id": "upper_padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "רווח עליון (מעל התמונה)",
+      "default": 100,
+      "info": "הגדר על 0 למחיקה מוחלטת של הרווח"
+    },
+    {
+      "type": "range",
+      "id": "lower_padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "רווח תחתוו (מתחת לתמונה)",
+      "default": 100,
+      "info": "הגדר על 0 למחיקה מוחלטת של הרווח"
+    },
+    {
+      "type": "header",
+      "content": "מנגנון מיסגור פנימי (Zoom & Pan)"
+    },
+    {
+      "type": "range",
+      "id": "zoom_level",
+      "min": 100,
+      "max": 300,
+      "step": 2,
+      "unit": "%",
+      "label": "רמת זום (הגדלה)",
+      "default": 100,
+      "info": "מעל 100% מאפשר להזיז את התמונה"
+    },
+    {
+      "type": "range",
+      "id": "horizontal_pos",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "מיקום אופקי (X Axis)",
+      "default": 0,
+      "info": "מזיז את התמונה ימינה/שמאלה בתוך הפריים"
+    },
+    {
+      "type": "range",
+      "id": "vertical_pos",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "מיקום אנכי (Y Axis)",
+      "default": 0,
+      "info": "מזיז את התמונה למעלה/למטה בתוך הפריים"
+    },
+    {
+      "type": "header",
+      "content": "שילוב ורספונסיביות"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shadow",
+      "label": "הוסף הצללה בתחתית התמונה",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "רווח עליון/תחתוו במובייל",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Full-Width Image"
+    }
+  ]
+}
+{% endschema %}

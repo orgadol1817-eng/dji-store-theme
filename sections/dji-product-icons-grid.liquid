@@ -1,0 +1,146 @@
+{%- comment -%}
+  DJI Enterprise Performance Specs Grid
+  Author: AI Senior Architect
+  Features: CSS Grid, SVG Icons, Responsive RTL, Heebo Typography
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-specs-{{ section.id }} {
+    background-color: var(--dji-bg, #000000);
+    padding: clamp(60px, 8vw, 120px) 0;
+    color: var(--dji-text, #ffffff);
+    direction: rtl;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  .dji-specs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .dji-specs-grid {
+    display: grid;
+    /* גריד חכם שמסתדר אוטומטית לפי רוחב המסך */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 60px;
+  }
+
+  .dji-spec-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .dji-spec-icon {
+    width: 32px;
+    height: 32px;
+    color: var(--dji-blue, #0070d5); /* צבע המותג לאייקונים */
+    opacity: 0.9;
+  }
+
+  /* תמיכה באייקונים מסוג SVG ישירות לתוך ה-HTML לטעינה מהירה במיוחד */
+  .dji-spec-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .dji-spec-value {
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 800; /* Heebo ExtraBold */
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.5px;
+    color: var(--dji-text, #ffffff);
+  }
+
+  .dji-spec-label {
+    font-size: 14px;
+    font-weight: 300; /* Heebo Light */
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .dji-specs-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px 20px;
+      padding-top: 40px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="dji-specs-{{ section.id }}" id="specs-grid">
+  <div class="dji-specs-container">
+    <div class="dji-specs-grid">
+      {%- for block in section.blocks -%}
+        <div class="dji-spec-item" {{ block.shopify_attributes }}>
+          <div class="dji-spec-icon">
+            {%- if block.settings.custom_svg != blank -%}
+              {{ block.settings.custom_svg }}
+            {%- else -%}
+              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            {%- endif -%}
+          </div>
+          <h3 class="dji-spec-value">{{ block.settings.value }}</h3>
+          <p class="dji-spec-label">{{ block.settings.label }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DJI Specs Grid",
+  "settings": [],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "נתון טכני (Spec)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "ערך (לדוגמה: 55 דק')",
+          "default": "55 Min"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "תווית (לדוגמה: זמן טיסה)",
+          "default": "Max Flight Time"
+        },
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "קוד SVG לאייקון (אופציונלי)",
+          "info": "הדבק קוד SVG (תגיות <svg>) כדי להבטיח איכות מקסימלית בלי לפגוע במהירות."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Specs Grid",
+      "blocks": [
+        { "type": "spec", "settings": { "value": "55 Min", "label": "זמן טיסה מקסימלי" } },
+        { "type": "spec", "settings": { "value": "15 km", "label": "טווח שידור מקסימלי" } },
+        { "type": "spec", "settings": { "value": "IP55", "label": "עמידות למים ואבק" } },
+        { "type": "spec", "settings": { "value": "-20°C", "label": "טמפרטורת עבודה מינימלית" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

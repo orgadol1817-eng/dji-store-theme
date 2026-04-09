@@ -1,0 +1,171 @@
+{%- comment -%}
+  DJI Full Media Scene - v3.0 (Text Above Media)
+  Inspired by DJI Matrice 4 Enterprise - Perfect Alignment.
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-scene-wrapper-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+
+  .dji-scene-container {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 4%;
+  }
+
+  /* 1. Header Layout (Split Mode) */
+  .dji-scene-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+    margin-bottom: {{ section.settings.margin_below_text }}px;
+  }
+
+  .dji-scene-headline-box {
+    flex: 1;
+  }
+
+  .dji-scene-headline {
+    font-size: {{ section.settings.headline_size }}px;
+    color: {{ section.settings.headline_color }};
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -1px;
+  }
+
+  .dji-scene-desc-box {
+    flex: 1.2;
+  }
+
+  .dji-scene-description {
+    font-size: {{ section.settings.desc_size }}px;
+    color: {{ section.settings.desc_color }};
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* 2. Media Layout */
+  .dji-scene-media-container {
+    width: 100%;
+    position: relative;
+    border-radius: {{ section.settings.media_radius }}px;
+    overflow: hidden;
+    background: #050505;
+    line-height: 0;
+  }
+
+  .dji-scene-media-container img,
+  .dji-scene-media-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  @media (max-width: 990px) {
+    .dji-scene-header {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .dji-scene-headline {
+      font-size: clamp(26px, 8vw, {{ section.settings.headline_size }}px);
+    }
+    .dji-scene-description {
+      font-size: 16px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="dji-scene-wrapper-{{ section.id }}">
+  <div class="dji-scene-container">
+    
+    {%- comment -%} Header Section: Headline & Description {%- endcomment -%}
+    <div class="dji-scene-header">
+      <div class="dji-scene-headline-box">
+        {%- if section.settings.headline != blank -%}
+          <div class="dji-scene-headline richtext">
+            {{ section.settings.headline }}
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <div class="dji-scene-desc-box">
+        {%- if section.settings.description != blank -%}
+          <div class="dji-scene-description richtext">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Media Section: Image or Video {%- endcomment -%}
+    <div class="dji-scene-media-container">
+      {%- if section.settings.media_type == 'video' and section.settings.video_url != blank -%}
+        <video muted loop playsinline autoplay preload="auto">
+          <source src="{{ section.settings.video_url }}" type="video/mp4">
+        </video>
+      {%- elsif section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DJI Full Media Scene",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "צבע רקע סקשן", "default": "#000000" },
+    { "type": "range", "id": "container_width", "min": 800, "max": 1800, "step": 20, "unit": "px", "label": "רווח מיכל", "default": 1300 },
+    { "type": "header", "content": "📝 עריכת טקסט (מעל המדיה)" },
+    {
+      "type": "richtext",
+      "id": "headline",
+      "label": "כותרת ראשית (צד ימין)",
+      "default": "<p>Rapid 0.5-Second Interval Shooting</p>"
+    },
+    { "type": "range", "id": "headline_size", "min": 20, "max": 100, "step": 1, "unit": "px", "label": "גודל כותרת", "default": 42 },
+    { "type": "color", "id": "headline_color", "label": "צבע כותרת", "default": "#ffffff" },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "טקסט תיאור (צד שמאל)",
+      "default": "<p>הסבר טכני מפורט על התכונה. המבנה מפוצל כך שהטקסט תמיד שומר על גובה אחיד ויישור מקצועי.</p>"
+    },
+    { "type": "range", "id": "desc_size", "min": 12, "max": 30, "step": 1, "unit": "px", "label": "גודל תיאור", "default": 17 },
+    { "type": "color", "id": "desc_color", "label": "צבע תיאור", "default": "#a6a6a6" },
+    { "type": "range", "id": "margin_below_text", "min": 10, "max": 100, "step": 2, "unit": "px", "label": "רווח בין טקסט למדיה", "default": 40 },
+    { "type": "header", "content": "🖼️ עריכת מדיה (תמונה / וידאו)" },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "סוג מדיה",
+      "options": [
+        { "value": "image", "label": "תמונה" },
+        { "value": "video", "label": "וידאו (MP4 URL)" }
+      ],
+      "default": "image"
+    },
+    { "type": "image_picker", "id": "image", "label": "בחר תמונה" },
+    { "type": "text", "id": "video_url", "label": "קישור לוידאו (MP4 URL)", "info": "העלה לקבצים והעתק את הלינק" },
+    { "type": "range", "id": "media_radius", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "עיגול פינות מדיה", "default": 12 },
+    { "type": "header", "content": "📏 מרווחים חיצוניים" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 200, "step": 5, "unit": "px", "label": "רווח עליון", "default": 100 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 200, "step": 5, "unit": "px", "label": "רווח תחתון", "default": 100 }
+  ],
+  "presets": [
+    {
+      "name": "DJI Full Media Scene"
+    }
+  ]
+}
+{% endschema %}

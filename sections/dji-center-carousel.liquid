@@ -1,5 +1,7 @@
 {%- comment -%}
-  DJI Center Mode Carousel - INFINITE LOOP + FULL SPACING CONTROL + NEGATIVE GAP
+  DJI Center Mode Carousel - FIXED: NO JUMP VERSION
+  - Maintains Infinite Loop, Negative Gaps, and Ken Burns.
+  - Fixed auto-scroll bug by using manual scroll calculation.
 {%- endcomment -%}
 
 {%- style -%}
@@ -263,7 +265,6 @@
 {%- endstyle -%}
 
 <div class="dji-center-carousel" id="dji-carousel-{{ section.id }}" data-speed="7000" dir="rtl">
-  
   <div class="dji-carousel-track">
     {% assign loop_times = 1 %}
     {% if section.blocks.size > 1 %}
@@ -281,10 +282,8 @@
         {%- assign btn_bg_rgba = block.settings.btn_bg_color | color_modify: 'alpha', btn_opacity -%}
 
         <div class="dji-slide {% unless is_real %}is-clone{% endunless %}" {% if is_real %}data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}{% endif %}>
-          
           <div class="dji-slide-media-wrapper">
             <div class="dji-slide-scrim"></div>
-            
             {%- capture media_styles -%}
               object-position: {{ block.settings.media_pos_x }}% {{ block.settings.media_pos_y }}%; 
               transform: scale({{ block.settings.media_zoom | divided_by: 100.0 }});
@@ -305,7 +304,6 @@
                   {{ 'lifestyle-1' | placeholder_svg_tag: 'dji-media-obj placeholder-svg' }}
                 {%- endif -%}
               </div>
-
               <div class="dji-media-mobile">
                 {%- if block.settings.video_mobile != blank -%}
                   {{ block.settings.video_mobile | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'dji-media-obj', style: media_styles }}
@@ -324,40 +322,28 @@
             {% if block.settings.title != blank %}
               <h2 class="dji-slide-title" style="color: {{ block.settings.text_color }};">{{ block.settings.title }}</h2>
             {% endif %}
-            
             {% if block.settings.subtitle != blank %}
               <p class="dji-slide-subtitle" style="color: {{ block.settings.text_color }};">{{ block.settings.subtitle }}</p>
             {% endif %}
-
             <div class="dji-slide-actions">
               {% if block.settings.text_learn != blank and block.settings.link_learn != blank %}
                 <a href="{{ block.settings.link_learn }}" class="dji-link-btn" style="color: {{ block.settings.text_color }}; background-color: {{ btn_bg_rgba }}; border: 1px solid {{ block.settings.btn_border_color }};" tabindex="-1">
                   {{ block.settings.text_learn }}
                   {% if block.settings.show_arrow_learn %}
-                    <span class="dji-arrow-double">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/>
-                      </svg>
-                    </span>
+                    <span class="dji-arrow-double"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/></svg></span>
                   {% endif %}
                 </a>
               {% endif %}
-              
               {% if block.settings.text_buy != blank and block.settings.link_buy != blank %}
                 <a href="{{ block.settings.link_buy }}" class="dji-link-btn" style="color: {{ block.settings.text_color }}; background-color: {{ btn_bg_rgba }}; border: 1px solid {{ block.settings.btn_border_color }};" tabindex="-1">
                   {{ block.settings.text_buy }}
                   {% if block.settings.show_arrow_buy %}
-                    <span class="dji-arrow-double">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/>
-                      </svg>
-                    </span>
+                    <span class="dji-arrow-double"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 13L6 8L11 3"/><path d="M6 13L1 8L6 3"/></svg></span>
                   {% endif %}
                 </a>
               {% endif %}
             </div>
           </div>
-
         </div>
       {% endfor %}
     {% endfor %}
@@ -371,7 +357,6 @@
       <button class="dji-nav-arrow dji-nav-left" aria-label="הבא">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-
       <div class="dji-progress-bars">
         {% for block in section.blocks %}
           <button class="dji-bar-wrap" data-index="{{ forloop.index0 }}">
@@ -382,7 +367,6 @@
       </div>
     </div>
   {% endif %}
-
 </div>
 
 <script>
@@ -393,29 +377,48 @@
     const track = section.querySelector('.dji-carousel-track');
     const slides = Array.from(section.querySelectorAll('.dji-slide'));
     const fills = section.querySelectorAll('.dji-bar-fill');
-    const barWraps = section.querySelectorAll('.dji-bar-wrap');
     const nextBtn = section.querySelector('.dji-nav-left');
     const prevBtn = section.querySelector('.dji-nav-right');
+    const barWraps = section.querySelectorAll('.dji-bar-wrap');
     
     const realCount = {{ section.blocks.size }};
-    if (realCount <= 1) return;
+    if (realCount <= 0) return;
 
     let currentIndex = realCount; 
     let autoplayTimer;
     const speed = parseInt(section.getAttribute('data-speed')) || 7000;
 
-    track.style.scrollBehavior = 'auto';
-    if(slides[currentIndex]) {
-        slides[currentIndex].scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+    // פונקציית מרכוז שקטה - מונעת קפיצה של כל דף האינטרנט
+    function silentCenter(index, behavior = 'auto') {
+      const targetSlide = slides[index];
+      if (!targetSlide) return;
+      
+      const trackWidth = track.offsetWidth;
+      const slideWidth = targetSlide.offsetWidth;
+      const slideOffset = targetSlide.offsetLeft;
+      
+      // חישוב המיקום המדויק למרכז בתוך ה-Container
+      const scrollPos = slideOffset - (trackWidth / 2) + (slideWidth / 2);
+      
+      track.scrollTo({
+        left: scrollPos,
+        behavior: behavior
+      });
     }
-    setTimeout(() => { track.style.scrollBehavior = 'smooth'; }, 100);
+
+    // אתחול ללא קפיצת עמוד
+    track.style.scrollBehavior = 'auto';
+    silentCenter(currentIndex, 'auto');
+    
+    setTimeout(() => { 
+      track.style.scrollBehavior = 'smooth'; 
+    }, 100);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
           const index = slides.indexOf(entry.target);
           currentIndex = index;
-          
           const realIndex = index % realCount;
           updateUI(realIndex);
 
@@ -432,7 +435,7 @@
 
     function updateUI(realIndex) {
       slides.forEach(s => s.classList.remove('is-active'));
-      slides[currentIndex].classList.add('is-active');
+      if(slides[currentIndex]) slides[currentIndex].classList.add('is-active');
 
       fills.forEach(fill => {
         fill.style.transition = 'none';
@@ -453,16 +456,12 @@
     }
 
     function goToSlide(index) {
-      if(slides[index]) {
-        slides[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
+      silentCenter(index, 'smooth');
     }
 
     function jumpToSlide(index) {
       track.style.scrollBehavior = 'auto'; 
-      if(slides[index]) {
-        slides[index].scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-      }
+      silentCenter(index, 'auto');
       setTimeout(() => { track.style.scrollBehavior = 'smooth'; }, 50);
     }
 
@@ -493,7 +492,7 @@
       "max": 100,
       "step": 2,
       "unit": "px",
-      "label": "מרחק חיצוני עליון (מאפשר למשוך למעלה!)",
+      "label": "מרחק חיצוני עליון",
       "default": 0
     },
     {
@@ -533,7 +532,7 @@
       "max": 100,
       "step": 2,
       "unit": "px",
-      "label": "רווח בין תמונות הסליידר (ניתן לגרור למינוס!)",
+      "label": "רווח בין תמונות הסליידר",
       "default": -20
     },
     {
@@ -553,7 +552,7 @@
       "max": 100,
       "step": 5,
       "unit": "%",
-      "label": "אטימות רקע (100% = מלא, 0 = שקוף)",
+      "label": "אטימות רקע",
       "default": 30
     },
     {
@@ -584,21 +583,21 @@
         },
         {
           "type": "header",
-          "content": "מדיה - מובייל (לא חובה)"
+          "content": "מדיה - מובייל"
         },
         {
           "type": "video",
           "id": "video_mobile",
-          "label": "וידאו מובייל (Portrait)"
+          "label": "וידאו מובייל"
         },
         {
           "type": "image_picker",
           "id": "image_mobile",
-          "label": "תמונת מובייל (Portrait)"
+          "label": "תמונת מובייל"
         },
         {
           "type": "header",
-          "content": "שליטה במדיה (זום ומיקום)"
+          "content": "שליטה במדיה"
         },
         {
           "type": "range",
@@ -607,7 +606,7 @@
           "max": 200,
           "step": 1,
           "unit": "%",
-          "label": "זום (Zoom)",
+          "label": "זום",
           "default": 100
         },
         {
@@ -617,7 +616,7 @@
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "מיקום אופקי (X - 50 זה אמצע)",
+          "label": "מיקום אופקי",
           "default": 50
         },
         {
@@ -627,7 +626,7 @@
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "מיקום אנכי (Y - 50 זה אמצע)",
+          "label": "מיקום אנכי",
           "default": 50
         },
         {
@@ -653,12 +652,12 @@
         },
         {
           "type": "header",
-          "content": "עיצוב כפתורים (Buttons UI)"
+          "content": "עיצוב כפתורים"
         },
         {
           "type": "color",
           "id": "btn_bg_color",
-          "label": "צבע רקע לכפתורים",
+          "label": "צבע רקע כפתור",
           "default": "#ffffff"
         },
         {
@@ -668,7 +667,7 @@
           "max": 100,
           "step": 5,
           "unit": "%",
-          "label": "אטימות רקע כפתור (100 = מלא, 0 = שקוף)",
+          "label": "אטימות רקע כפתור",
           "default": 0
         },
         {
@@ -678,19 +677,15 @@
           "default": "#ffffff"
         },
         {
-          "type": "header",
-          "content": "כפתור 1"
-        },
-        {
           "type": "text",
           "id": "text_learn",
-          "label": "טקסט",
+          "label": "טקסט כפתור 1",
           "default": "Learn More"
         },
         {
           "type": "url",
           "id": "link_learn",
-          "label": "קישור"
+          "label": "קישור כפתור 1"
         },
         {
           "type": "checkbox",
@@ -699,19 +694,15 @@
           "default": true
         },
         {
-          "type": "header",
-          "content": "כפתור 2"
-        },
-        {
           "type": "text",
           "id": "text_buy",
-          "label": "טקסט",
+          "label": "טקסט כפתור 2",
           "default": "Buy Now"
         },
         {
           "type": "url",
           "id": "link_buy",
-          "label": "קישור"
+          "label": "קישור כפתור 2"
         },
         {
           "type": "checkbox",

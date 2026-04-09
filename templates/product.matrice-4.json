@@ -1,0 +1,465 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "specs_grid": {
+      "type": "dji-product-icons-grid",
+      "disabled": true,
+      "settings": {}
+    },
+    "subnav": {
+      "type": "dji-product-subnav",
+      "blocks": {
+        "nav_link_h3RyYB": {
+          "type": "nav_link",
+          "settings": {
+            "link_text": "נתונים טכניים",
+            "link_url": "",
+            "is_button": false,
+            "btn_bg_color": "#0070d5",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#0070d5"
+          }
+        },
+        "nav_link_HTfynj": {
+          "type": "nav_link",
+          "settings": {
+            "link_text": "וידאו",
+            "link_url": "",
+            "is_button": false,
+            "btn_bg_color": "#0070d5",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#0070d5"
+          }
+        },
+        "nav_link_yx3cmJ": {
+          "type": "nav_link",
+          "settings": {
+            "link_text": "צור קשר",
+            "link_url": "",
+            "is_button": false,
+            "btn_bg_color": "#0070d5",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#0070d5"
+          }
+        },
+        "nav_link_ydfj4B": {
+          "type": "nav_link",
+          "settings": {
+            "link_text": "קנה עכשיו",
+            "link_url": "",
+            "is_button": true,
+            "btn_bg_color": "#0070d5",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#0070d5"
+          }
+        }
+      },
+      "block_order": [
+        "nav_link_h3RyYB",
+        "nav_link_HTfynj",
+        "nav_link_yx3cmJ",
+        "nav_link_ydfj4B"
+      ],
+      "settings": {
+        "title_nudge": 0,
+        "links_nudge": 0,
+        "title_nudge_mobile": 0,
+        "links_nudge_mobile": 0,
+        "mobile_font_size_title": 14,
+        "mobile_font_size_links": 11,
+        "custom_title": "DJI Matrice 4 Series",
+        "title_color": "#ffffff",
+        "bar_height": 60,
+        "bar_bg_color": "#1a1a1a",
+        "bar_border_color": "#333333",
+        "sticky_bg_color": "#1a1a1a",
+        "sticky_bg_opacity": 75,
+        "link_color": "#b3b3b3",
+        "link_hover_color": "#ffffff"
+      }
+    },
+    "hero": {
+      "type": "dji-product-hero-video",
+      "settings": {
+        "video_type": "mp4",
+        "bg_video_url": "https://cdn.shopify.com/videos/c/o/v/399030dffb0f4aeb97166a3b9643a82d.mp4",
+        "enable_loop": true,
+        "watch_url": "https://cdn.shopify.com/videos/c/o/v/399030dffb0f4aeb97166a3b9643a82d.mp4",
+        "watch_label": "Watch Video",
+        "pre_headline": "Flagship Intelligent Multi-Sensor Compact Drone",
+        "headline": "DJI MATRICE 4 SERIES",
+        "sub_headline": "The Age of Intelligent Flight",
+        "title_size": 85,
+        "color_pre_title": "#ffffff",
+        "color_title": "#ffffff",
+        "color_sub": "#ffffff",
+        "color_btn_text": "#ffffff",
+        "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4) 100%)",
+        "horizontal_pos": 50,
+        "vertical_pos": 50,
+        "text_alignment": "center",
+        "section_height_desktop": 100,
+        "section_height_mobile": 90
+      }
+    },
+    "intro": {
+      "type": "dji-product-intro-text",
+      "settings": {
+        "intro_text": "<p><strong>Introducing the DJI Matrice 4 Series, a new compact and intelligent multi-sensor flagship drone series for enterprise industries. The series includes Matrice 4T and Matrice 4E, each equipped with advanced features such as smart detection and measurement with laser range finder. Flight operations are now safer and more reliable with significantly enhanced sensing capabilities. The accessories for the Matrice 4 series have also been significantly upgraded. The Matrice 4T is suitable for a wide range of industries, including electricity, emergency response, public safety, and forestry conservation. The Matrice 4E is designed for geospatial applications such as surveying and mapping, construction, and mining. A new era in intelligent aerial operations begins now.</strong></p>",
+        "blue_text": ",Two Models",
+        "white_text": "Countless Applications",
+        "horizontal_pos": 50,
+        "vertical_pos": 50,
+        "text_alignment": "center",
+        "section_height": 330
+      }
+    },
+    "buy_area": {
+      "type": "main-product",
+      "disabled": true,
+      "settings": {}
+    },
+    "dji_full_width_image_bFC9A9": {
+      "type": "dji-full-width-image",
+      "name": "DJI Full-Width Image",
+      "settings": {
+        "upper_padding": 65,
+        "lower_padding": 100,
+        "zoom_level": 150,
+        "horizontal_pos": 0,
+        "vertical_pos": -6,
+        "show_shadow": false,
+        "mobile_padding_top": 0
+      }
+    },
+    "dji_specs_comparison_znN7ww": {
+      "type": "dji-specs-comparison",
+      "name": "DJI Specs Comparison",
+      "settings": {
+        "section_height_desktop": 100,
+        "horizontal_pos": 50,
+        "vertical_pos": 50,
+        "content_max_width": 1300,
+        "card_padding": 70,
+        "model_font_size": 40,
+        "cat_font_size": 17,
+        "details_font_size": 15,
+        "bg_main": "#000000",
+        "bg_card": "#161616",
+        "color_model_name": "#ffffff",
+        "color_cat": "#ffffff",
+        "color_details": "#ffffffa6",
+        "glow_1": "#ff9a00",
+        "glow_2": "#00d4ff",
+        "model_1_name": "DJI MATRICE 4T",
+        "model_2_name": "DJI MATRICE 4E"
+      }
+    },
+    "dji_feature_grid_BNghPJ": {
+      "type": "dji-feature-grid",
+      "blocks": {
+        "feature_card_QJMkNk": {
+          "type": "feature_card",
+          "settings": {
+            "title": "פונקציות תפעול חכמות",
+            "text_color": "#ffffff",
+            "video_url": "",
+            "card_size": "card-wide",
+            "x_pos": 50,
+            "y_pos": 10,
+            "text_align": "center"
+          }
+        },
+        "feature_card_TkeyRz": {
+          "type": "feature_card",
+          "settings": {
+            "title": "הצטיינות בסביבות תאורה חלשה",
+            "text_color": "#ffffff",
+            "video_url": "",
+            "card_size": "card-standard",
+            "x_pos": 50,
+            "y_pos": 10,
+            "text_align": "center"
+          }
+        },
+        "feature_card_hArCa8": {
+          "type": "feature_card",
+          "settings": {
+            "title": "ראייה חדה ותמונות יציבות",
+            "text_color": "#ffffff",
+            "video_url": "",
+            "card_size": "card-standard",
+            "x_pos": 50,
+            "y_pos": 10,
+            "text_align": "center"
+          }
+        },
+        "feature_card_YyTiUy": {
+          "type": "feature_card",
+          "settings": {
+            "title": "מיפוי מדויק ביעילות גבוהה",
+            "text_color": "#ffffff",
+            "video_url": "",
+            "card_size": "card-wide",
+            "x_pos": 50,
+            "y_pos": 10,
+            "text_align": "center"
+          }
+        }
+      },
+      "block_order": [
+        "feature_card_QJMkNk",
+        "feature_card_TkeyRz",
+        "feature_card_hArCa8",
+        "feature_card_YyTiUy"
+      ],
+      "name": "DJI Feature Bento Grid",
+      "settings": {
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "vertical_offset": 0
+      }
+    },
+    "dji_video_hero_showcase_dMEMXR": {
+      "type": "dji-video-hero-showcase",
+      "name": "DJI Video Hero Showcase",
+      "settings": {
+        "bg_color": "#201e1e",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "space_between": 40,
+        "top_label": "תפעול חכם",
+        "headline": "יעילות תפעולית גבוהה",
+        "description": "פונקציות הטיסה והצילום החדשות משפרות באופן דרמטי את היעילות והפרודוקטיביות התפעולית.",
+        "headline_size": 80,
+        "color_text": "#67bfbe",
+        "color_description": "#dddddd",
+        "text_alignment": "center",
+        "text_offset_x": 0,
+        "text_offset_y": 0,
+        "media_type": "image",
+        "video_url": "",
+        "media_width": 90,
+        "media_height": 70,
+        "media_radius": 12,
+        "media_zoom": 100,
+        "media_focus_x": 50,
+        "media_focus_y": 50,
+        "media_overlay": "rgba(0,0,0,0)",
+        "media_offset_x": 0,
+        "media_offset_y": 0
+      }
+    },
+    "dji_alternating_features_pca9ie": {
+      "type": "dji-alternating-features",
+      "blocks": {
+        "feature_row_X7G6YK": {
+          "type": "feature_row",
+          "settings": {
+            "layout_direction": "row",
+            "headline": "כותרת תכונה\nחדשה ומדויקת",
+            "description": "<p>פירוט טכני על התכונה של הרחפן. כאן המקום להסביר על היתרונות המקצועיים.</p>",
+            "headline_size": 40,
+            "headline_color": "#8ba0d0",
+            "desc_color": "#ffffff",
+            "content_gap": 20,
+            "text_align": "right",
+            "offset_x": 0,
+            "offset_y": 0,
+            "media_type": "image",
+            "video_url": "",
+            "radius": 0
+          }
+        },
+        "feature_row_D6CYth": {
+          "type": "feature_row",
+          "settings": {
+            "layout_direction": "row-reverse",
+            "headline": "כותרת תכונה\nחדשה ומדויקת",
+            "description": "<p>פירוט טכני על התכונה של הרחפן. כאן המקום להסביר על היתרונות המקצועיים.</p>",
+            "headline_size": 40,
+            "headline_color": "#8ba0d0",
+            "desc_color": "#ffffff",
+            "content_gap": 20,
+            "text_align": "right",
+            "offset_x": 0,
+            "offset_y": 0,
+            "media_type": "image",
+            "video_url": "",
+            "radius": 0
+          }
+        }
+      },
+      "block_order": [
+        "feature_row_X7G6YK",
+        "feature_row_D6CYth"
+      ],
+      "name": "DJI Alternating Features",
+      "settings": {
+        "bg_color": "#201e1e",
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "row_gap": 100
+      }
+    },
+    "dji_interactive_video_tabs_rPx38r": {
+      "type": "dji-interactive-video-tabs",
+      "blocks": {
+        "tab_item_c7fUDn": {
+          "type": "tab_item",
+          "settings": {
+            "tab_title": "Cruise",
+            "video_url": "",
+            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+          }
+        },
+        "tab_item_hzNjLw": {
+          "type": "tab_item",
+          "settings": {
+            "tab_title": "FlyTo",
+            "video_url": "",
+            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+          }
+        },
+        "tab_item_wWKqTk": {
+          "type": "tab_item",
+          "settings": {
+            "tab_title": "Smart Track",
+            "video_url": "",
+            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+          }
+        },
+        "tab_item_RYLyKz": {
+          "type": "tab_item",
+          "settings": {
+            "tab_title": "POI",
+            "video_url": "",
+            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "tab_item_c7fUDn",
+        "tab_item_hzNjLw",
+        "tab_item_wWKqTk",
+        "tab_item_RYLyKz"
+      ],
+      "name": "DJI Interactive Tabs Showcase",
+      "settings": {
+        "bg_color": "#201e1e",
+        "padding_top": 60,
+        "padding_bottom": 100,
+        "headline": "Efficient Flight, Intelligent Operations",
+        "headline_size": 47,
+        "color_headline": "#ffffff",
+        "video_width": 75,
+        "media_radius": 12,
+        "color_text": "#dddddd"
+      }
+    },
+    "dji_vertical_navigator_Vz4Rfg": {
+      "type": "dji-vertical-navigator",
+      "blocks": {
+        "feature_pbdPbz": {
+          "type": "feature",
+          "settings": {
+            "title": "לוק 5: חישה רב-כיוונית מבוססת עדשת עין-דג לתנאי תאורה חלשה (Low-Light Fisheye Omnidirectional Sensing)תיאור:",
+            "description": "סדרת ה-Matrice 4 מצוידת בשישה חיישני ראיית \"עין-דג\" (Fisheye) ברזולוציה גבוהה המותאמים לתאורה חלשה. אלו משפרים משמעותית את יכולות המיקוד הוויזואלי ומניעת המכשולים בתנאי חשיכה. מערך זה מאפשר הימנעות אוטומטית ממכשולים, ניתוב מחדש חכם (Rerouting) וחזרה בטוחה לבסיס בסביבות עירוניות חשוכות.",
+            "media_type": "image",
+            "video_url": ""
+          }
+        },
+        "feature_7YQejz": {
+          "type": "feature",
+          "settings": {
+            "title": "בלוק 4: הדמיה תרמית (Thermal Imaging",
+            "description": "ה-Matrice 4T תומך במצב אינפרא-אדום ברזולוציה גבוהה (High-Res), עם רזולוציה של עד 1280 × 1024. בנוסף, הוא מציע רזולוציה אולטרה-גבוהה החושפת פרטי טמפרטורה מזעריים לטובת משימות מורכבות. כל מכשיר עובר כיול דיוק טמפרטורה קפדני ומשתמש בחיישן טמפרטורה מובנה כדי לספק מדידות מדויקות בזמן אמת.",
+            "media_type": "image",
+            "video_url": ""
+          }
+        },
+        "feature_VgKViz": {
+          "type": "feature",
+          "settings": {
+            "title": "בלוק 3 תאורת עזר אינפרא-אדום קרוב (NIR Auxiliary Light)",
+            "description": "דגם ה-Matrice 4T כולל חומרת תאורת NIR חדשה, המאפשרת טווחי הארה של עד 100 מטרים. יכולת זו מבטיחה נראות ברורה של אובייקטים בסביבות חשוכות לחלוטין, מה שהופך את הרחפן לאידיאלי ליישומים כגון הגנה על חיות בר ומשימות אבטחה.",
+            "media_type": "image",
+            "video_url": ""
+          }
+        },
+        "feature_UQWgBP": {
+          "type": "feature",
+          "settings": {
+            "title": "בלוק 2 צילום חכם בתנאי תאורה חלשה (Smart Low-Light Photo)",
+            "description": "המצלמות בסדרת ה-Matrice 4 מצוידות בצמצמים גדולים יותר וביכולות תאורה חלשה חכמות, המעלות משמעותית את רמת הביצועים ומשפרות את היכולת המבצעית בשעות הדמדומים והלילה.",
+            "media_type": "image",
+            "video_url": ""
+          }
+        },
+        "feature_LXG4cV": {
+          "type": "feature",
+          "settings": {
+            "title": "בלוק 1 מצב סצנת לילה (Night Scene Mode)",
+            "description": "מצב סצנת לילה (Night Scene Mode) \nתיאור:\nסדרת ה-Matrice 4 זכתה לשדרוג משמעותי במצב הלילה. מערכת ראיית הלילה בצבע מלא (Full-color) תומכת כעת בשלושה מצבים וכוללת שתי רמות של הפחתת רעשים משופרת. כשהוא מצויד במסנן IR-Cut ותאורת עזר NIR, הרחפן מתגבר ללא מאמץ על אתגרי החשיכה ומבטיח שמושאי חיפוש והצלה יהיו נראים בבירור.",
+            "media_type": "image",
+            "video_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_pbdPbz",
+        "feature_7YQejz",
+        "feature_VgKViz",
+        "feature_UQWgBP",
+        "feature_LXG4cV"
+      ],
+      "name": "DJI Vertical Navigator",
+      "settings": {
+        "bg_color": "#000000",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "color_main_headline": "#ffffff",
+        "headline_size": 56,
+        "color_title_active": "#ffffff",
+        "color_title_inactive": "#ffffff4d",
+        "item_title_size": 22,
+        "color_desc": "#ffffffb3",
+        "item_desc_size": 16,
+        "color_accent": "#ffffff",
+        "item_padding": 25,
+        "container_width": 1300,
+        "media_height": 60,
+        "scale": 100,
+        "offset_x": 0,
+        "offset_y": 0,
+        "gap_size": 80,
+        "media_radius": 12,
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "loop": true
+      }
+    }
+  },
+  "order": [
+    "specs_grid",
+    "subnav",
+    "hero",
+    "intro",
+    "buy_area",
+    "dji_full_width_image_bFC9A9",
+    "dji_specs_comparison_znN7ww",
+    "dji_feature_grid_BNghPJ",
+    "dji_video_hero_showcase_dMEMXR",
+    "dji_alternating_features_pca9ie",
+    "dji_interactive_video_tabs_rPx38r",
+    "dji_vertical_navigator_Vz4Rfg"
+  ]
+}

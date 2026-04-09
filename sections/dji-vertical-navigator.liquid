@@ -1,0 +1,266 @@
+{%- comment -%}
+  DJI Vertical Navigator - v7.0 (The Professional Merge)
+  Merged Stability of v3.2 + Flex Accordion Alignment + Full Design Control.
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-nav-wrapper-{{ section.id }} { 
+    background-color: {{ section.settings.bg_color }}; 
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0; 
+    font-family: 'Heebo', sans-serif; 
+    direction: rtl; 
+    overflow: hidden; 
+  }
+
+  .dji-nav-transform-layer-{{ section.id }} { 
+    transform: scale({{ section.settings.scale | divided_by: 100.0 }}) translate({{ section.settings.offset_x }}px, {{ section.settings.offset_y }}px);
+    transform-origin: top center; 
+    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .dji-nav-container { 
+    max-width: {{ section.settings.container_width }}px; 
+    margin: 0 auto; 
+    padding: 0 4%; 
+    display: flex; 
+    flex-direction: column; 
+  }
+
+  .dji-nav-main-headline { 
+    font-size: {{ section.settings.headline_size }}px; 
+    font-weight: 700; 
+    color: {{ section.settings.color_main_headline }}; 
+    margin-bottom: 50px; 
+    text-align: center;
+  }
+
+  /* Alignment Core: Fixed height split to match media */
+  .dji-nav-split { 
+    display: flex; 
+    gap: {{ section.settings.gap_size }}px; 
+    align-items: stretch; 
+    position: relative; 
+    height: {{ section.settings.media_height }}vh;
+    min-height: 450px;
+  }
+
+  .dji-nav-list-side { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    z-index: 10; 
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .dji-nav-item { 
+    flex: 0 0 auto;
+    cursor: pointer; 
+    border-right: 2px solid rgba(255,255,255,0.1); 
+    padding: {{ section.settings.item_padding }}px 25px {{ section.settings.item_padding }}px 0; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Active State Expansion */
+  .dji-nav-item.is-active { 
+    flex: 1 1 auto; 
+    border-right-color: {{ section.settings.color_accent }};
+  }
+
+  .dji-nav-item::before { 
+    content: ''; 
+    position: absolute; 
+    right: -2px; 
+    top: 0; 
+    height: 0%; 
+    width: 2px; 
+    background-color: {{ section.settings.color_accent }}; 
+  }
+
+  .dji-nav-item.is-active::before { 
+    height: 100%; 
+    transition: height {{ section.settings.autoplay_speed }}s linear; 
+  }
+
+  .dji-nav-item-title { 
+    font-size: {{ section.settings.item_title_size }}px; 
+    font-weight: 600; 
+    color: {{ section.settings.color_title_inactive }}; 
+    margin: 0; 
+    transition: color 0.4s ease;
+    flex-shrink: 0;
+  }
+
+  .dji-nav-item.is-active .dji-nav-item-title { color: {{ section.settings.color_title_active }}; }
+
+  .dji-nav-item-desc { 
+    max-height: 0;
+    overflow-y: auto; 
+    opacity: 0; 
+    color: {{ section.settings.color_desc }}; 
+    font-size: {{ section.settings.item_desc_size }}px; 
+    line-height: 1.6; 
+    transition: opacity 0.4s ease, margin 0.4s ease;
+    padding-left: 10px;
+  }
+
+  .dji-nav-item.is-active .dji-nav-item-desc { 
+    max-height: none;
+    opacity: 1; 
+    margin-top: 15px; 
+    padding-bottom: 10px;
+  }
+
+  /* Scrollbar for long descriptions */
+  .dji-nav-item-desc::-webkit-scrollbar { width: 3px; }
+  .dji-nav-item-desc::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+
+  .dji-nav-media-side { 
+    flex: 1.4; 
+    height: 100%;
+    border-radius: {{ section.settings.media_radius }}px; 
+    overflow: hidden; 
+    background-color: #050505; 
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    position: relative;
+  }
+
+  .dji-media-layer { 
+    position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; transform: scale(1.05); 
+    transition: opacity 0.8s ease, transform 0.8s ease; 
+  }
+
+  .dji-media-layer.is-active { opacity: 1; visibility: visible; transform: scale(1); z-index: 2; }
+  .dji-media-layer img, .dji-media-layer video { width: 100%; height: 100%; object-fit: cover; }
+
+  @media (max-width: 990px) { 
+    .dji-nav-split { flex-direction: column-reverse; gap: 30px; height: auto; } 
+    .dji-nav-list-side { height: auto; }
+    .dji-nav-media-side { width: 100%; height: 45vh; }
+    .dji-nav-item.is-active { flex: 0 0 auto; }
+  }
+{%- endstyle -%}
+
+<section class="dji-nav-wrapper-{{ section.id }}" id="DjiNav-{{ section.id }}">
+  <div class="dji-nav-transform-layer-{{ section.id }}">
+    <div class="dji-nav-container" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.autoplay_speed }}" data-loop="{{ section.settings.loop }}">
+      {%- if section.settings.headline != blank -%}
+        <h2 class="dji-nav-main-headline">{{ section.settings.headline }}</h2>
+      {%- endif -%}
+      <div class="dji-nav-split">
+        <div class="dji-nav-list-side">
+          {%- for block in section.blocks -%}
+            <div class="dji-nav-item {% if forloop.first %}is-active{% endif %} js-nav-item" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+              <h3 class="dji-nav-item-title">{{ block.settings.title }}</h3>
+              <div class="dji-nav-item-desc">{{ block.settings.description }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="dji-nav-media-side">
+          {%- for block in section.blocks -%}
+            <div class="dji-media-layer js-media-layer {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
+              {%- if block.settings.media_type == 'video' -%}
+                <video muted loop playsinline preload="auto"><source src="{{ block.settings.video_url }}" type="video/mp4"></video>
+              {%- else -%}
+                {{ block.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+class DJIVerticalNavigator {
+  constructor(id) {
+    this.container = document.querySelector(`#DjiNav-${id} .dji-nav-container`);
+    if (!this.container) return;
+    this.navItems = Array.from(this.container.querySelectorAll('.js-nav-item'));
+    this.mediaLayers = Array.from(this.container.querySelectorAll('.js-media-layer'));
+    this.isAutoplay = this.container.dataset.autoplay === 'true';
+    this.speed = parseInt(this.container.dataset.speed) * 1000;
+    this.currentIndex = 0;
+    this.timer = null;
+    this.init();
+  }
+  init() {
+    this.navItems.forEach((item, index) => {
+      item.addEventListener('click', () => { this.goToSlide(index); this.resetTimer(); });
+    });
+    if (this.isAutoplay) this.startTimer();
+    this.updateMedia(0);
+  }
+  goToSlide(index) {
+    this.navItems.forEach(nav => nav.classList.remove('is-active'));
+    this.mediaLayers.forEach(layer => layer.classList.remove('is-active'));
+    this.currentIndex = index;
+    this.navItems[this.currentIndex].classList.add('is-active');
+    this.mediaLayers[this.currentIndex].classList.add('is-active');
+    this.updateMedia(index);
+  }
+  updateMedia(index) {
+    this.mediaLayers.forEach((layer, i) => {
+      const vid = layer.querySelector('video');
+      if (vid) { if (i === index) { vid.currentTime = 0; vid.play().catch(() => {}); } else vid.pause(); }
+    });
+  }
+  startTimer() { this.timer = setInterval(() => { this.currentIndex = (this.currentIndex + 1) % this.navItems.length; this.goToSlide(this.currentIndex); }, this.speed); }
+  resetTimer() { if (this.isAutoplay) { clearInterval(this.timer); this.startTimer(); } }
+}
+document.addEventListener('DOMContentLoaded', () => new DJIVerticalNavigator('{{ section.id }}'));
+document.addEventListener('shopify:section:load', (e) => new DJIVerticalNavigator(e.detail.sectionId));
+</script>
+
+{% schema %}
+{
+  "name": "DJI Vertical Navigator v7",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#000000" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 200, "step": 5, "unit": "px", "label": "רווח עליון חיצוני", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 200, "step": 5, "unit": "px", "label": "רווח תחתוו חיצוני", "default": 80 },
+    { "type": "header", "content": "🎨 עיצוב טקסט ומרווחים" },
+    { "type": "color", "id": "color_main_headline", "label": "צבע כותרת ראשית", "default": "#ffffff" },
+    { "type": "range", "id": "headline_size", "min": 20, "max": 100, "step": 1, "unit": "px", "label": "גודל כותרת ראשית", "default": 56 },
+    { "type": "color", "id": "color_title_active", "label": "צבע כותרת משנית (פעילה)", "default": "#ffffff" },
+    { "type": "color", "id": "color_title_inactive", "label": "צבע כותרת משנית (כבוי)", "default": "rgba(255,255,255,0.3)" },
+    { "type": "range", "id": "item_title_size", "min": 12, "max": 40, "step": 1, "unit": "px", "label": "גודל כותרת משנית", "default": 22 },
+    { "type": "color", "id": "color_desc", "label": "צבע טקסט תיאור", "default": "rgba(255,255,255,0.7)" },
+    { "type": "range", "id": "item_desc_size", "min": 10, "max": 24, "step": 1, "unit": "px", "label": "גודל טקסט תיאור", "default": 16 },
+    { "type": "color", "id": "color_accent", "label": "צבע פס התקדמות", "default": "#ffffff" },
+    { "type": "range", "id": "item_padding", "min": 5, "max": 60, "step": 1, "unit": "px", "label": "מרווח בין פריטים (Vertical)", "default": 25 },
+    { "type": "header", "content": "📏 שליטה במיקום ומדיה" },
+    { "type": "range", "id": "container_width", "min": 800, "max": 1800, "step": 50, "unit": "px", "label": "רוחב מקסימלי", "default": 1300 },
+    { "type": "range", "id": "media_height", "min": 30, "max": 95, "step": 5, "unit": "vh", "label": "גובה הסקשן (vh)", "default": 65 },
+    { "type": "range", "id": "scale", "min": 50, "max": 120, "step": 1, "unit": "%", "label": "זום (Scale)", "default": 100 },
+    { "type": "range", "id": "offset_x", "min": -250, "max": 250, "step": 5, "unit": "px", "label": "הזזה אופקית (X)", "default": 0 },
+    { "type": "range", "id": "offset_y", "min": -250, "max": 250, "step": 5, "unit": "px", "label": "הזזה אנכית (Y)", "default": 0 },
+    { "type": "range", "id": "gap_size", "min": 20, "max": 200, "step": 5, "unit": "px", "label": "רווח בין טקסט למדיה", "default": 80 },
+    { "type": "range", "id": "media_radius", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "עיגול פינות מדיה", "default": 12 },
+    { "type": "header", "content": "🤖 אוטומציה" },
+    { "type": "checkbox", "id": "autoplay", "label": "הפעל מעבר אוטומטי", "default": true },
+    { "type": "range", "id": "autoplay_speed", "min": 2, "max": 15, "step": 1, "unit": "s", "label": "מהירות החלפה (שניות)", "default": 6 },
+    { "type": "checkbox", "id": "loop", "label": "חזור להתחלה (Loop)", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "כותרת" },
+        { "type": "textarea", "id": "description", "label": "תיאור" },
+        { "type": "select", "id": "media_type", "label": "סוג מדיה", "options": [{"value":"image","label":"תמונה"},{"value":"video","label":"וידאו"}], "default": "video" },
+        { "type": "image_picker", "id": "image", "label": "תמונה" },
+        { "type": "text", "id": "video_url", "label": "קישור לוידאו (MP4)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "DJI Vertical Navigator v7" }]
+}
+{% endschema %}

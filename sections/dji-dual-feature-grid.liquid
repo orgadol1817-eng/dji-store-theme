@@ -1,0 +1,236 @@
+{%- comment -%}
+  DJI Dual Grid - v2.3 (Borders & Hover Effects)
+  Features: Frame Borders, Hover Animations (Lift, Glow, Zoom), Replay Button.
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-dual-grid-wrapper-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+    overflow: hidden;
+  }
+
+  .dji-dual-grid-container {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 4%;
+  }
+
+  .dji-dual-grid-main-title {
+    font-size: {{ section.settings.main_headline_size }}px;
+    color: {{ section.settings.color_main_headline }};
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 60px;
+    line-height: 1.2;
+  }
+
+  .dji-dual-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: {{ section.settings.grid_gap }}px;
+    align-items: stretch;
+  }
+
+  /* The Column / Card Frame */
+  .dji-dual-column { 
+    display: flex; 
+    flex-direction: column; 
+    border-radius: {{ section.settings.card_radius }}px;
+    height: 100%;
+    /* Base transitions for effects */
+    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+
+  /* Hover Effects */
+  .hover-effect-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+  
+  .hover-effect-glow:hover {
+    box-shadow: 0 0 30px var(--hover-glow-color, rgba(255,255,255,0.2));
+  }
+
+  .hover-effect-zoom .dji-dual-media-box img,
+  .hover-effect-zoom .dji-dual-media-box video {
+    transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+  
+  .hover-effect-zoom:hover .dji-dual-media-box img,
+  .hover-effect-zoom:hover .dji-dual-media-box video {
+    transform: scale(calc(var(--media-scale, 1) + 0.05));
+  }
+
+  .dji-dual-media-box {
+    width: 100%;
+    aspect-ratio: {{ section.settings.media_aspect_ratio }};
+    border-radius: {{ section.settings.media_radius }}px;
+    overflow: hidden;
+    background-color: #050505;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  /* Media Scaling managed via CSS variables for smooth effect compatibility */
+  .dji-dual-media-box img, 
+  .dji-dual-media-box video {
+    width: 100%; height: 100%; object-fit: cover; display: block; will-change: transform;
+    transform: scale(var(--media-scale, 1));
+  }
+
+  .dji-replay-overlay {
+    position: absolute; bottom: 15px; right: 15px; z-index: 10; width: 44px; height: 44px;
+    background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2); opacity: 0; visibility: hidden; transition: all 0.3s ease;
+  }
+  .dji-replay-overlay.is-visible { opacity: 1; visibility: visible; }
+  .dji-replay-overlay svg { width: 22px; height: 22px; fill: #fff; }
+
+  .dji-dual-text-content { display: flex; flex-direction: column; gap: 10px; }
+  .dji-dual-column-title { font-size: {{ section.settings.column_title_size }}px; color: {{ section.settings.color_column_title }}; font-weight: 700; margin: 0; }
+  .dji-dual-column-desc { font-size: {{ section.settings.column_desc_size }}px; color: {{ section.settings.color_column_desc }}; line-height: 1.6; margin: 0; }
+
+  @media (max-width: 990px) {
+    .dji-dual-grid-layout { grid-template-columns: 1fr; gap: 30px; }
+  }
+{%- endstyle -%}
+
+<section class="dji-dual-grid-wrapper-{{ section.id }}" id="DjiDual-{{ section.id }}">
+  <div class="dji-dual-grid-container">
+    {%- if section.settings.main_headline != blank -%}
+      <h2 class="dji-dual-grid-main-title">{{ section.settings.main_headline }}</h2>
+    {%- endif -%}
+
+    <div class="dji-dual-grid-layout">
+      {%- for block in section.blocks -%}
+        <div class="dji-dual-column js-dual-column hover-effect-{{ block.settings.hover_effect }}" 
+             style="background-color: {{ block.settings.frame_bg }}; 
+                    padding: {{ block.settings.frame_padding }}px;
+                    border: {{ block.settings.frame_border_width }}px solid {{ block.settings.frame_border_color }};
+                    --hover-glow-color: {{ block.settings.frame_border_color | default: 'rgba(255,255,255,0.2)' }};" 
+             {{ block.shopify_attributes }}>
+          
+          <div class="dji-dual-media-box" style="margin-bottom: {{ block.settings.media_margin_bottom }}px;">
+            {%- capture media_style -%}
+              --media-scale: {{ block.settings.media_zoom | divided_by: 100.0 }};
+              object-position: {{ block.settings.focal_x }}% {{ block.settings.focal_y }}%;
+            {%- endcapture -%}
+
+            {%- if block.settings.media_type == 'video' and block.settings.video_url != blank -%}
+              <video class="js-dji-video" muted playsinline autoplay preload="metadata" style="{{ media_style }}" {% if block.settings.loop_video %}loop{% endif %}>
+                <source src="{{ block.settings.video_url }}" type="video/mp4">
+              </video>
+              {%- unless block.settings.loop_video -%}
+                <div class="dji-replay-overlay js-replay-btn"><svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M12 5V1L7 6L12 11V7C15.31 7 18 9.69 18 13C18 16.31 15.31 19 12 19C8.69 19 6 16.31 6 13H4C4 17.42 7.58 21 12 21C16.42 21 20 17.42 20 13C20 8.58 16.42 5 12 5Z"/></svg></div>
+              {%- endunless -%}
+            {%- elsif block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', style: media_style }}
+            {%- endif -%}
+          </div>
+
+          <div class="dji-dual-text-content" style="text-align: {{ block.settings.text_align }};">
+            <h3 class="dji-dual-column-title" style="color: {{ block.settings.title_color | default: section.settings.color_column_title }};">
+              {{ block.settings.title }}
+            </h3>
+            <div class="dji-dual-column-desc richtext" style="color: {{ block.settings.desc_color | default: section.settings.color_column_desc }};">
+              {{ block.settings.description }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+class DJIDualMediaLogic {
+  constructor(sectionId) {
+    this.section = document.querySelector(`#DjiDual-${sectionId}`);
+    if (!this.section) return;
+    this.init();
+  }
+  init() {
+    this.section.querySelectorAll('.js-dual-column').forEach(col => {
+      const video = col.querySelector('.js-dji-video');
+      const replayBtn = col.querySelector('.js-replay-btn');
+      if (video && replayBtn) {
+        video.addEventListener('ended', () => replayBtn.classList.add('is-visible'));
+        replayBtn.addEventListener('click', () => {
+          video.currentTime = 0; video.play(); replayBtn.classList.remove('is-visible');
+        });
+      }
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded', () => new DJIDualMediaLogic('{{ section.id }}'));
+document.addEventListener('shopify:section:load', (e) => new DJIDualMediaLogic(e.detail.sectionId));
+</script>
+
+{% schema %}
+{
+  "name": "DJI Dual Grid v2.3",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "צבע רקע כללי", "default": "#000000" },
+    { "type": "range", "id": "container_width", "min": 800, "max": 1800, "step": 20, "unit": "px", "label": "רווח מיכל מקסימלי", "default": 1400 },
+    { "type": "text", "id": "main_headline", "label": "כותרת ראשית", "default": "לכידה רב-כיוונית, יעילות מוכפלת" },
+    { "type": "range", "id": "main_headline_size", "min": 20, "max": 80, "step": 1, "unit": "px", "label": "גודל כותרת", "default": 48 },
+    { "type": "color", "id": "color_main_headline", "label": "צבע כותרת ראשית", "default": "#ffffff" },
+    { "type": "range", "id": "grid_gap", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "רווח בין כרטיסים", "default": 40 },
+    { "type": "range", "id": "card_radius", "min": 0, "max": 40, "step": 1, "unit": "px", "label": "עיגול פינות מסגרת (לכל הכרטיס)", "default": 12 },
+    { "type": "text", "id": "media_aspect_ratio", "label": "יחס גובה-רוחב (16/9, 4/3)", "default": "4/3" },
+    { "type": "range", "id": "media_radius", "min": 0, "max": 40, "step": 1, "unit": "px", "label": "עיגול פינות מדיה פנימית", "default": 8 },
+    { "type": "header", "content": "🎨 עיצוב טקסט גלובלי" },
+    { "type": "range", "id": "column_title_size", "min": 16, "max": 50, "step": 1, "unit": "px", "label": "גודל כותרת פנימית", "default": 28 },
+    { "type": "color", "id": "color_column_title", "label": "צבע כותרת פנימית", "default": "#ffffff" },
+    { "type": "range", "id": "column_desc_size", "min": 12, "max": 30, "step": 1, "unit": "px", "label": "גודל טקסט תיאור", "default": 16 },
+    { "type": "color", "id": "color_column_desc", "label": "צבע טקסט תיאור", "default": "rgba(255,255,255,0.7)" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 200, "step": 5, "unit": "px", "label": "רווח עליון", "default": 100 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 200, "step": 5, "unit": "px", "label": "רווח תחתון", "default": 100 }
+  ],
+  "blocks": [
+    {
+      "type": "feature_column",
+      "name": "עמודת תכונה",
+      "settings": [
+        { "type": "header", "content": "✨ עיצוב מסגרת ואפקטים" },
+        { "type": "color", "id": "frame_bg", "label": "צבע רקע (בתוך המסגרת)", "default": "transparent" },
+        { "type": "color", "id": "frame_border_color", "label": "צבע מסגרת (Border)", "default": "transparent" },
+        { "type": "range", "id": "frame_border_width", "min": 0, "max": 10, "step": 1, "unit": "px", "label": "עובי מסגרת", "default": 0 },
+        { "type": "range", "id": "frame_padding", "min": 0, "max": 80, "step": 1, "unit": "px", "label": "רווח פנימי במסגרת", "default": 0 },
+        {
+          "type": "select",
+          "id": "hover_effect",
+          "label": "אפקט במעבר עכבר (Hover)",
+          "options": [
+            { "value": "none", "label": "ללא אפקט" },
+            { "value": "lift", "label": "ריחוף (Lift)" },
+            { "value": "glow", "label": "הילת צבע (Glow)" },
+            { "value": "zoom", "label": "זום מדיה (Media Zoom)" }
+          ],
+          "default": "none"
+        },
+        { "type": "select", "id": "text_align", "label": "יישור טקסט", "options": [{"value":"right","label":"ימין"},{"value":"center","label":"מרכז"},{"value":"left","label":"שמאל"}], "default": "right" },
+        { "type": "header", "content": "📹 מדיה" },
+        { "type": "select", "id": "media_type", "label": "סוג מדיה", "options": [{"value":"image","label":"תמונה"},{"value":"video","label":"וידאו"}], "default": "image" },
+        { "type": "checkbox", "id": "loop_video", "label": "הפעל וידאו בלופ", "default": true },
+        { "type": "image_picker", "id": "image", "label": "בחר תמונה" },
+        { "type": "text", "id": "video_url", "label": "קישור לוידאו (MP4)" },
+        { "type": "range", "id": "media_zoom", "min": 100, "max": 200, "step": 1, "unit": "%", "label": "זום פנימי", "default": 100 },
+        { "type": "range", "id": "focal_x", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקוד X", "default": 50 },
+        { "type": "range", "id": "focal_y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקוד Y", "default": 50 },
+        { "type": "range", "id": "media_margin_bottom", "min": 0, "max": 60, "step": 1, "unit": "px", "label": "רווח מתחת למדיה", "default": 25 },
+        { "type": "header", "content": "📝 תוכן" },
+        { "type": "text", "id": "title", "label": "כותרת", "default": "כותרת טכנולוגית" },
+        { "type": "color", "id": "title_color", "label": "צבע כותרת (מותאם)" },
+        { "type": "richtext", "id": "description", "label": "תיאור", "default": "<p>פירוט טכני.</p>" },
+        { "type": "color", "id": "desc_color", "label": "צבע תיאור (מותאם)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "DJI Dual Grid v2.3" }]
+}
+{% endschema %}

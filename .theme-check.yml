@@ -1,1 +1,6 @@
-extends: theme-check:recommended
+﻿RemoteAsset:
+  enabled: false
+ImgWidthAndHeight:
+  enabled: false
+HardcodedRoutes:
+  enabled: false

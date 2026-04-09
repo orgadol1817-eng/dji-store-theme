@@ -1,0 +1,284 @@
+{%- comment -%}
+  DJI Interactive Video Tabs Showcase - v3.1 (Fix: Schema Validation & RTL)
+  Optimized for Cursor 2026 & Shopify CLI
+{%- endcomment -%}
+
+{%- style -%}
+  .dji-tabs-wrapper-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    font-family: 'Heebo', sans-serif;
+    color: #ffffff;
+    direction: rtl;
+    overflow: hidden;
+  }
+
+  .dji-tabs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+  }
+
+  .dji-tabs-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .dji-tabs-headline {
+    font-size: {{ section.settings.headline_size }}px;
+    color: {{ section.settings.color_headline }};
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Media Viewport - Simulated Drone Controller Screen */
+  .dji-tabs-viewport-outer {
+    position: relative;
+    width: {{ section.settings.video_width }}%;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    border-radius: {{ section.settings.media_radius }}px;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+
+  /* UI Overlays (The "Drone" Look) */
+  .dji-viewport-ui {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    border: 20px solid transparent;
+  }
+  .dji-viewport-ui::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+  }
+
+  .dji-tabs-video-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dji-tabs-video-layer.is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+  }
+  .dji-tabs-video-layer video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Navigation Interface */
+  .dji-tabs-nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .dji-tab-btn {
+    padding: 15px 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    text-transform: uppercase;
+  }
+
+  .dji-tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 0; height: 2px;
+    background: #fff;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px #fff;
+  }
+
+  .dji-tab-btn.is-active {
+    color: #fff;
+  }
+  .dji-tab-btn.is-active::after {
+    width: 100%;
+  }
+
+  /* Content Description */
+  .dji-tabs-description-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    min-height: 80px;
+  }
+
+  .dji-tab-content {
+    display: none;
+    color: {{ section.settings.color_text }};
+    font-size: 18px;
+    line-height: 1.6;
+    animation: djiFadeUp 0.5s ease forwards;
+  }
+  .dji-tab-content.is-active {
+    display: block;
+  }
+
+  @keyframes djiFadeUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 990px) {
+    .dji-tabs-viewport-outer { width: 100%; }
+    .dji-tabs-nav-bar { gap: 15px; overflow-x: auto; justify-content: flex-start; padding-bottom: 5px; }
+    .dji-tab-btn { font-size: 14px; white-space: nowrap; }
+  }
+{%- endstyle -%}
+
+<section class="dji-tabs-wrapper-{{ section.id }}" id="DjiTabs-{{ section.id }}">
+  <div class="dji-tabs-container">
+    {%- if section.settings.headline != blank -%}
+      <div class="dji-tabs-header">
+        <h2 class="dji-tabs-headline">{{ section.settings.headline }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="dji-tabs-viewport-outer">
+      <div class="dji-viewport-ui"></div>
+      {%- for block in section.blocks -%}
+        <div class="dji-tabs-video-layer js-dji-video-layer {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.video_url != blank -%}
+            <video muted loop playsinline preload="metadata">
+              <source src="{{ block.settings.video_url }}" type="video/mp4">
+            </video>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="dji-tabs-nav-bar">
+      {%- for block in section.blocks -%}
+        <div class="dji-tab-btn js-dji-tab-trigger {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
+          {{ block.settings.tab_title }}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="dji-tabs-description-wrap">
+      {%- for block in section.blocks -%}
+        <div class="dji-tab-content js-dji-tab-content {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
+          {{ block.settings.tab_description }}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+class DJIInteractiveTabs {
+  constructor(sectionId) {
+    this.container = document.querySelector(`#DjiTabs-${sectionId}`);
+    if (!this.container) return;
+    
+    this.triggers = this.container.querySelectorAll('.js-dji-tab-trigger');
+    this.videos = this.container.querySelectorAll('.js-dji-video-layer');
+    this.contents = this.container.querySelectorAll('.js-dji-tab-content');
+    
+    this.init();
+  }
+
+  init() {
+    this.triggers.forEach(btn => {
+      btn.addEventListener('click', () => this.switchTab(btn.dataset.index));
+    });
+    // Autoplay the first video
+    this.playVideo(0);
+  }
+
+  switchTab(index) {
+    this.triggers.forEach(el => el.classList.toggle('is-active', el.dataset.index === index));
+    this.contents.forEach(el => el.classList.toggle('is-active', el.dataset.index === index));
+    this.videos.forEach(el => {
+      const isActive = el.dataset.index === index;
+      el.classList.toggle('is-active', isActive);
+      this.playVideo(index);
+    });
+  }
+
+  playVideo(index) {
+    this.videos.forEach((layer, i) => {
+      const video = layer.querySelector('video');
+      if (!video) return;
+      if (i == index) {
+        video.currentTime = 0;
+        video.play().catch(e => console.log("Autoplay blocked or video missing"));
+      } else {
+        video.pause();
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => new DJIInteractiveTabs('{{ section.id }}'));
+// Support for Shopify Theme Editor
+document.addEventListener('shopify:section:load', (e) => new DJIInteractiveTabs(e.detail.sectionId));
+</script>
+
+{% schema %}
+{
+  "name": "DJI Interactive Tabs",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "רקע", "default": "#000000" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 150, "step": 5, "unit": "px", "label": "רווח עליון", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 150, "step": 5, "unit": "px", "label": "רווח תחתוו", "default": 100 },
+    { "type": "text", "id": "headline", "label": "כותרת", "default": "Efficient Flight, Intelligent Operations" },
+    { 
+      "type": "range", 
+      "id": "headline_size", 
+      "min": 20, 
+      "max": 80, 
+      "step": 1, 
+      "unit": "px", 
+      "label": "גודל כותרת", 
+      "default": 47 
+    },
+    { "type": "color", "id": "color_headline", "label": "צבע כותרת", "default": "#ffffff" },
+    { "type": "range", "id": "video_width", "min": 50, "max": 100, "step": 5, "unit": "%", "label": "רוחב וידאו", "default": 75 },
+    { "type": "range", "id": "media_radius", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "עיגול פינות", "default": 12 },
+    { "type": "color", "id": "color_text", "label": "צבע תיאור", "default": "#dddddd" }
+  ],
+  "blocks": [
+    {
+      "type": "tab_item",
+      "name": "Tab Mode",
+      "settings": [
+        { "type": "text", "id": "tab_title", "label": "שם הטאב (למשל: FlyTo)" },
+        { "type": "text", "id": "video_url", "label": "קישור לוידאו MP4" },
+        { "type": "richtext", "id": "tab_description", "label": "תיאור המצב" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DJI Interactive Tabs Showcase"
+    }
+  ]
+}
+{% endschema %}

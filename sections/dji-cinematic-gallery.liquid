@@ -120,7 +120,13 @@
           <source src="{{ block.settings.video_url }}" type="video/mp4">
         </video>
       {%- else -%}
-        <img class="dji-cinema-item {% if forloop.first %}active{% endif %}" src="{{ block.settings.image | image_url: width: 2000 }}">
+        <img
+          class="dji-cinema-item {% if forloop.first %}active{% endif %}"
+          src="{{ block.settings.image | image_url: width: 2000 }}"
+          width="{{ block.settings.image.width }}"
+          height="{{ block.settings.image.height }}"
+          alt="{{ block.settings.image.alt | escape }}"
+        >
       {%- endif -%}
     {%- endfor -%}
   </div>

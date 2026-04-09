@@ -1,7 +1,392 @@
-<header class="site-header" id="site-header">
+{%- if section.settings.show_top_bar -%}
+  {%- liquid
+    assign about_l = section.settings.about_link_label | strip
+    assign terms_l = section.settings.terms_link_label | strip
+    assign privacy_l = section.settings.privacy_link_label | strip
+  -%}
+  {% style %}
+    #shopify-section-{{ section.id }} .drox-top-bar {
+      background-color: {{ section.settings.top_bar_bg }};
+      margin: 0;
+      padding: 0;
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__inner {
+      min-height: {{ section.settings.top_bar_height }}px;
+      --drox-links-gap: {{ section.settings.top_bar_links_gap }}px;
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__link {
+      color: {{ section.settings.top_bar_right_color }};
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__pipe {
+      color: {{ section.settings.top_bar_right_color }};
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__promo {
+      color: {{ section.settings.top_bar_middle_color }};
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__left-label {
+      color: {{ section.settings.top_bar_left_label_color }};
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__phone-num {
+      color: {{ section.settings.top_bar_phone_color }};
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__segment--right {
+      transform: translateX({{ section.settings.right_segment_offset }}px);
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__segment--middle {
+      transform: translateX({{ section.settings.middle_segment_offset }}px);
+    }
+    #shopify-section-{{ section.id }} .drox-top-bar__segment--left {
+      transform: translateX({{ section.settings.left_segment_offset }}px);
+    }
+    @media (max-width: 767px) {
+      #shopify-section-{{ section.id }} .drox-top-bar--suppress-mobile {
+        display: none !important;
+      }
+      #shopify-section-{{ section.id }} .drox-top-bar__segment--hide-sm {
+        display: none !important;
+      }
+      #shopify-section-{{ section.id }} .drox-top-bar {
+        background-color: {{ section.settings.top_bar_bg_mobile }};
+      }
+      #shopify-section-{{ section.id }} .drox-top-bar .drox-top-bar__link,
+      #shopify-section-{{ section.id }} .drox-top-bar .drox-top-bar__pipe,
+      #shopify-section-{{ section.id }} .drox-top-bar .drox-top-bar__promo,
+      #shopify-section-{{ section.id }} .drox-top-bar .drox-top-bar__contact-line,
+      #shopify-section-{{ section.id }} .drox-top-bar .drox-top-bar__left-label,
+      #shopify-section-{{ section.id }} .drox-top-bar .drox-top-bar__phone-num {
+        font-size: {{ section.settings.top_bar_font_size_mobile }}px;
+      }
+    }
+  {% endstyle %}
+  <div class="drox-top-bar{% unless section.settings.show_top_bar_mobile %} drox-top-bar--suppress-mobile{% endunless %}" data-drox-top-bar>
+    <div class="drox-top-bar__inner">
+      <div class="drox-top-bar__col drox-top-bar__col--links drox-top-bar__segment drox-top-bar__segment--right{% if section.settings.hide_links_mobile %} drox-top-bar__segment--hide-sm{% endif %}">
+        <div class="drox-top-bar__links-row">
+          {%- if about_l != blank -%}
+            {%- if section.settings.about_link != blank -%}
+              <a class="drox-top-bar__link" href="{{ section.settings.about_link }}">{{ about_l }}</a>
+            {%- else -%}
+              <span class="drox-top-bar__link drox-top-bar__link--static">{{ about_l }}</span>
+            {%- endif -%}
+          {%- endif -%}
+          {%- if terms_l != blank -%}
+            {%- if about_l != blank -%}
+              <span class="drox-top-bar__pipe" aria-hidden="true">|</span>
+            {%- endif -%}
+            {%- if section.settings.terms_link != blank -%}
+              <a class="drox-top-bar__link" href="{{ section.settings.terms_link }}">{{ terms_l }}</a>
+            {%- else -%}
+              <span class="drox-top-bar__link drox-top-bar__link--static">{{ terms_l }}</span>
+            {%- endif -%}
+          {%- endif -%}
+          {%- if privacy_l != blank -%}
+            {%- if about_l != blank or terms_l != blank -%}
+              <span class="drox-top-bar__pipe" aria-hidden="true">|</span>
+            {%- endif -%}
+            {%- if section.settings.privacy_link != blank -%}
+              <a class="drox-top-bar__link" href="{{ section.settings.privacy_link }}">{{ privacy_l }}</a>
+            {%- else -%}
+              <span class="drox-top-bar__link drox-top-bar__link--static">{{ privacy_l }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="drox-top-bar__col drox-top-bar__col--promo drox-top-bar__segment drox-top-bar__segment--middle{% if section.settings.hide_promo_mobile %} drox-top-bar__segment--hide-sm{% endif %}">
+        <span class="drox-top-bar__promo">{{ section.settings.promo_text }}</span>
+      </div>
+      <div class="drox-top-bar__col drox-top-bar__col--phone drox-top-bar__segment drox-top-bar__segment--left{% if section.settings.hide_phone_mobile %} drox-top-bar__segment--hide-sm{% endif %}">
+        <span class="drox-top-bar__contact-line">
+          <span class="drox-top-bar__left-label">{{ section.settings.left_contact_label }}</span><span class="drox-top-bar__phone-num">{{ section.settings.phone_number_text }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+{% style %}
+  /* Reset white space bug */
+  body, html { margin: 0; padding: 0; }
+  #shopify-section-{{ section.id }} {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* Visually hide accessibility links safely to prevent white gaps */
+  .skip-to-content-link:not(:focus) {
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
+
+  #shopify-section-{{ section.id }} {
+    --sh-nav-color: {{ section.settings.nav_link_color }};
+    --sh-nav-hover: {{ section.settings.nav_link_hover_color }};
+    --sh-header-scrolled-bg: {{ section.settings.header_scrolled_bg }};
+    --sh-header-scrolled-nav: {{ section.settings.header_scrolled_nav_color }};
+    --sh-header-height: {{ section.settings.header_height }}px;
+
+    /* Mega Menu Variables (User Controlled) */
+    --sh-mega-bg: {{ section.settings.mega_panel_bg }};
+    --sh-mega-title: {{ section.settings.mega_card_title_color }};
+    --sh-mega-hover: {{ section.settings.mega_card_link_hover_color }};
+    --sh-mega-font-size: {{ section.settings.mega_font_size }}px;
+    --sh-mega-width: {{ section.settings.mega_panel_width }}px;
+    --sh-mega-item-padding-v: {{ section.settings.mega_item_padding_v }}px;
+    --sh-mega-border: {{ section.settings.mega_panel_border_color }};
+    --sh-mega-bg-hover: {{ section.settings.mega_card_bg_hover_color }};
+
+    --sh-license-badge-bg: {{ section.settings.license_badge_color }};
+    --sh-license-badge-fg: {{ section.settings.license_badge_text_color }};
+    --sh-drawer-bg: {{ section.settings.drawer_bg_color }};
+    --sh-drawer-text: {{ section.settings.drawer_text_color }};
+    --sh-drawer-accent: {{ section.settings.drawer_accent_color }};
+  }
+  
+  /* --- BENDA STYLE FLAT MEGA MENU --- */
+  
+  /* הפאנל הראשי */
+  #shopify-section-{{ section.id }} .sh-benda-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: var(--sh-mega-width);
+    min-width: var(--sh-mega-width);
+    max-width: var(--sh-mega-width);
+    background: var(--sh-mega-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--sh-mega-border);
+    border-top: none;
+    z-index: 9602;
+    opacity: 0;
+    visibility: hidden;
+    direction: rtl;
+    pointer-events: none;
+  }
+  
+  #shopify-section-{{ section.id }} .sh-mega-wrap:hover .sh-benda-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  /* רשימות */
+  #shopify-section-{{ section.id }} .sh-benda-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #shopify-section-{{ section.id }} .sh-benda-item {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  /* הקישור — full row hit area, padding + font from Customizer */
+  #shopify-section-{{ section.id }} .sh-benda-link {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    min-height: calc(var(--sh-mega-item-padding-v) * 2 + var(--sh-mega-font-size) * 1.35);
+    padding: var(--sh-mega-item-padding-v) 15px;
+    color: var(--sh-mega-title);
+    font-size: var(--sh-mega-font-size);
+    font-weight: 400;
+    text-decoration: none;
+    transition: background-color 0.1s ease, color 0.1s ease;
+  }
+  
+  /* צבע רקע במעבר עכבר - מילוי מלא! */
+  #shopify-section-{{ section.id }} .sh-benda-link:hover, 
+  #shopify-section-{{ section.id }} .sh-benda-item:hover > .sh-benda-link {
+    background-color: var(--sh-mega-bg-hover);
+    color: var(--sh-mega-hover);
+  }
+  
+  /* החץ - נעול שמאלה כדי לא להפריע למרכוז */
+  #shopify-section-{{ section.id }} .sh-benda-arrow {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.4;
+  }
+
+  /* מגירות פנימיות - נצמדות באופן חלק בלי קופסאות */
+  #shopify-section-{{ section.id }} .sh-benda-flyout {
+    position: absolute;
+    top: -1px;
+    right: 100%;
+    width: var(--sh-mega-width);
+    min-width: var(--sh-mega-width);
+    max-width: var(--sh-mega-width);
+    background: var(--sh-mega-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--sh-mega-border);
+    border-right: none; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  #shopify-section-{{ section.id }} .sh-benda-item:hover > .sh-benda-flyout {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  /* ---------------------------------------- */
+
+  {%- if section.settings.logo_hover_enabled -%}
+  /* Logo: tint pixels to nav hover color (transparent outside logo — no background box) */
+  #shopify-section-{{ section.id }} .sh-logo {
+    display: flex;
+    width: {{ section.settings.logo_width }}px;
+    max-width: 100%;
+    max-height: 100%;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .sh-logo:hover {
+    background-color: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .header__logo-img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    transition: filter 0.25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .sh-logo:hover .header__logo-img {
+    filter: url(#logo-hover-tint-{{ section.id }});
+  }
+  {%- else -%}
+  #shopify-section-{{ section.id }} .sh-logo {
+    display: flex;
+    width: {{ section.settings.logo_width }}px;
+    max-width: 100%;
+    max-height: 100%;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  #shopify-section-{{ section.id }} .header__logo-img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+  {%- endif -%}
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .sh-logo {
+      width: {{ section.settings.logo_width_mobile }}px;
+    }
+  }
+  #shopify-section-{{ section.id }} .site-header {
+    height: var(--sh-header-height);
+    min-height: var(--sh-header-height);
+    background: {{ section.settings.header_nav_bg }};
+  }
+
+  #shopify-section-{{ section.id }} .sh-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 0;
+  }
+  #shopify-section-{{ section.id }} .site-header.scrolled {
+    background: var(--sh-header-scrolled-bg);
+  }
+  #shopify-section-{{ section.id }} .site-header.scrolled .sh-nav__link,
+  #shopify-section-{{ section.id }} .site-header.scrolled .sh-tool-btn {
+    color: var(--sh-header-scrolled-nav);
+  }
+  #shopify-section-{{ section.id }} .sh-nav__link,
+  #shopify-section-{{ section.id }} .sh-tool-btn {
+    color: var(--sh-nav-color);
+  }
+  
+  /* Hover effects for main nav links */
+  #shopify-section-{{ section.id }} .sh-nav__link:hover {
+    color: var(--sh-nav-hover);
+    opacity: 1;
+    {% if section.settings.nav_hover_bold %}
+    text-shadow: 0 0 0.6px var(--sh-nav-hover);
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .sh-mega-wrap:hover .sh-nav__link--mega {
+    color: var(--sh-nav-hover);
+    {% if section.settings.nav_hover_bold %}
+    text-shadow: 0 0 0.6px var(--sh-nav-hover);
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .sh-nav {
+    gap: {{ section.settings.menu_item_spacing }}px;
+  }
+  #shopify-section-{{ section.id }} .sh-nav__badge {
+    background: var(--sh-license-badge-bg);
+    color: var(--sh-license-badge-fg);
+  }
+{% endstyle %}
+
+{%- liquid
+  # Extract unique Level 1 Categories from all blocks
+  assign l1_raw = ""
+  for block in section.blocks
+    if block.type == 'mega_category'
+      assign l1_title = block.settings.l1_title | strip
+      if l1_title != blank
+        assign delimiter = "@@" | append: l1_title | append: "@@"
+        unless l1_raw contains delimiter
+          assign l1_raw = l1_raw | append: delimiter | append: "||"
+        endunless
+      endif
+    endif
+  endfor
+  assign l1_list = l1_raw | split: "||"
+-%}
+
+<header class="site-header{% if section.settings.show_top_bar %} site-header--has-top-bar{% endif %}" id="site-header">
+  {%- if section.settings.logo_hover_enabled -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" class="sh-logo-hover-filter" style="position:absolute;overflow:hidden;pointer-events:none" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="logo-hover-tint-{{ section.id }}" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+          <feFlood flood-color="{{ section.settings.nav_link_hover_color }}" flood-opacity="1" result="flood"/>
+          <feComposite in="flood" in2="SourceAlpha" operator="in" result="tinted"/>
+        </filter>
+      </defs>
+    </svg>
+  {%- endif -%}
   <div class="sh-inner">
 
-    <!-- Logo -->
     <a class="sh-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
       <img
         src="https://cdn.shopify.com/s/files/1/0758/4897/4509/files/logo_drox.png?v=1773919882"
@@ -13,35 +398,106 @@
       >
     </a>
 
-    <!-- Desktop navigation -->
     <nav class="sh-nav" aria-label="ניווט ראשי">
-      {%- assign mega_keyword = section.settings.mega_keyword | default: 'מקצוע' -%}
-      {%- for link in section.settings.menu.links -%}
-        {%- if link.title contains mega_keyword -%}
-          <div class="sh-mega-trigger" id="sh-mega-trigger" aria-expanded="false">
-            <span class="sh-nav__link sh-nav__link--mega">{{ link.title }}</span>
-          </div>
-        {%- else -%}
-          <a class="sh-nav__link" href="{{ link.url }}">{{ link.title }}</a>
-        {%- endif -%}
-      {%- else -%}
-        <div class="sh-mega-trigger" id="sh-mega-trigger" aria-expanded="false">
-          <span class="sh-nav__link sh-nav__link--mega">רחפנים מקצועיים</span>
+      
+      <div class="sh-mega-wrap">
+        <div class="sh-mega-trigger" id="sh-mega-trigger-catalog" aria-expanded="false">
+          <span class="sh-nav__link sh-nav__link--mega">
+            <span class="sh-nav__mega-text">{{ section.settings.nav_catalog_label }}</span>
+            <svg class="sh-nav__mega-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </span>
         </div>
-        <a class="sh-nav__link" href="/collections/camera-drones">רחפני צילום</a>
-        <a class="sh-nav__link" href="/collections/multimedia">צילום ומולטימדיה</a>
-        <a class="sh-nav__link" href="/pages/contact">תמיכה ויצירת קשר</a>
-      {%- endfor -%}
+        
+        <div class="sh-mega-panel sh-benda-panel" id="sh-mega-panel" role="region" aria-hidden="true">
+          {%- if l1_list.size > 0 -%}
+            <ul class="sh-benda-list" role="list">
+              
+              {%- for l1_item in l1_list -%}
+                {%- if l1_item != blank -%}
+                  {%- assign l1_name = l1_item | remove: "@@" -%}
+                  
+                  <li class="sh-benda-item">
+                    <a href="#" class="sh-benda-link">
+                      <span>{{ l1_name }}</span>
+                      <svg class="sh-benda-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"/>
+                      </svg>
+                    </a>
+
+                    <ul class="sh-benda-flyout" role="list">
+                      {%- for block in section.blocks -%}
+                        {%- if block.type == 'mega_category' and block.settings.l1_title == l1_name -%}
+                          
+                          {%- if block.settings.l2_title != blank -%}
+                            <li class="sh-benda-item" {{ block.shopify_attributes }}>
+                              <a href="{{ block.settings.l2_link | default: '#' }}" class="sh-benda-link">
+                                <span>{{ block.settings.l2_title }}</span>
+                                {%- if block.settings.link_1_text != blank -%}
+                                  <svg class="sh-benda-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                  </svg>
+                                {%- endif -%}
+                              </a>
+
+                              {%- if block.settings.link_1_text != blank -%}
+                                <ul class="sh-benda-flyout" role="list">
+                                  {%- if block.settings.link_1_text != blank -%}<li><a href="{{ block.settings.link_1_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_1_text }}</span></a></li>{%- endif -%}
+                                  {%- if block.settings.link_2_text != blank -%}<li><a href="{{ block.settings.link_2_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_2_text }}</span></a></li>{%- endif -%}
+                                  {%- if block.settings.link_3_text != blank -%}<li><a href="{{ block.settings.link_3_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_3_text }}</span></a></li>{%- endif -%}
+                                  {%- if block.settings.link_4_text != blank -%}<li><a href="{{ block.settings.link_4_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_4_text }}</span></a></li>{%- endif -%}
+                                  {%- if block.settings.link_5_text != blank -%}<li><a href="{{ block.settings.link_5_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_5_text }}</span></a></li>{%- endif -%}
+                                  {%- if block.settings.link_6_text != blank -%}<li><a href="{{ block.settings.link_6_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_6_text }}</span></a></li>{%- endif -%}
+                                  {%- if block.settings.link_7_text != blank -%}<li><a href="{{ block.settings.link_7_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_7_text }}</span></a></li>{%- endif -%}
+                                  {%- if block.settings.link_8_text != blank -%}<li><a href="{{ block.settings.link_8_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_8_text }}</span></a></li>{%- endif -%}
+                                </ul>
+                              {%- endif -%}
+                            </li>
+                          {%- else -%}
+                            {%- if block.settings.link_1_text != blank -%}<li class="sh-benda-item" {{ block.shopify_attributes }}><a href="{{ block.settings.link_1_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_1_text }}</span></a></li>{%- endif -%}
+                            {%- if block.settings.link_2_text != blank -%}<li class="sh-benda-item"><a href="{{ block.settings.link_2_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_2_text }}</span></a></li>{%- endif -%}
+                            {%- if block.settings.link_3_text != blank -%}<li class="sh-benda-item"><a href="{{ block.settings.link_3_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_3_text }}</span></a></li>{%- endif -%}
+                            {%- if block.settings.link_4_text != blank -%}<li class="sh-benda-item"><a href="{{ block.settings.link_4_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_4_text }}</span></a></li>{%- endif -%}
+                            {%- if block.settings.link_5_text != blank -%}<li class="sh-benda-item"><a href="{{ block.settings.link_5_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_5_text }}</span></a></li>{%- endif -%}
+                            {%- if block.settings.link_6_text != blank -%}<li class="sh-benda-item"><a href="{{ block.settings.link_6_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_6_text }}</span></a></li>{%- endif -%}
+                            {%- if block.settings.link_7_text != blank -%}<li class="sh-benda-item"><a href="{{ block.settings.link_7_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_7_text }}</span></a></li>{%- endif -%}
+                            {%- if block.settings.link_8_text != blank -%}<li class="sh-benda-item"><a href="{{ block.settings.link_8_url | default: '#' }}" class="sh-benda-link"><span>{{ block.settings.link_8_text }}</span></a></li>{%- endif -%}
+                          {%- endif -%}
+                          
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+              
+            </ul>
+          {%- else -%}
+            <div style="padding: 15px; color: #666; font-size: 13px;">הוסף בלוקים מסוג "קבוצת רחפנים" בעורך.</div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="sh-nav__item sh-nav__item--license">
+        <a class="sh-nav__link sh-nav__link--license" href="{{ section.settings.nav_license_url | default: '#' }}">
+          {%- if section.settings.show_license_badge -%}
+            <span class="sh-nav__badge" aria-hidden="true">{{ section.settings.license_badge_text }}</span>
+          {%- endif -%}
+          <span class="sh-nav__license-text">{{ section.settings.nav_license_label }}</span>
+        </a>
+      </div>
+      <a class="sh-nav__link" href="{{ section.settings.nav_about_url | default: '#' }}">{{ section.settings.nav_about_label }}</a>
+      <a class="sh-nav__link" href="{{ section.settings.nav_contact_url | default: '#' }}">{{ section.settings.nav_contact_label }}</a>
     </nav>
 
-    <!-- Tools: search · cart · hamburger -->
     <div class="sh-tools">
       <button class="sh-tool-btn sh-search-btn" id="sh-search-btn" aria-label="חיפוש" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
-
       <a class="sh-tool-btn sh-cart-btn" href="{{ routes.cart_url }}" aria-label="עגלת קניות">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -51,539 +507,193 @@
           <span class="sh-cart-count">{{ cart.item_count }}</span>
         {%- endif -%}
       </a>
-
       <button class="sh-tool-btn sh-hamburger" id="sh-hamburger" aria-label="תפריט" aria-expanded="false" aria-controls="sh-drawer">
         <span></span><span></span><span></span>
       </button>
     </div>
-
   </div>
 </header>
 
-<!-- ── Mega-menu panel ── -->
-<div class="sh-mega-panel" id="sh-mega-panel" role="region" aria-label="תפריט מקצועי" aria-hidden="true">
-  <div class="sh-mega-inner">
-    <div class="sh-mega-columns">
-      <div class="sh-mega-col">
-        <span class="sh-mega-col__heading">חקלאות</span>
-        <ul>
-          <li><a href="#">ציוד לחקלאים</a></li>
-          <li><a href="#">רחפני ריסוס</a></li>
-          <li><a href="#">מערכות ניהול</a></li>
-        </ul>
-      </div>
-      <div class="sh-mega-col">
-        <span class="sh-mega-col__heading">מדידה ומיפוי</span>
-        <ul>
-          <li><a href="#">Mavic 3 Enterprise</a></li>
-          <li><a href="#">Matrice 350 RTK</a></li>
-          <li><a href="#">מטע"דים</a></li>
-        </ul>
-      </div>
-      <div class="sh-mega-col">
-        <span class="sh-mega-col__heading">ביטחון והצלה</span>
-        <ul>
-          <li><a href="#">רחפנים תרמיים</a></li>
-          <li><a href="#">Matrice 30 Series</a></li>
-        </ul>
-      </div>
-      <div class="sh-mega-col">
-        <span class="sh-mega-col__heading">תשתיות</span>
-        <ul>
-          <li><a href="#">בדיקת תשתיות</a></li>
-          <li><a href="#">מגדלי תקשורת</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── Search overlay ── -->
 <div class="sh-search-panel" id="sh-search-panel" role="search" aria-hidden="true">
   <div class="sh-search-panel__inner">
-    <form action="/search" method="get" class="sh-search-form">
-      <input
-        type="search"
-        name="q"
-        id="sh-search-input"
-        class="sh-search-input"
-        placeholder="חפש מוצרים..."
-        autocomplete="off"
-        dir="rtl"
-        aria-label="שדה חיפוש"
-      >
+    <form action="{{ routes.search_url }}" method="get" class="sh-search-form">
+      <input type="search" name="q" id="sh-search-input" class="sh-search-input" placeholder="חפש מוצרים..." autocomplete="off" dir="rtl" aria-label="שדה חיפוש">
       <button type="submit" class="sh-search-submit" aria-label="חפש">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
     </form>
     <button class="sh-search-close" id="sh-search-close" aria-label="סגור חיפוש">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
 </div>
 
-<!-- ── Mobile drawer overlay ── -->
 <div class="sh-drawer-overlay" id="sh-drawer-overlay" aria-hidden="true"></div>
 
-<!-- ── Mobile drawer ── -->
 <nav class="sh-drawer" id="sh-drawer" aria-label="תפריט נייד" aria-modal="true" role="dialog">
   <div class="sh-drawer__header">
     <span class="sh-drawer__logo">DROX</span>
     <button class="sh-drawer__close" id="sh-drawer-close" aria-label="סגור תפריט">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
   <ul class="sh-drawer__links">
-    {%- for link in section.settings.menu.links -%}
-      <li><a href="{{ link.url }}" class="sh-drawer__link">{{ link.title }}</a></li>
-    {%- else -%}
-      <li><a href="/collections/professional-drones" class="sh-drawer__link">רחפנים מקצועיים</a></li>
-      <li>
-        <details class="sh-drawer__sub">
-          <summary class="sh-drawer__link">קטגוריות</summary>
-          <ul class="sh-drawer__sub-links">
-            <li><a href="#">חקלאות</a></li>
-            <li><a href="#">מדידה ומיפוי</a></li>
-            <li><a href="#">ביטחון והצלה</a></li>
-          </ul>
-        </details>
-      </li>
-      <li><a href="/collections/camera-drones" class="sh-drawer__link">רחפני צילום</a></li>
-      <li><a href="/collections/multimedia" class="sh-drawer__link">צילום ומולטימדיה</a></li>
-      <li><a href="/pages/contact" class="sh-drawer__link">תמיכה ויצירת קשר</a></li>
-    {%- endfor -%}
+    <li>
+      <details class="sh-drawer__sub sh-drawer__sub--mega">
+        <summary class="sh-drawer__link">{{ section.settings.nav_catalog_label }}</summary>
+        <div class="sh-drawer__mega-nested">
+          {%- if l1_list.size > 0 -%}
+            {%- for l1_item in l1_list -%}
+              {%- if l1_item != blank -%}
+                {%- assign l1_name = l1_item | remove: "@@" -%}
+                <details class="sh-drawer__sub sh-drawer__sub--mega-tier">
+                  <summary class="sh-drawer__link sh-drawer__link--tier">{{ l1_name }}</summary>
+                  <div class="sh-drawer__mega-body">
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'mega_category' and block.settings.l1_title == l1_name -%}
+                        {%- if block.settings.l2_title != blank -%}
+                          <details>
+                             <summary class="sh-drawer__mega-l2">{{ block.settings.l2_title }}</summary>
+                             <ul class="sh-drawer__sub-links">
+                               {%- if block.settings.link_1_text != blank -%}<li><a href="{{ block.settings.link_1_url | default: '#' }}">{{ block.settings.link_1_text }}</a></li>{%- endif -%}
+                               {%- if block.settings.link_2_text != blank -%}<li><a href="{{ block.settings.link_2_url | default: '#' }}">{{ block.settings.link_2_text }}</a></li>{%- endif -%}
+                               {%- if block.settings.link_3_text != blank -%}<li><a href="{{ block.settings.link_3_url | default: '#' }}">{{ block.settings.link_3_text }}</a></li>{%- endif -%}
+                               {%- if block.settings.link_4_text != blank -%}<li><a href="{{ block.settings.link_4_url | default: '#' }}">{{ block.settings.link_4_text }}</a></li>{%- endif -%}
+                               {%- if block.settings.link_5_text != blank -%}<li><a href="{{ block.settings.link_5_url | default: '#' }}">{{ block.settings.link_5_text }}</a></li>{%- endif -%}
+                               {%- if block.settings.link_6_text != blank -%}<li><a href="{{ block.settings.link_6_url | default: '#' }}">{{ block.settings.link_6_text }}</a></li>{%- endif -%}
+                               {%- if block.settings.link_7_text != blank -%}<li><a href="{{ block.settings.link_7_url | default: '#' }}">{{ block.settings.link_7_text }}</a></li>{%- endif -%}
+                               {%- if block.settings.link_8_text != blank -%}<li><a href="{{ block.settings.link_8_url | default: '#' }}">{{ block.settings.link_8_text }}</a></li>{%- endif -%}
+                             </ul>
+                          </details>
+                        {%- else -%}
+                           <ul class="sh-drawer__sub-links" style="padding-top: 5px;">
+                             {%- if block.settings.link_1_text != blank -%}<li><a href="{{ block.settings.link_1_url | default: '#' }}">{{ block.settings.link_1_text }}</a></li>{%- endif -%}
+                             {%- if block.settings.link_2_text != blank -%}<li><a href="{{ block.settings.link_2_url | default: '#' }}">{{ block.settings.link_2_text }}</a></li>{%- endif -%}
+                             {%- if block.settings.link_3_text != blank -%}<li><a href="{{ block.settings.link_3_url | default: '#' }}">{{ block.settings.link_3_text }}</a></li>{%- endif -%}
+                             {%- if block.settings.link_4_text != blank -%}<li><a href="{{ block.settings.link_4_url | default: '#' }}">{{ block.settings.link_4_text }}</a></li>{%- endif -%}
+                             {%- if block.settings.link_5_text != blank -%}<li><a href="{{ block.settings.link_5_url | default: '#' }}">{{ block.settings.link_5_text }}</a></li>{%- endif -%}
+                             {%- if block.settings.link_6_text != blank -%}<li><a href="{{ block.settings.link_6_url | default: '#' }}">{{ block.settings.link_6_text }}</a></li>{%- endif -%}
+                             {%- if block.settings.link_7_text != blank -%}<li><a href="{{ block.settings.link_7_url | default: '#' }}">{{ block.settings.link_7_text }}</a></li>{%- endif -%}
+                             {%- if block.settings.link_8_text != blank -%}<li><a href="{{ block.settings.link_8_url | default: '#' }}">{{ block.settings.link_8_text }}</a></li>{%- endif -%}
+                           </ul>
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                </details>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            <p class="sh-drawer__mega-empty">הוסף בלוקים מסוג "קבוצת רחפנים" כדי להציג תפריט.</p>
+          {%- endif -%}
+        </div>
+      </details>
+    </li>
+    <li>
+      <a href="{{ section.settings.nav_license_url | default: '#' }}" class="sh-drawer__link{% if section.settings.show_license_badge %} sh-drawer__link--with-badge{% endif %}">
+        {%- if section.settings.show_license_badge -%}
+          <span class="sh-drawer__badge">{{ section.settings.license_badge_text }}</span>
+        {%- endif -%}
+        {{ section.settings.nav_license_label }}
+      </a>
+    </li>
+    <li><a href="{{ section.settings.nav_about_url | default: '#' }}" class="sh-drawer__link">{{ section.settings.nav_about_label }}</a></li>
+    <li><a href="{{ section.settings.nav_contact_url | default: '#' }}" class="sh-drawer__link">{{ section.settings.nav_contact_label }}</a></li>
   </ul>
 </nav>
 
 {% stylesheet %}
-/* ── Site Header ──────────────────────────────────────────── */
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 72px;
-  z-index: 9000;
-  background: transparent;
-  transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
-  font-family: 'Heebo', sans-serif;
-  direction: rtl;
+/* ── DROX top bar ── */
+.drox-top-bar { position: relative; width: 100%; z-index: 2; font-family: 'Heebo', sans-serif; direction: rtl; box-sizing: border-box; }
+.drox-top-bar__inner { max-width: 1400px; margin: 0 auto; padding: 0 3%; box-sizing: border-box; display: flex; flex-direction: row; direction: rtl; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.drox-top-bar__col { flex: 1 1 0; min-width: 0; text-align: center; }
+.drox-top-bar__col--links { text-align: right; }
+.drox-top-bar__col--phone { text-align: left; }
+.drox-top-bar__link { color: inherit; text-decoration: none; font-size: 12px; font-weight: 500; transition: opacity 0.2s ease; }
+.drox-top-bar__link:hover { opacity: 0.85; text-decoration: underline; }
+.drox-top-bar__link--static { cursor: default; }
+.drox-top-bar__link--static:hover { opacity: 1; text-decoration: none; }
+.drox-top-bar__links-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: var(--drox-links-gap, 8px); width: 100%; }
+.drox-top-bar__pipe { opacity: 0.65; font-weight: 400; user-select: none; }
+.drox-top-bar__segment { will-change: transform; }
+.drox-top-bar__promo { font-size: 12px; font-weight: 500; line-height: 1.4; }
+.drox-top-bar__contact-line { display: inline-block; font-size: 12px; line-height: 1.4; }
+.drox-top-bar__left-label { font-weight: 500; }
+.drox-top-bar__phone-num { font-weight: 600; }
+@media (max-width: 768px) {
+  .drox-top-bar__inner { flex-direction: column; justify-content: center; gap: 8px; padding-left: 4%; padding-right: 4%; }
+  .drox-top-bar__col--links, .drox-top-bar__col--phone { text-align: center; }
+}
+@media (max-width: 767px) {
+  .drox-top-bar__inner { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; align-content: center; gap: 10px; row-gap: 8px; }
+  .drox-top-bar__col { flex: 1 1 auto; min-width: 0; max-width: 100%; }
+  .drox-top-bar__col--links { text-align: center; }
+  .drox-top-bar__links-row { justify-content: center; }
 }
 
-.site-header.scrolled {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-}
-
-.sh-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 3%;
-}
-
-/* ── Logo ── */
-.sh-logo { display: flex; align-items: center; flex-shrink: 0; }
-
-.header__logo-img {
-  width: 120px;
-  height: auto;
-  display: block;
-  filter: invert(1);
-  transition: filter 0.35s ease;
-}
-
-.site-header.scrolled .header__logo-img {
-  filter: none;
-}
-
-/* ── Desktop Nav ── */
-.sh-nav {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  height: 100%;
-}
-
-.sh-nav__link {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 16px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.25s ease, opacity 0.25s ease;
-  white-space: nowrap;
-  position: relative;
-}
-
-.sh-nav__link--mega::after {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg);
-  margin-right: 6px;
-  opacity: 0.7;
-  transition: transform 0.2s ease;
-}
-
-.sh-mega-trigger[aria-expanded="true"] .sh-nav__link--mega::after {
-  transform: rotate(-135deg);
-}
-
-.site-header.scrolled .sh-nav__link { color: #1a1a1a; }
-.sh-nav__link:hover { opacity: 0.75; }
-
-/* ── Tools ── */
-.sh-tools {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.sh-tool-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: #fff;
-  border-radius: 50%;
-  transition: color 0.25s ease, background 0.25s ease;
-  position: relative;
-  text-decoration: none;
-}
-
-.site-header.scrolled .sh-tool-btn { color: #1a1a1a; }
+/* ── Site Header (height set in section style settings — header_height) ── */
+.site-header { position: sticky; top: 0; left: 0; right: 0; width: 100%; min-height: 60px; z-index: 9000; background: transparent; transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease; font-family: 'Heebo', sans-serif; direction: rtl; overflow: visible; margin: 0; padding: 0; }
+.site-header.scrolled { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(15px); box-shadow: 0 1px 0 rgba(0,0,0,0.08); }
+.sh-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; max-width: 1400px; margin: 0 auto; padding: 0 3%; overflow: visible; }
+.sh-logo { display: flex; align-items: center; flex-shrink: 0; justify-content: center; }
+.header__logo-img { transition: filter 0.25s ease; }
+.sh-nav { display: flex; align-items: center; flex-wrap: nowrap; gap: 2px; height: 100%; overflow: visible; margin: 0; }
+.sh-mega-wrap { position: relative; display: flex; align-items: stretch; height: 100%; z-index: 9601; }
+.sh-mega-trigger { display: flex; align-items: center; height: 100%; cursor: pointer; }
+.sh-nav__item { position: relative; display: flex; align-items: center; height: 100%; }
+.sh-nav__item--license { display: flex; align-items: center; height: 100%; }
+.sh-nav__link--license { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.sh-nav__link--license .sh-nav__badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 700; line-height: 1.2; padding: 3px 8px; border-radius: 4px; white-space: nowrap; pointer-events: none; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); }
+.sh-nav__link { display: flex; align-items: center; height: 100%; padding: 0 16px; font-size: 15px; font-weight: 500; text-decoration: none; transition: color 0.25s ease, opacity 0.25s ease; white-space: nowrap; position: relative; }
+.sh-nav__link--mega { display: inline-flex; align-items: center; gap: 6px; }
+.sh-nav__mega-chevron { flex-shrink: 0; transition: transform 0.25s ease; }
+.sh-mega-wrap:hover .sh-nav__mega-chevron { transform: rotate(180deg); }
+.sh-tools { display: flex; align-items: center; gap: 4px; }
+.sh-tool-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: none; background: transparent; cursor: pointer; border-radius: 50%; transition: color 0.25s ease, background 0.25s ease; position: relative; text-decoration: none; }
 .sh-tool-btn:hover { background: rgba(128,128,128,0.12); }
+.sh-cart-count { position: absolute; top: 4px; left: 4px; background: #0070d5; color: #fff; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Heebo', sans-serif; }
+.sh-hamburger { flex-direction: column; gap: 4px; display: none; }
+.sh-hamburger span { display: block; width: 20px; height: 2px; background: currentColor; border-radius: 2px; transition: all 0.3s ease; }
 
-.sh-cart-count {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  background: #0070d5;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Heebo', sans-serif;
-}
+/* Drawer & Search Panels */
+.sh-search-panel { position: fixed; top: 0; left: 0; right: 0; width: 100%; background: #fff; z-index: 10050; transform: translateY(-110%); visibility: hidden; transition: transform 0.55s, visibility 0.55s; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.sh-search-panel.is-open { transform: translateY(0); visibility: visible; }
+.sh-search-panel__inner { display: flex; align-items: center; max-width: 860px; margin: 0 auto; padding: 18px 5%; gap: 12px; direction: rtl; }
+.sh-search-form { display: flex; flex: 1; align-items: center; border-bottom: 2px solid #1a1a1a; gap: 8px; }
+.sh-search-input { flex: 1; border: none; outline: none; font-size: 18px; padding: 8px 4px; background: transparent; direction: rtl; }
+.sh-search-submit, .sh-search-close { border: none; background: transparent; cursor: pointer; color: #1a1a1a; padding: 8px; display: flex; align-items: center; }
 
-/* Hamburger */
-.sh-hamburger {
-  flex-direction: column;
-  gap: 4px;
-  display: none;
-}
-
-.sh-hamburger span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: currentColor;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-/* ── Mega Panel ── */
-.sh-mega-panel {
-  position: fixed;
-  top: 72px;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: #fff;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  z-index: 8990;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
-  transition: opacity 0.28s ease, visibility 0.28s ease, transform 0.28s ease;
-  direction: rtl;
-}
-
-.sh-mega-panel.is-open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.sh-mega-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 36px 3%;
-}
-
-.sh-mega-columns {
-  display: flex;
-  gap: 48px;
-  direction: rtl;
-}
-
-.sh-mega-col { flex: 1; min-width: 140px; }
-
-.sh-mega-col__heading {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #999;
-  margin-bottom: 14px;
-  font-family: 'Heebo', sans-serif;
-}
-
-.sh-mega-col ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.sh-mega-col ul a {
-  font-size: 15px;
-  font-weight: 400;
-  color: #1a1a1a;
-  text-decoration: none;
-  transition: color 0.2s;
-  font-family: 'Heebo', sans-serif;
-}
-
-.sh-mega-col ul a:hover { color: #0070d5; }
-
-/* ── Search Panel ── */
-.sh-search-panel {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: #fff;
-  z-index: 9100;
-  transform: translateY(-110%);
-  visibility: hidden;
-  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-}
-
-.sh-search-panel.is-open {
-  transform: translateY(0);
-  visibility: visible;
-}
-
-.sh-search-panel__inner {
-  display: flex;
-  align-items: center;
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 18px 5%;
-  gap: 12px;
-  direction: rtl;
-}
-
-.sh-search-form {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  border-bottom: 2px solid #1a1a1a;
-  gap: 8px;
-}
-
-.sh-search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 18px;
-  font-family: 'Heebo', sans-serif;
-  padding: 8px 4px;
-  background: transparent;
-  direction: rtl;
-}
-
-.sh-search-submit {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: #1a1a1a;
-  display: flex;
-  align-items: center;
-}
-
-.sh-search-close {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: #1a1a1a;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-/* ── Mobile Drawer ── */
-.sh-drawer-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 9050;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.sh-drawer-overlay.is-open {
-  opacity: 1;
-}
-
-.sh-drawer {
-  position: fixed;
-  top: 0;
-  right: -320px;
-  width: 300px;
-  max-width: 90vw;
-  height: 100%;
-  background: #111;
-  color: #fff;
-  z-index: 9100;
-  overflow-y: auto;
-  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  direction: rtl;
-  font-family: 'Heebo', sans-serif;
-}
-
+.sh-drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9050; opacity: 0; transition: opacity 0.3s ease; }
+.sh-drawer-overlay.is-open { opacity: 1; }
+.sh-drawer { position: fixed; top: 0; right: -320px; width: 300px; max-width: 90vw; height: 100%; background: var(--sh-drawer-bg); color: var(--sh-drawer-text); z-index: 9100; overflow-y: auto; transition: right 0.35s; direction: rtl; font-family: 'Heebo', sans-serif; }
 .sh-drawer.is-open { right: 0; }
+.sh-drawer__header { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sh-drawer__logo { font-size: 20px; font-weight: 800; letter-spacing: 2px; }
+.sh-drawer__close { border: none; background: transparent; cursor: pointer; color: inherit; padding: 4px; display: flex; }
+.sh-drawer__links { list-style: none; margin: 0; padding: 16px 0; }
+.sh-drawer__link { display: block; padding: 14px 20px; font-size: 16px; font-weight: 500; color: inherit; text-decoration: none; }
+.sh-drawer__link--with-badge { position: relative; padding-top: 26px; }
+.sh-drawer__badge { position: absolute; top: 8px; right: 20px; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: var(--sh-license-badge-bg); color: var(--sh-license-badge-fg); }
+.sh-drawer__sub summary { cursor: pointer; list-style: none; }
+.sh-drawer__sub summary::-webkit-details-marker { display: none; }
+.sh-drawer__mega-body { padding: 0 0 8px; }
+.sh-drawer__mega-l2 { margin: 0; padding: 12px 20px 4px; font-size: 14px; font-weight: 600; opacity: 0.9; cursor: pointer; }
+.sh-drawer__sub-links { list-style: none; padding: 0 20px 0 0; margin: 0; }
+.sh-drawer__sub-links li a { display: block; padding: 10px 20px; font-size: 14px; color: var(--sh-drawer-accent); text-decoration: none; }
 
-.sh-drawer__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.sh-drawer__logo {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #fff;
-}
-
-.sh-drawer__close {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-}
-
-.sh-drawer__links {
-  list-style: none;
-  margin: 0;
-  padding: 16px 0;
-}
-
-.sh-drawer__link {
-  display: block;
-  padding: 14px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #fff;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.sh-drawer__link:hover { background: rgba(255,255,255,0.05); }
-
-.sh-drawer__sub summary.sh-drawer__link { cursor: pointer; list-style: none; }
-.sh-drawer__sub summary.sh-drawer__link::-webkit-details-marker { display: none; }
-
-.sh-drawer__sub-links {
-  list-style: none;
-  padding: 0 0 0 20px;
-  margin: 0;
-}
-
-.sh-drawer__sub-links li a {
-  display: block;
-  padding: 10px 20px;
-  font-size: 14px;
-  color: rgba(255,255,255,0.7);
-  text-decoration: none;
-}
-
-/* ── Responsive ── */
 @media (max-width: 768px) {
   .sh-nav { display: none; }
   .sh-hamburger { display: flex; }
-  .header__logo-img { width: 90px !important; }
   .sh-inner { padding: 0 5%; }
 }
-
 @media (min-width: 769px) {
   .sh-hamburger { display: none; }
   .sh-drawer { display: none; }
-}
-
-/* ── Visually hidden (skip link) ── */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.visually-hidden:focus {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0;
-  padding: 8px 16px;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
 }
 {% endstylesheet %}
 
 {% javascript %}
 (function () {
-  /* ── Scroll: transparent → white ── */
   var header = document.getElementById('site-header');
   if (header) {
     window.addEventListener('scroll', function () {
@@ -591,114 +701,67 @@
     }, { passive: true });
   }
 
-  /* ── Mega menu ── */
-  var trigger   = document.getElementById('sh-mega-trigger');
-  var megaPanel = document.getElementById('sh-mega-panel');
-  var megaTimer;
-
-  function openMega() {
-    clearTimeout(megaTimer);
-    if (!trigger || !megaPanel) return;
-    megaPanel.classList.add('is-open');
-    trigger.setAttribute('aria-expanded', 'true');
-    megaPanel.setAttribute('aria-hidden', 'false');
-  }
-
-  function closeMega() {
-    megaTimer = setTimeout(function () {
-      if (!megaPanel) return;
-      megaPanel.classList.remove('is-open');
-      if (trigger) trigger.setAttribute('aria-expanded', 'false');
-      megaPanel.setAttribute('aria-hidden', 'true');
-    }, 120);
-  }
-
-  if (trigger && megaPanel) {
-    trigger.addEventListener('mouseenter', openMega);
-    trigger.addEventListener('mouseleave', closeMega);
-    megaPanel.addEventListener('mouseenter', function () { clearTimeout(megaTimer); });
-    megaPanel.addEventListener('mouseleave', closeMega);
-    trigger.addEventListener('click', function () {
-      var open = megaPanel.classList.contains('is-open');
-      open ? closeMega() : openMega();
-    });
-  }
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && megaPanel) closeMega();
-  });
-
-  /* ── Search panel ── */
-  var searchBtn   = document.getElementById('sh-search-btn');
+  var searchBtn = document.getElementById('sh-search-btn');
   var searchPanel = document.getElementById('sh-search-panel');
   var searchClose = document.getElementById('sh-search-close');
   var searchInput = document.getElementById('sh-search-input');
-
+  
   function openSearch() {
     if (!searchPanel) return;
     searchPanel.classList.add('is-open');
     searchPanel.setAttribute('aria-hidden', 'false');
-    if (searchBtn) searchBtn.setAttribute('aria-expanded', 'true');
     setTimeout(function () { if (searchInput) searchInput.focus(); }, 80);
   }
-
   function closeSearch() {
     if (!searchPanel) return;
     searchPanel.classList.remove('is-open');
     searchPanel.setAttribute('aria-hidden', 'true');
-    if (searchBtn) searchBtn.setAttribute('aria-expanded', 'false');
   }
-
-  if (searchBtn)   searchBtn.addEventListener('click', function (e) { e.stopPropagation(); openSearch(); });
+  if (searchBtn) searchBtn.addEventListener('click', function (e) { e.stopPropagation(); openSearch(); });
   if (searchClose) searchClose.addEventListener('click', closeSearch);
 
-  document.addEventListener('click', function (e) {
-    if (searchPanel && searchPanel.classList.contains('is-open')) {
-      if (!searchPanel.contains(e.target) && e.target !== searchBtn) closeSearch();
-    }
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeSearch();
-  });
-
-  /* ── Mobile drawer ── */
   var hamburger = document.getElementById('sh-hamburger');
-  var drawer    = document.getElementById('sh-drawer');
-  var overlay   = document.getElementById('sh-drawer-overlay');
+  var drawer = document.getElementById('sh-drawer');
+  var overlay = document.getElementById('sh-drawer-overlay');
   var drawerClose = document.getElementById('sh-drawer-close');
 
   function openDrawer() {
     if (!drawer) return;
     drawer.classList.add('is-open');
     if (overlay) { overlay.style.display = 'block'; requestAnimationFrame(function () { overlay.classList.add('is-open'); }); }
-    if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
-
   function closeDrawer() {
     if (!drawer) return;
     drawer.classList.remove('is-open');
-    if (overlay) {
-      overlay.classList.remove('is-open');
-      setTimeout(function () { overlay.style.display = 'none'; }, 350);
-    }
-    if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    if (overlay) { overlay.classList.remove('is-open'); setTimeout(function () { overlay.style.display = 'none'; }, 350); }
     document.body.style.overflow = '';
   }
-
-  if (hamburger)   hamburger.addEventListener('click', openDrawer);
+  if (hamburger) hamburger.addEventListener('click', openDrawer);
   if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
-  if (overlay)     overlay.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeDrawer();
-  });
-
-  /* ── Re-init on Shopify section reload ── */
-  document.addEventListener('shopify:section:load', function () {
-    if (header) header.classList.toggle('scrolled', window.scrollY > 5);
-  });
+  var droxTopBar = document.querySelector('[data-drox-top-bar]');
+  function syncDroxTopBarOffset() {
+    var siteHeader = document.getElementById('site-header');
+    if (!siteHeader) return;
+    if (!droxTopBar) {
+      document.documentElement.style.removeProperty('--drox-top-offset');
+      return;
+    }
+    var bottom = droxTopBar.getBoundingClientRect().bottom;
+    if (bottom <= 0) {
+      siteHeader.classList.remove('site-header--has-top-bar');
+      document.documentElement.style.removeProperty('--drox-top-offset');
+    } else {
+      siteHeader.classList.add('site-header--has-top-bar');
+      document.documentElement.style.setProperty('--drox-top-offset', Math.round(bottom) + 'px');
+    }
+  }
+  window.addEventListener('scroll', syncDroxTopBarOffset, { passive: true });
+  window.addEventListener('resize', syncDroxTopBarOffset);
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', syncDroxTopBarOffset); } 
+  else { syncDroxTopBarOffset(); }
 })();
 {% endjavascript %}
 
@@ -706,21 +769,101 @@
 {
   "name": "Header",
   "settings": [
+    { "type": "header", "content": "Top bar (announcement)" },
+    { "type": "checkbox", "id": "show_top_bar", "label": "Show top bar", "default": true },
+    { "type": "color", "id": "top_bar_bg", "label": "Top bar background", "default": "#000000" },
+    { "type": "color", "id": "top_bar_right_color", "label": "Right column — link text", "default": "#ffffff" },
+    { "type": "color", "id": "top_bar_middle_color", "label": "Middle — promo text", "default": "#ffffff" },
+    { "type": "color", "id": "top_bar_left_label_color", "label": "Left — contact label", "default": "#ffffff" },
+    { "type": "color", "id": "top_bar_phone_color", "label": "Left — phone number", "default": "#ff9a00" },
+    { "type": "range", "id": "top_bar_links_gap", "min": 4, "max": 20, "step": 1, "unit": "px", "label": "Right column — space between links", "default": 8 },
+    { "type": "range", "id": "right_segment_offset", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "Right column — horizontal nudge", "default": 0 },
+    { "type": "range", "id": "middle_segment_offset", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "Middle — horizontal nudge", "default": 0 },
+    { "type": "range", "id": "left_segment_offset", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "Left column — horizontal nudge", "default": 0 },
+    { "type": "url", "id": "about_link", "label": "About (אודות)" },
+    { "type": "text", "id": "about_link_label", "label": "About link label", "default": "אודות" },
+    { "type": "url", "id": "terms_link", "label": "Terms of use (תקנון האתר)" },
+    { "type": "text", "id": "terms_link_label", "label": "Terms link label", "default": "תקנון האתר" },
+    { "type": "url", "id": "privacy_link", "label": "Privacy policy (מדיניות פרטיות)" },
+    { "type": "text", "id": "privacy_link_label", "label": "Privacy link label", "default": "מדיניות פרטיות" },
+    { "type": "text", "id": "promo_text", "label": "Promo text (center)", "default": "הזמינו רחפן וקבלו הדרכת הטסה חינם" },
+    { "type": "text", "id": "left_contact_label", "label": "Left — contact label", "default": "להזמנות או פרטים חייגו עכשיו: " },
+    { "type": "text", "id": "phone_number_text", "label": "Left — phone number", "default": "03-656-5500" },
+    { "type": "range", "id": "top_bar_height", "min": 28, "max": 56, "step": 2, "unit": "px", "label": "Top bar height / padding", "default": 36 },
+    { "type": "header", "content": "Top bar — mobile" },
+    { "type": "checkbox", "id": "show_top_bar_mobile", "label": "Show top bar on mobile", "default": true },
+    { "type": "checkbox", "id": "hide_links_mobile", "label": "Hide right column (links) on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_promo_mobile", "label": "Hide middle (promo) on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_phone_mobile", "label": "Hide left column (contact) on mobile", "default": false },
+    { "type": "range", "id": "top_bar_font_size_mobile", "min": 8, "max": 14, "step": 1, "unit": "px", "label": "Top bar font size (mobile only)", "default": 10 },
+    { "type": "color", "id": "top_bar_bg_mobile", "label": "Top bar background (mobile)", "default": "#000000" },
+    
+    { "type": "header", "content": "Logo" },
+    { "type": "checkbox", "id": "logo_hover_enabled", "label": "Enable Logo Hover Highlight", "default": true },
+    { "type": "range", "id": "logo_width", "min": 100, "max": 300, "step": 5, "unit": "px", "label": "Logo width (desktop)", "default": 120 },
+    { "type": "range", "id": "logo_width_mobile", "min": 50, "max": 150, "step": 5, "unit": "px", "label": "Logo width (mobile)", "default": 90 },
+    
+    { "type": "header", "content": "Header & navigation" },
+    { "type": "range", "id": "header_height", "min": 60, "max": 180, "step": 2, "unit": "px", "label": "Header height", "default": 80 },
+    { "type": "color", "id": "header_nav_bg", "label": "Header background (transparent header)", "default": "#00000000" },
+    { "type": "color", "id": "nav_link_color", "label": "Header text color", "default": "#ffffff" },
+    { "type": "color", "id": "nav_link_hover_color", "label": "Hover text color (צבע במעבר עכבר)", "default": "#ff6b00" },
+    { "type": "checkbox", "id": "nav_hover_bold", "label": "Bold links on hover (הדגשה במעבר עכבר)", "default": true },
+    { "type": "range", "id": "menu_item_spacing", "min": 10, "max": 50, "step": 2, "unit": "px", "label": "Menu item spacing", "default": 20 },
+    { "type": "color", "id": "header_scrolled_bg", "label": "Header background (scrolled)", "default": "#ffffffeb" },
+    { "type": "color", "id": "header_scrolled_nav_color", "label": "Navigation & icons color (scrolled)", "default": "#1a1a1a" },
+    
+    { "type": "text", "id": "nav_catalog_label", "label": "Catalog mega menu label", "default": "קטלוג החנות" },
+    { "type": "text", "id": "nav_license_label", "label": "License link label", "default": "רישוי להטסה" },
+    { "type": "url", "id": "nav_license_url", "label": "License link URL" },
+    { "type": "text", "id": "nav_about_label", "label": "About link label", "default": "אודות" },
+    { "type": "url", "id": "nav_about_url", "label": "About URL" },
+    { "type": "text", "id": "nav_contact_label", "label": "Contact link label", "default": "צור קשר" },
+    { "type": "url", "id": "nav_contact_url", "label": "Contact URL" },
+    
+    { "type": "header", "content": "License badge" },
+    { "type": "checkbox", "id": "show_license_badge", "label": "Show license badge", "default": true },
+    { "type": "text", "id": "license_badge_text", "label": "Badge text", "default": "קורס מתנה!" },
+    { "type": "color", "id": "license_badge_color", "label": "Badge background", "default": "#ff6b00" },
+    { "type": "color", "id": "license_badge_text_color", "label": "Badge text color", "default": "#ffffff" },
+    
+    { "type": "header", "content": "Mega menu panel" },
+    { "type": "color", "id": "mega_panel_bg", "label": "Background color", "default": "#ffffff" },
+    { "type": "color", "id": "mega_panel_border_color", "label": "צבע מסגרות הפרדה (בנדה DJI)", "default": "#ff6b00" },
+    { "type": "color", "id": "mega_card_bg_hover_color", "label": "צבע רקע פריט במעבר עכבר", "default": "#f5f5f5" },
+    { "type": "color", "id": "mega_card_title_color", "label": "Text color", "default": "#1a1a1a" },
+    { "type": "color", "id": "mega_card_link_hover_color", "label": "Hover text color", "default": "#ff6b00" },
+    { "type": "range", "id": "mega_font_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Mega menu font size", "default": 14 },
+    { "type": "range", "id": "mega_panel_width", "min": 150, "max": 400, "step": 5, "unit": "px", "label": "Mega menu panel width", "default": 180 },
+    { "type": "range", "id": "mega_item_padding_v", "min": 5, "max": 30, "step": 1, "unit": "px", "label": "Mega menu row padding (vertical)", "default": 10 },
+    
+    { "type": "header", "content": "Mobile drawer" },
+    { "type": "color", "id": "drawer_bg_color", "label": "Drawer background", "default": "#111111" },
+    { "type": "color", "id": "drawer_text_color", "label": "Drawer link color", "default": "#ffffff" },
+    { "type": "color", "id": "drawer_accent_color", "label": "Drawer sub-link color", "default": "#bbbbbb" }
+  ],
+  "blocks": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Navigation menu",
-      "default": "main-menu"
-    },
-    {
-      "type": "text",
-      "id": "mega_keyword",
-      "label": "Mega menu trigger keyword",
-      "default": "מקצוע"
+      "type": "mega_category",
+      "name": "קבוצת רחפנים (הוסף כמה)",
+      "settings": [
+        { "type": "paragraph", "content": "💡 כדי להוסיף 'מיפוי', 'חקלאות' ו'ביטחון' תחת 'רחפני אנטרפרייז', פשוט הוסיפו 3 בלוקים כאלו! שמרו על השם ברמה 1 זהה, והמערכת תמזג אותם." },
+        { "type": "text", "id": "l1_title", "label": "שם קטגוריה ראשית (רמה 1)", "default": "רחפני אנטרפרייז", "info": "לדוגמה: רחפני אנטרפרייז" },
+        { "type": "text", "id": "l2_title", "label": "שם תת-קטגוריה (רמה 2 - למשל: מיפוי / חקלאות)", "default": "מיפוי", "info": "השאירו ריק אם אתם לא צריכים את הרמה הזו." },
+        { "type": "url", "id": "l2_link", "label": "קישור לתת-קטגוריה" },
+        { "type": "header", "content": "רשימת הרחפנים של הקבוצה הזו" },
+        { "type": "text", "id": "link_1_text", "label": "רחפן 1" }, { "type": "url", "id": "link_1_url", "label": "קישור רחפן 1" },
+        { "type": "text", "id": "link_2_text", "label": "רחפן 2" }, { "type": "url", "id": "link_2_url", "label": "קישור רחפן 2" },
+        { "type": "text", "id": "link_3_text", "label": "רחפן 3" }, { "type": "url", "id": "link_3_url", "label": "קישור רחפן 3" },
+        { "type": "text", "id": "link_4_text", "label": "רחפן 4" }, { "type": "url", "id": "link_4_url", "label": "קישור רחפן 4" },
+        { "type": "text", "id": "link_5_text", "label": "רחפן 5" }, { "type": "url", "id": "link_5_url", "label": "קישור רחפן 5" },
+        { "type": "text", "id": "link_6_text", "label": "רחפן 6" }, { "type": "url", "id": "link_6_url", "label": "קישור רחפן 6" },
+        { "type": "text", "id": "link_7_text", "label": "רחפן 7" }, { "type": "url", "id": "link_7_url", "label": "קישור רחפן 7" },
+        { "type": "text", "id": "link_8_text", "label": "רחפן 8" }, { "type": "url", "id": "link_8_url", "label": "קישור רחפן 8" }
+      ]
     }
   ],
-  "presets": [
-    { "name": "Header" }
-  ]
+  "max_blocks": 30,
+  "presets": [ { "name": "Header" } ]
 }
 {% endschema %}
