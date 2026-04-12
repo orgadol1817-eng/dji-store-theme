@@ -1,23 +1,22 @@
-{%- comment -%}
-  DJI Enterprise Intro Text - v2.0 (Architect Edition)
-  Features: Dual-color heading, XY Precision Positioning, Adjustable Section Height
-{%- endcomment -%}
-
 {%- style -%}
-  :root {
+  #shopify-section-{{ section.id }} {
+    --intro-bg: {{ section.settings.bg_color }};
     --intro-x-pos: {{ section.settings.horizontal_pos }}%;
     --intro-y-pos: {{ section.settings.vertical_pos }}%;
+    --content-max-width: {{ section.settings.content_max_width }}px;
   }
 
-  .dji-intro-v2 {
+  .dji-intro-v3 {
     position: relative;
-    background-color: #000000;
+    background-color: var(--intro-bg);
     width: 100%;
-    /* שליטה בגובה הסקשן כדי לאפשר תנועה */
     height: {{ section.settings.section_height }}px;
-    min-height: 400px;
+    min-height: 300px;
     overflow: hidden;
     font-family: 'Heebo', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .dji-intro-content-wrapper {
@@ -25,62 +24,75 @@
     top: var(--intro-y-pos);
     left: var(--intro-x-pos);
     transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 1000px;
+    width: 90%;
+    max-width: var(--content-max-width);
     padding: 20px;
     text-align: {{ section.settings.text_alignment }};
     direction: rtl;
   }
 
-  /* הטקסט הלבן הקטן */
+  /* טקסט הקדמה (קטן) */
   .dji-intro-paragraph {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: clamp(14px, 1.2vw, 18px);
-    font-weight: 300;
+    color: {{ section.settings.intro_color }};
+    font-size: {{ section.settings.intro_size }}px;
+    font-weight: {{ section.settings.intro_weight }};
     line-height: 1.6;
-    margin-bottom: 30px;
+    margin-bottom: {{ section.settings.intro_margin_bottom }}px;
   }
 
-  /* הכותרת הדו-צבעונית */
-  .dji-intro-heading {
-    text-transform: uppercase;
-    line-height: 1;
-    letter-spacing: -2px;
-    margin: 0;
-  }
-
+  /* כותרת מודגשת (Accent) */
   .dji-heading-accent {
-    color: #0070d5 !important;
+    color: {{ section.settings.accent_color }} !important;
     display: block;
-    font-size: clamp(36px, 6vw, 75px);
-    font-weight: 800;
-    margin-bottom: 5px;
+    font-size: {{ section.settings.accent_size }}px;
+    font-weight: {{ section.settings.accent_weight }};
+    line-height: {{ section.settings.heading_line_height }};
+    text-transform: uppercase;
+    letter-spacing: -1px;
   }
 
+  /* כותרת דקה (Main) */
   .dji-heading-main {
-    color: #ffffff !important;
-    font-size: clamp(34px, 5vw, 70px);
-    font-weight: 300;
+    color: {{ section.settings.main_text_color }} !important;
+    font-size: {{ section.settings.main_text_size }}px;
+    font-weight: {{ section.settings.main_text_weight }};
+    line-height: {{ section.settings.heading_line_height }};
     display: block;
+    text-transform: uppercase;
   }
 
+  /* התאמות למובייל */
   @media (max-width: 768px) {
-    .dji-intro-v2 {
-      height: auto;
-      padding: 60px 20px;
+    .dji-intro-v3 {
+      height: auto !important;
+      padding: 60px 16px;
+      min-height: auto;
+      box-sizing: border-box;
     }
     .dji-intro-content-wrapper {
-      position: relative;
+      position: relative !important;
       top: 0 !important;
       left: 0 !important;
-      transform: none;
+      transform: none !important;
       margin: 0 auto;
       text-align: center;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .dji-intro-paragraph {
+      font-size: {{ section.settings.intro_size_mobile }}px;
+    }
+    .dji-heading-accent {
+      font-size: {{ section.settings.accent_size_mobile }}px;
+    }
+    .dji-heading-main {
+      font-size: {{ section.settings.main_text_size_mobile }}px;
     }
   }
 {%- endstyle -%}
 
-<div class="dji-intro-v2">
+<div class="dji-intro-v3">
   <div class="dji-intro-content-wrapper">
     {%- if section.settings.intro_text != blank -%}
       <div class="dji-intro-paragraph">
@@ -89,8 +101,8 @@
     {%- endif -%}
 
     <h2 class="dji-intro-heading">
-      <span class="dji-heading-accent">{{ section.settings.blue_text }}</span>
-      <span class="dji-heading-main">{{ section.settings.white_text }}</span>
+      <span class="dji-heading-accent">{{ section.settings.accent_text }}</span>
+      <span class="dji-heading-main">{{ section.settings.main_text }}</span>
     </h2>
   </div>
 </div>
@@ -101,29 +113,205 @@
   "settings": [
     {
       "type": "header",
-      "content": "תוכן הטקסט"
+      "content": "Global Settings (כללי)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "צבע רקע",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "min": 200,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "גובה הסקשן (דסקטופ)",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "label": "רוחב תוכן מקסימלי",
+      "default": 1000
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "יישור טקסט",
+      "options": [
+        { "value": "left", "label": "שמאל" },
+        { "value": "center", "label": "מרכז" },
+        { "value": "right", "label": "ימין" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Intro Paragraph (טקסט עליון קטן)"
     },
     {
       "type": "richtext",
       "id": "intro_text",
-      "label": "טקסט הקדמה (לבן קטן)",
-      "default": "<p>Introducing the DJI Matrice 4 Series, a new compact and intelligent multi-sensor flagship drone series for enterprise industries.</p>"
+      "label": "תוכן הטקסט",
+      "default": "<p>Introducing the DJI Matrice 4 Series, a new multi-sensor flagship drone.</p>"
     },
     {
-      "type": "text",
-      "id": "blue_text",
-      "label": "טקסט כחול מודגש",
-      "default": "Two Models,"
+      "type": "color",
+      "id": "intro_color",
+      "label": "צבע טקסט",
+      "default": "#cccccc"
     },
     {
-      "type": "text",
-      "id": "white_text",
-      "label": "טקסט לבן דק",
-      "default": "Countless Applications"
+      "type": "range",
+      "id": "intro_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "גודל גופן",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "intro_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "גודל גופן (מובייל)",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "intro_weight",
+      "label": "עובי גופן",
+      "options": [
+        { "value": "300", "label": "דק" },
+        { "value": "400", "label": "רגיל" },
+        { "value": "700", "label": "מודגש" }
+      ],
+      "default": "300"
+    },
+    {
+      "type": "range",
+      "id": "intro_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "רווח מתחת לטקסט",
+      "default": 30
     },
     {
       "type": "header",
-      "content": "מיקום (XY Positioning)"
+      "content": "Accent Heading (החלק הצבעוני)"
+    },
+    {
+      "type": "text",
+      "id": "accent_text",
+      "label": "טקסט",
+      "default": "Two Models,"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "צבע",
+      "default": "#0070d5"
+    },
+    {
+      "type": "range",
+      "id": "accent_size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "גודל גופן",
+      "default": 74
+    },
+    {
+      "type": "range",
+      "id": "accent_size_mobile",
+      "min": 15,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "גודל גופן (מובייל)",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "accent_weight",
+      "label": "עובי גופן",
+      "options": [
+        { "value": "400", "label": "רגיל" },
+        { "value": "700", "label": "מודגש" },
+        { "value": "900", "label": "סופר מודגש" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "header",
+      "content": "Main Heading (החלק הלבן)"
+    },
+    {
+      "type": "text",
+      "id": "main_text",
+      "label": "טקסט",
+      "default": "Countless Applications"
+    },
+    {
+      "type": "color",
+      "id": "main_text_color",
+      "label": "צבע",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "main_text_size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "גודל גופן",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "main_text_size_mobile",
+      "min": 15,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "גודל גופן (מובייל)",
+      "default": 38
+    },
+    {
+      "type": "select",
+      "id": "main_text_weight",
+      "label": "עובי גופן",
+      "options": [
+        { "value": "100", "label": "דק מאוד" },
+        { "value": "300", "label": "דק" },
+        { "value": "400", "label": "רגיל" }
+      ],
+      "default": "300"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_height",
+      "label": "מרווח בין שורות הכותרת",
+      "default": "1.1"
+    },
+    {
+      "type": "header",
+      "content": "Positioning (מיקום XY)"
     },
     {
       "type": "range",
@@ -144,27 +332,6 @@
       "unit": "%",
       "label": "מיקום אנכי (Y)",
       "default": 50
-    },
-    {
-      "type": "select",
-      "id": "text_alignment",
-      "label": "יישור טקסט",
-      "options": [
-        { "value": "left", "label": "שמאל" },
-        { "value": "center", "label": "מרכז" },
-        { "value": "right", "label": "ימין" }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "range",
-      "id": "section_height",
-      "min": 300,
-      "max": 800,
-      "step": 10,
-      "unit": "px",
-      "label": "גובה הסקשן",
-      "default": 500
     }
   ],
   "presets": [

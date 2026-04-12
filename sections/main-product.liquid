@@ -1,27 +1,138 @@
 {%- comment -%} Standard Product Main Section (Restored) {%- endcomment -%}
-<section class="product-main-wrapper" style="background-color: #000; color: #fff; padding: 50px 0;">
-  <div class="container" style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; padding: 0 20px;">
-    
+
+{% style %}
+  #shopify-section-{{ section.id }} .product-main-wrapper {
+    background-color: #000;
+    color: #fff;
+    padding: 50px 0;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 0 20px;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-media {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-media img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-info {
+    flex: 1;
+    min-width: 300px;
+    direction: rtl;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-price {
+    font-size: 24px;
+    color: #0070d5;
+    margin: 20px 0;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-btn {
+    background: #0070d5;
+    color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .product-main-desc {
+    margin-top: 30px;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .product-main-inner {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0 16px;
+      gap: 24px;
+    }
+
+    #shopify-section-{{ section.id }} .product-main-media {
+      flex: none;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .product-main-info {
+      flex: none;
+      width: 100%;
+      min-width: 0;
+    }
+
+    #shopify-section-{{ section.id }} .product-main-title {
+      font-size: 24px;
+    }
+
+    #shopify-section-{{ section.id }} .product-main-price {
+      font-size: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .product-main-btn {
+      font-size: 16px;
+      padding: 14px 24px;
+    }
+
+    #shopify-section-{{ section.id }} .product-main-desc {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+  }
+{% endstyle %}
+
+<section class="product-main-wrapper">
+  <div class="product-main-inner">
+
     {%- comment -%} Product Media (Images) {%- endcomment -%}
-    <div class="product-media" style="flex: 1; min-width: 300px;">
+    <div class="product-main-media">
       {% if product.featured_image %}
-        <img src="{{ product.featured_image | image_url: width: 800 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="eager" alt="{{ product.title }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="eager" style="width: 100%; border-radius: 8px;">
+        <img
+          src="{{ product.featured_image | image_url: width: 800 }}"
+          alt="{{ product.title | escape }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+          loading="eager"
+        >
       {% endif %}
     </div>
 
     {%- comment -%} Product Details {%- endcomment -%}
-    <div class="product-info" style="flex: 1; min-width: 300px; direction: rtl;">
-      <h1 style="font-size: 32px; font-weight: 800;">{{ product.title }}</h1>
-      <div style="font-size: 24px; color: #0070d5; margin: 20px 0;">{{ product.price | money }}</div>
-      
+    <div class="product-main-info">
+      <h1 class="product-main-title">{{ product.title }}</h1>
+      <div class="product-main-price">{{ product.price | money }}</div>
+
       {% form 'product', product %}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button type="submit" style="background: #0070d5; color: #fff; padding: 15px 40px; border: none; border-radius: 30px; cursor: pointer; font-size: 18px; width: 100%;">
+        <button type="submit" class="product-main-btn">
           הוספה לסל
         </button>
       {% endform %}
 
-      <div style="margin-top: 30px; line-height: 1.6; opacity: 0.8;">
+      <div class="product-main-desc">
         {{ product.description }}
       </div>
     </div>

@@ -30,23 +30,40 @@
     --subnav-sticky-bg: {{ section.settings.sticky_bg_color | color_modify: 'alpha', sticky_alpha }};
   }
 
-  /* הזחות דסקטופ */
-  @media (min-width: 768px) {
+  /* הזחות דסקטופ (769px+ avoids overlap with mobile max-width: 768px) */
+  @media (min-width: 769px) {
     #shopify-section-{{ section.id }} .dji-subnav-right { transform: translateX({{ section.settings.title_nudge }}px); }
     #shopify-section-{{ section.id }} .dji-subnav-left { transform: translateX({{ section.settings.links_nudge }}px); }
     .dji-subnav-title { font-size: 18px; }
     .dji-subnav-container { padding: 0 3%; }
   }
 
-  /* הזחות ועיצוב מובייל (NEW!) */
-  @media (max-width: 767px) {
+  /* הזחות ועיצוב מובייל */
+  @media (max-width: 768px) {
     #shopify-section-{{ section.id }} .dji-subnav-right { transform: translateX({{ section.settings.title_nudge_mobile }}px); }
-    #shopify-section-{{ section.id }} .dji-subnav-left { transform: translateX({{ section.settings.links_nudge_mobile }}px); }
+    #shopify-section-{{ section.id }} .dji-subnav-left {
+      transform: translateX({{ section.settings.links_nudge_mobile }}px);
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      min-width: 0;
+    }
     .dji-subnav-title { font-size: {{ section.settings.mobile_font_size_title }}px !important; }
     .dji-subnav-link, .dji-subnav-btn { font-size: {{ section.settings.mobile_font_size_links }}px !important; }
-    .dji-subnav-container { padding: 0 5%; }
-    .dji-subnav-links { gap: 10px !important; }
+    .dji-subnav-container { padding: 0 16px; box-sizing: border-box; }
+    #shopify-section-{{ section.id }} .dji-subnav-links {
+      gap: 10px !important;
+      justify-content: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
     .dji-subnav-btn { padding: 4px 12px !important; }
+    .dji-subnav-mobile-hide { display: none !important; }
+    #shopify-section-{{ section.id }} .dji-subnav-links li:has(> .dji-subnav-mobile-hide) {
+      display: none !important;
+    }
   }
 
   /* --- 3. מבנה הסאב-נאב --- */
@@ -83,9 +100,9 @@
           <li>
             {%- if block.settings.is_button -%}
               {% style %}.btn-{{ block.id }} { background: {{ block.settings.btn_bg_color }} !important; color: {{ block.settings.btn_text_color }} !important; border: 1px solid {{ block.settings.btn_border_color }} !important; }{% endstyle %}
-              <a href="{{ block.settings.link_url | default: '#' }}" class="dji-subnav-btn btn-{{ block.id }}">{{ block.settings.link_text }}</a>
+              <a href="{{ block.settings.link_url | default: '#' }}" class="dji-subnav-btn btn-{{ block.id }}{% if block.settings.hide_on_mobile %} dji-subnav-mobile-hide{% endif %}">{{ block.settings.link_text }}</a>
             {%- else -%}
-              <a href="{{ block.settings.link_url | default: '#' }}" class="dji-subnav-link">{{ block.settings.link_text }}</a>
+              <a href="{{ block.settings.link_url | default: '#' }}" class="dji-subnav-link{% if block.settings.hide_on_mobile %} dji-subnav-mobile-hide{% endif %}">{{ block.settings.link_text }}</a>
             {%- endif -%}
           </li>
         {%- endfor -%}
@@ -150,7 +167,8 @@
         { "type": "checkbox", "id": "is_button", "label": "עצב ככפתור", "default": false },
         { "type": "color", "id": "btn_bg_color", "label": "רקע כפתור", "default": "#0070d5" },
         { "type": "color", "id": "btn_text_color", "label": "טקסט כפתור", "default": "#ffffff" },
-        { "type": "color", "id": "btn_border_color", "label": "מסגרת כפתור", "default": "#0070d5" }
+        { "type": "color", "id": "btn_border_color", "label": "מסגרת כפתור", "default": "#0070d5" },
+        { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide this link on mobile", "default": false }
       ]
     }
   ],

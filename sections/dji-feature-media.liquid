@@ -1,0 +1,182 @@
+{%- comment -%}
+  DJI Feature Media - v2.1 "The Ultimate Editor"
+  Fixed: Schema step limit for nudge_x and nudge_y.
+  Full control: XY Nudge, Typography, Colors, Native Video + YouTube/Vimeo
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --f-bg: {{ section.settings.color_bg }};
+    --content-max-w: {{ section.settings.content_max_width }}px;
+  }
+
+  .dji-feature-v2 {
+    position: relative;
+    width: 100%;
+    min-height: {{ section.settings.section_height }}px;
+    background-color: var(--f-bg);
+    overflow: hidden;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+    display: flex;
+    padding: 80px 0;
+  }
+
+  .dji-f-master {
+    position: relative;
+    width: 90%;
+    max-width: var(--content-max-w);
+    margin: 0 auto;
+    z-index: 10;
+    transform: translate(calc({{ section.settings.nudge_x }}px), calc({{ section.settings.nudge_y }}px));
+  }
+
+  /* כותרת ראשית */
+  .f-header-v2 {
+    text-align: center;
+    margin-bottom: {{ section.settings.header_margin }}px;
+  }
+  .f-header-v2 h2 {
+    font-size: {{ section.settings.main_title_size }}px;
+    font-weight: {{ section.settings.main_title_weight }};
+    letter-spacing: {{ section.settings.main_title_spacing }}px;
+    color: {{ section.settings.color_main_title }};
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  /* מבנה מפוצל 1/3 - 2/3 */
+  .f-split-v2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    margin-bottom: {{ section.settings.media_margin }}px;
+    align-items: start;
+  }
+
+  .f-sub-title-v2 h3 {
+    font-size: {{ section.settings.sub_title_size }}px;
+    font-weight: {{ section.settings.sub_title_weight }};
+    color: {{ section.settings.color_sub_title }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .f-desc-v2 {
+    font-size: {{ section.settings.desc_size }}px;
+    line-height: {{ section.settings.desc_line_height }};
+    font-weight: {{ section.settings.desc_weight }};
+    color: {{ section.settings.color_desc }};
+  }
+
+  /* מדיה */
+  .f-media-v2 {
+    width: 100%;
+    border-radius: {{ section.settings.media_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    position: relative;
+  }
+
+  .f-media-v2 video, .f-media-v2 img, .f-media-v2 iframe {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border: none;
+  }
+
+  @media (max-width: 768px) {
+    .dji-feature-v2 { padding: 40px 16px; box-sizing: border-box; }
+    .f-header-v2 h2 { font-size: calc({{ section.settings.main_title_size }}px * 0.6); }
+    .f-split-v2 { grid-template-columns: 1fr; gap: 20px; }
+    .f-sub-title-v2 h3 { font-size: calc({{ section.settings.sub_title_size }}px * 0.7); }
+    .f-desc-v2 { font-size: calc({{ section.settings.desc_size }}px * 0.9); }
+  }
+{%- endstyle -%}
+
+<section class="dji-feature-v2">
+  <div class="dji-f-master">
+    
+    <div class="f-header-v2">
+      <h2>{{ section.settings.main_title }}</h2>
+    </div>
+
+    <div class="f-split-v2">
+      <div class="f-sub-title-v2">
+        <h3>{{ section.settings.sub_title }}</h3>
+      </div>
+      <div class="f-desc-v2">
+        {{ section.settings.description_text }}
+      </div>
+    </div>
+
+    <div class="f-media-v2">
+      {%- if section.settings.media_type == 'video_native' and section.settings.video_native != blank -%}
+        {{ section.settings.video_native | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+      {%- elsif section.settings.media_type == 'video_url' -%}
+        {%- if section.settings.video_url.type == 'youtube' -%}
+          <iframe src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?autoplay=1&mute=1&loop=1&playlist={{ section.settings.video_url.id }}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {%- else -%}
+          <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&muted=1&loop=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        {%- endif -%}
+      {%- else -%}
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 2200 }}" alt="{{ section.settings.main_title }}">
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DJI Feature Media Pro",
+  "settings": [
+    { "type": "header", "content": "טקסטים ותוכן" },
+    { "type": "text", "id": "main_title", "label": "כותרת עליונה", "default": "Intelligent Operations" },
+    { "type": "text", "id": "sub_title", "label": "כותרת צד (1/3)", "default": "Smarter Flight" },
+    { "type": "richtext", "id": "description_text", "label": "תיאור (2/3)", "default": "<p>הכנס כאן את הפירוט הטכני של הרחפן. תוכל להדגיש מילים כרצונך.</p>" },
+    
+    { "type": "header", "content": "מדיה (תמונה/וידאו)" },
+    { "type": "select", "id": "media_type", "label": "סוג מדיה", "options": [
+        { "value": "image", "label": "תמונה" },
+        { "value": "video_native", "label": "וידאו (קובץ משופיפיי)" },
+        { "value": "video_url", "label": "וידאו (YouTube/Vimeo)" }
+      ], "default": "image" 
+    },
+    { "type": "image_picker", "id": "image", "label": "בחר תמונה" },
+    { "type": "video", "id": "video_native", "label": "בחר קובץ וידאו" },
+    { "type": "video_url", "id": "video_url", "label": "קישור וידאו חיצוני", "accept": ["youtube", "vimeo"] },
+
+    { "type": "header", "content": "מיקום ומידות (Nudge Logic)" },
+    { "type": "range", "id": "content_max_width", "min": 800, "max": 1600, "step": 50, "unit": "px", "label": "רוחב תוכן", "default": 1200 },
+    { "type": "range", "id": "nudge_x", "min": -200, "max": 200, "step": 5, "unit": "px", "label": "הזחה אופקית (X)", "default": 0 },
+    { "type": "range", "id": "nudge_y", "min": -200, "max": 200, "step": 5, "unit": "px", "label": "הזחה אנכית (Y)", "default": 0 },
+    { "type": "range", "id": "header_margin", "min": 0, "max": 150, "step": 5, "unit": "px", "label": "רווח מתחת לכותרת ראשית", "default": 80 },
+    { "type": "range", "id": "media_margin", "min": 0, "max": 150, "step": 5, "unit": "px", "label": "רווח מעל המדיה", "default": 60 },
+
+    { "type": "header", "content": "עיצוב טקסט (Typography)" },
+    { "type": "range", "id": "main_title_size", "min": 20, "max": 120, "step": 2, "unit": "px", "label": "גודל כותרת ראשית", "default": 56 },
+    { "type": "range", "id": "main_title_weight", "min": 100, "max": 900, "step": 100, "label": "עובי כותרת ראשית", "default": 800 },
+    { "type": "range", "id": "main_title_spacing", "min": -2, "max": 20, "step": 1, "unit": "px", "label": "ריווח אותיות כותרת", "default": 2 },
+    { "type": "range", "id": "sub_title_size", "min": 15, "max": 60, "step": 1, "unit": "px", "label": "גודל כותרת צד", "default": 32 },
+    { "type": "range", "id": "sub_title_weight", "min": 100, "max": 900, "step": 100, "label": "עובי כותרת צד", "default": 700 },
+    { "type": "range", "id": "desc_size", "min": 12, "max": 30, "step": 1, "unit": "px", "label": "גודל תיאור", "default": 17 },
+    { "type": "range", "id": "desc_weight", "min": 100, "max": 900, "step": 100, "label": "עובי תיאור", "default": 300 },
+    { "type": "range", "id": "desc_line_height", "min": 1.0, "max": 2.5, "step": 0.1, "label": "מרווח שורות תיאור", "default": 1.7 },
+
+    { "type": "header", "content": "צבעים" },
+    { "type": "color", "id": "color_bg", "label": "רקע סקשן", "default": "#000000" },
+    { "type": "color", "id": "color_main_title", "label": "צבע כותרת ראשית", "default": "#ffffff" },
+    { "type": "color", "id": "color_sub_title", "label": "צבע כותרת צד", "default": "#ffffff" },
+    { "type": "color", "id": "color_desc", "label": "צבע תיאור", "default": "#a0a0a0" },
+    { "type": "range", "id": "media_radius", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "פינות מעוגלות למדיה", "default": 4 }
+  ],
+  "presets": [{ "name": "DJI Feature Media Pro" }]
+}
+{% endschema %}

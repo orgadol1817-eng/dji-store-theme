@@ -1,26 +1,27 @@
 {%- comment -%}
-  DJI Specs Comparison - v6.0 "The Architect Masterpiece"
-  Author: AI Senior Architect
-  Logic: Precise XY Positioning + Full Typography Engine + Frame Control
+  DJI Specs Comparison - v13.0 "The Split Architect Sync"
+  Logic: Row-based Sync + Split Card Design + RichText + Dual Nudge Engine
 {%- endcomment -%}
 
 {%- style -%}
   :root {
     --specs-x-pos: {{ section.settings.horizontal_pos }}%;
     --specs-y-pos: {{ section.settings.vertical_pos }}%;
-    
-    /* מנוע גדלי טקסט */
     --model-font-size: {{ section.settings.model_font_size }}px;
     --cat-font-size: {{ section.settings.cat_font_size }}px;
     --details-font-size: {{ section.settings.details_font_size }}px;
+    
+    /* מנוע המרווחים */
+    --line-height-base: {{ section.settings.line_height }};
+    --para-spacing: {{ section.settings.para_spacing }}px;
+    --text-align: {{ section.settings.text_alignment }};
   }
 
-  .dji-specs-v6-wrapper {
+  .dji-specs-v13-wrapper {
     position: relative;
     width: 100%;
-    /* שליטה בגובה הכללי למניעת חיתוך */
     height: {{ section.settings.section_height_desktop }}vh;
-    min-height: 600px;
+    min-height: 700px;
     background-color: {{ section.settings.bg_main }};
     overflow: hidden;
     font-family: 'Heebo', sans-serif;
@@ -28,165 +29,215 @@
     direction: rtl;
   }
 
-  /* קונטיינר מרכזי - המיקום שלו בתוך השחור */
-  .dji-specs-v6-content {
+  .dji-specs-v13-master {
     position: absolute;
     top: var(--specs-y-pos);
     left: var(--specs-x-pos);
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: {{ section.settings.content_max_width }}px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
     z-index: 10;
   }
 
-  /* עיצוב הכרטיס (המסגרת) */
-  .dji-card-v6 {
+  /* כותרות הדגמים - הזחה נפרדת */
+  .dji-specs-titles-v13 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 25px;
+    transform: translate({{ section.settings.titles_nudge_x }}px, {{ section.settings.titles_nudge_y }}px);
+  }
+
+  .model-name-v13 {
+    font-size: var(--model-font-size);
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+  }
+
+  .color-4t { color: {{ section.settings.glow_1 }}; text-shadow: 0 0 15px {{ section.settings.glow_1 | color_modify: 'alpha', 0.3 }}; }
+  .color-4e { color: {{ section.settings.glow_2 }}; text-shadow: 0 0 15px {{ section.settings.glow_2 | color_modify: 'alpha', 0.3 }}; }
+
+  /* תוכן המפרט - הזחה נפרדת */
+  .dji-specs-content-v13 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transform: translate({{ section.settings.content_nudge_x }}px, {{ section.settings.content_nudge_y }}px);
+  }
+
+  /* שורה מסונכרנת של שתי כרטיסיות */
+  .spec-sync-row-v13 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: stretch; /* גורם לשני הכרטיסים להיות באותו גובה */
+  }
+
+  /* עיצוב הכרטיס החתוך */
+  .dji-card-split {
     background-color: {{ section.settings.bg_card }};
-    /* שליטה ברווח הפנימי להגדלת המסגרת */
     padding: {{ section.settings.card_padding }}px;
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255,255,255,0.02);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     position: relative;
     overflow: hidden;
-    text-align: right;
-  }
-
-  /* אפקט ה-Rim Light המקצועי */
-  .dji-card-v6::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    z-index: 5;
-  }
-
-  .glow-thermal::before {
-    background: linear-gradient(90deg, transparent, {{ section.settings.glow_1 }} 70%, {{ section.settings.glow_1 }});
-  }
-
-  .glow-optical::before {
-    background: linear-gradient(90deg, transparent, {{ section.settings.glow_2 }} 70%, {{ section.settings.glow_2 }});
-  }
-
-  /* עיצוב טקסט דינמי */
-  .model-name-v6 {
-    font-size: var(--model-font-size);
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: {{ section.settings.color_model_name }};
-    text-transform: uppercase;
-  }
-
-  .spec-group-v6 {
-    margin-bottom: 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    padding-bottom: 15px;
-  }
-
-  .cat-title-v6 {
-    font-size: var(--cat-font-size);
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: {{ section.settings.color_cat }};
     display: flex;
-    align-items: center;
-    gap: 5px;
+    flex-direction: column;
   }
 
-  .cat-title-v6 sup { font-size: 0.6em; opacity: 0.5; }
+  .dji-card-model-label {
+    display: none;
+  }
 
-  .details-text-v6 {
+  /* אפקט ה-Rim Light של DJI */
+  .dji-card-split::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
+
+  .card-thermal::before { background: linear-gradient(90deg, transparent, {{ section.settings.glow_1 }} 70%, {{ section.settings.glow_1 }}); }
+  .card-optical::before { background: linear-gradient(90deg, transparent, {{ section.settings.glow_2 }} 70%, {{ section.settings.glow_2 }}); }
+
+  .cat-title-v13 {
+    font-size: var(--cat-font-size);
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: {{ section.settings.color_cat }};
+    text-align: var(--text-align);
+  }
+
+  .details-content-v13 {
     font-size: var(--details-font-size);
-    line-height: 1.6;
+    line-height: var(--line-height-base);
     color: {{ section.settings.color_details }};
     font-weight: 300;
+    text-align: var(--text-align);
   }
+
+  /* תמיכה בהדגשה ורווח אנטר */
+  .details-content-v13 strong, .details-content-v13 b { font-weight: 700; color: #ffffff; }
+  .details-content-v12 p, .details-content-v13 p { margin: 0 0 var(--para-spacing) 0; }
+  .details-content-v13 p:last-child { margin-bottom: 0; }
 
   .not-available { color: rgba(255,255,255,0.15); font-style: italic; }
 
   @media (max-width: 1024px) {
-    .dji-specs-v6-wrapper { height: auto; padding: 100px 0; }
-    .dji-specs-v6-content { 
-      position: relative; top: 0; left: 0; transform: none; 
-      grid-template-columns: 1fr; margin: 0 auto;
+    .dji-specs-v13-wrapper { height: auto; padding: 60px 0; min-height: auto; }
+    .dji-specs-v13-master { position: relative; top: 0 !important; left: 0 !important; transform: none !important; margin: 0 auto; width: 95%; }
+    .dji-specs-titles-v13 { grid-template-columns: 1fr; gap: 10px; text-align: center; }
+    .spec-sync-row-v13 { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  /* מובייל: ריפוד 16px, סקייל 0.7 לגופנים, ערימה מלאה */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      --model-font-size: calc({{ section.settings.model_font_size }}px * 0.7);
+      --cat-font-size: calc({{ section.settings.cat_font_size }}px * 0.7);
+      --details-font-size: calc({{ section.settings.details_font_size }}px * 0.7);
+      --para-spacing: calc({{ section.settings.para_spacing }}px * 0.7);
     }
-    .dji-card-v6 { padding: 40px 25px; }
+
+    .dji-specs-v13-wrapper {
+      min-height: 0;
+      height: auto;
+      padding: 40px 0;
+      overflow-x: hidden;
+    }
+
+    .dji-specs-v13-master {
+      width: 100%;
+      max-width: none;
+      padding-inline: 16px;
+      box-sizing: border-box;
+    }
+
+    .dji-specs-titles-v13 {
+      display: none;
+    }
+
+    .dji-specs-content-v13 {
+      gap: 14px;
+    }
+
+    .spec-sync-row-v13 {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      align-items: stretch;
+    }
+
+    .dji-card-split {
+      padding: max(14px, calc({{ section.settings.card_padding }}px * 0.7));
+    }
+
+    .dji-card-model-label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 0.04em;
+      margin: 0 0 6px 0;
+      line-height: 1.2;
+    }
+
+    .dji-card-model-label--1 {
+      color: {{ section.settings.glow_1 }};
+      text-shadow: 0 0 12px {{ section.settings.glow_1 | color_modify: 'alpha', 0.35 }};
+    }
+
+    .dji-card-model-label--2 {
+      color: {{ section.settings.glow_2 }};
+      text-shadow: 0 0 12px {{ section.settings.glow_2 | color_modify: 'alpha', 0.35 }};
+    }
+
+    .cat-title-v13 {
+      margin-bottom: 10px;
+    }
+
+    .details-content-v13 {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
   }
 {%- endstyle -%}
 
-<section class="dji-specs-v6-wrapper">
-  <div class="dji-specs-v6-content">
+<section class="dji-specs-v13-wrapper">
+  <div class="dji-specs-v13-master">
     
-    <div class="dji-card-v6 glow-thermal">
-      <h3 class="model-name-v6">{{ section.settings.model_1_name }}</h3>
-      
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמה רחבה<sup>[2]</sup></div>
-        <div class="details-text-v6">حיישן 1/1.3" CMOS, 48MP פיקסלים אפקטיביים, מפתח צמצם f/1.7, אורך מוקד שווה ערך ל-24 מ"מ.</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמת טלה בינונית<sup>[3]</sup></div>
-        <div class="details-text-v6">حיישן 1/1.3" CMOS, 48MP פיקסלים אפקטיביים, מפתח צמצם f/2.8, אורך מוקד שווה ערך ל-70 מ"מ.</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמת טלה<sup>[3]</sup></div>
-        <div class="details-text-v6">حיישן 1/1.5" CMOS, 48MP פיקסלים אפקטיביים, מפתח צמצם f/2.8, אורך מוקד שווה ערך ל-168 מ"מ.</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מד טווח לייזר</div>
-        <div class="details-text-v6">טווח מדידה: 1800 מטר (1 הרץ); טווח זווית אלכסונית: 600 מטר. דיוק טווח: ± (0.2 + 0.0015 × D).</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמה תרמית אינפרה-אדום</div>
-        <div class="details-text-v6">רזולוציה: 640×512, מפתח צמצם f/1.0, אורך מוקד שווה ערך ל-53 מ"מ, מיקרו-בולומטר VOx לא מקורר.</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">תאורת עזר NIR</div>
-        <div class="details-text-v6">שדה ראייה (FOV): 6°, מרחק תאורה: 100 מטר.</div>
-      </div>
+    <div class="dji-specs-titles-v13">
+      <h3 class="model-name-v13 color-4t">{{ section.settings.model_1_name }}</h3>
+      <h3 class="model-name-v13 color-4e">{{ section.settings.model_2_name }}</h3>
     </div>
 
-    <div class="dji-card-v6 glow-optical">
-      <h3 class="model-name-v6">{{ section.settings.model_2_name }}</h3>
-      
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמה רחבה<sup>[1]</sup></div>
-        <div class="details-text-v6">حיישן 4/3 CMOS, 20MP פיקסלים אפקטיביים, מפתח צמצם f/2.8-f/11, אורך מוקד 24 מ"מ, <strong>תריס מכני</strong>.</div>
-      </div>
+    <div class="dji-specs-content-v13">
+      {%- for block in section.blocks -%}
+        <div class="spec-sync-row-v13" {{ block.shopify_attributes }}>
+          
+          <div class="dji-card-split card-thermal">
+            <span class="dji-card-model-label dji-card-model-label--1">{{ section.settings.model_1_name | escape }}</span>
+            <span class="cat-title-v13">{{ block.settings.cat_title }}</span>
+            <div class="details-content-v13">
+              {{ block.settings.model_1_text }}
+            </div>
+          </div>
 
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמת טלה בינונית<sup>[3]</sup></div>
-        <div class="details-text-v6">حיישן 1/1.3" CMOS, 48MP פיקסלים אפקטיביים, מפתח צמצם f/2.8, אורך מוקד שווה ערך ל-70 מ"מ.</div>
-      </div>
+          <div class="dji-card-split card-optical">
+            <span class="dji-card-model-label dji-card-model-label--2">{{ section.settings.model_2_name | escape }}</span>
+            <span class="cat-title-v13">{{ block.settings.cat_title }}</span>
+            <div class="details-content-v13">
+              {%- assign m2_text = block.settings.model_2_text | strip_html | strip -%}
+              {%- if m2_text == '—' or m2_text == '-' or m2_text == blank -%}
+                <span class="not-available">לא זמין בדגם זה</span>
+              {%- else -%}
+                {{ block.settings.model_2_text }}
+              {%- endif -%}
+            </div>
+          </div>
 
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמת טלה<sup>[3]</sup></div>
-        <div class="details-text-v6">حיישן 1/1.5" CMOS, 48MP פיקסלים אפקטיביים, מפתח צמצם f/2.8, אורך מוקד שווה ערך ל-168 מ"מ.</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מד טווח לייזר</div>
-        <div class="details-text-v6">טווח מדידה: 1800 מטר (1 הרץ); טווח זווית אלכסונית: 600 מטר. דיוק טווח: ± (0.2 + 0.0015 × D).</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">מצלמה תרמית אינפרה-אדום</div>
-        <div class="details-text-v6 not-available">לא זמין בדגם זה</div>
-      </div>
-
-      <div class="spec-group-v6">
-        <div class="cat-title-v6">תאורת עזר NIR</div>
-        <div class="details-text-v6 not-available">לא זמין בדגם זה</div>
-      </div>
+        </div>
+      {%- endfor -%}
     </div>
 
   </div>
@@ -196,30 +247,51 @@
 {
   "name": "DJI Specs Comparison",
   "settings": [
-    { "type": "header", "content": "מיקום וגאומטריה (Layout)" },
+    { "type": "header", "content": "מיקום וגאומטריה (Master XY)" },
     { "type": "range", "id": "section_height_desktop", "min": 50, "max": 150, "step": 5, "unit": "vh", "label": "גובה הסקשן", "default": 100 },
     { "type": "range", "id": "horizontal_pos", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אופקי (X)", "default": 50 },
     { "type": "range", "id": "vertical_pos", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אנכי (Y)", "default": 50 },
-    { "type": "range", "id": "content_max_width", "min": 800, "max": 1600, "step": 50, "unit": "px", "label": "רוחב מקסימלי לגריד", "default": 1300 },
-    { "type": "range", "id": "card_padding", "min": 20, "max": 120, "step": 5, "unit": "px", "label": "גודל המסגרת הפנימית (Padding)", "default": 70 },
+    { "type": "range", "id": "content_max_width", "min": 800, "max": 1600, "step": 50, "unit": "px", "label": "רוחב מקסימלי", "default": 1300 },
+    { "type": "range", "id": "card_padding", "min": 20, "max": 100, "step": 5, "unit": "px", "label": "Padding בתוך הכרטיס", "default": 50 },
     
-    { "type": "header", "content": "מנוע טקסט (Typography)" },
+    { "type": "header", "content": "הזחה נפרדת (Nudge Logic)" },
+    { "type": "range", "id": "titles_nudge_x", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "הזחת כותרות X", "default": 0 },
+    { "type": "range", "id": "titles_nudge_y", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "הזחת כותרות Y", "default": 0 },
+    { "type": "range", "id": "content_nudge_x", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "הזחת תוכן X", "default": 0 },
+    { "type": "range", "id": "content_nudge_y", "min": -100, "max": 100, "step": 2, "unit": "px", "label": "הזחת תוכן Y", "default": 0 },
+
+    { "type": "header", "content": "מנוע רווחים ויישור" },
+    { "type": "select", "id": "text_alignment", "label": "יישור טקסט פנימי", "options": [
+        { "value": "right", "label": "ימין" },
+        { "value": "center", "label": "מרכז" }
+      ], "default": "right" 
+    },
+    { "type": "range", "id": "para_spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "רווח אנטר (Paragraph)", "default": 16 },
+    { "type": "range", "id": "line_height", "min": 1.0, "max": 2.5, "step": 0.1, "label": "מרווח בין שורות", "default": 1.7 },
+    
+    { "type": "header", "content": "צבעים וגופנים" },
     { "type": "range", "id": "model_font_size", "min": 20, "max": 60, "step": 1, "unit": "px", "label": "גודל שם דגם", "default": 34 },
     { "type": "range", "id": "cat_font_size", "min": 14, "max": 24, "step": 1, "unit": "px", "label": "גודל קטגוריה", "default": 17 },
-    { "type": "range", "id": "details_font_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "גודל פירוט טכני", "default": 15 },
-    
-    { "type": "header", "content": "צבעים (Colors)" },
-    { "type": "color", "id": "bg_main", "label": "צבע רקע דף", "default": "#000000" },
-    { "type": "color", "id": "bg_card", "label": "צבע רקע כרטיס", "default": "#161616" },
-    { "type": "color", "id": "color_model_name", "label": "צבע שם דגם", "default": "#ffffff" },
+    { "type": "range", "id": "details_font_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "גודל טקסט", "default": 15 },
+    { "type": "color", "id": "bg_main", "label": "רקע דף", "default": "#000000" },
+    { "type": "color", "id": "bg_card", "label": "רקע כרטיס", "default": "#111111" },
     { "type": "color", "id": "color_cat", "label": "צבע קטגוריה", "default": "#ffffff" },
-    { "type": "color", "id": "color_details", "label": "צבע פירוט טכני", "default": "rgba(255,255,255,0.65)" },
-    { "type": "color", "id": "glow_1", "label": "צבע זוהר דגם 1 (Thermal)", "default": "#ff9a00" },
-    { "type": "color", "id": "glow_2", "label": "צבע זוהר דגם 2 (Optical)", "default": "#00d4ff" },
-    
-    { "type": "header", "content": "טקסטים" },
-    { "type": "text", "id": "model_1_name", "label": "שם דגם 1", "default": "DJI MATRICE 4T" },
-    { "type": "text", "id": "model_2_name", "label": "שם דגם 2", "default": "DJI MATRICE 4E" }
+    { "type": "color", "id": "color_details", "label": "צבע טקסט", "default": "#a0a0a0" },
+    { "type": "color", "id": "glow_1", "label": "זוהר ימין (T)", "default": "#ff9a00" },
+    { "type": "color", "id": "glow_2", "label": "זוהר שמאל (E)", "default": "#00d4ff" },
+    { "type": "text", "id": "model_1_name", "label": "שם דגם ימין", "default": "DJI MATRICE 4T" },
+    { "type": "text", "id": "model_2_name", "label": "שם דגם שמאל", "default": "DJI MATRICE 4E" }
+  ],
+  "blocks": [
+    {
+      "type": "spec_row",
+      "name": "שורת השוואה",
+      "settings": [
+        { "type": "text", "id": "cat_title", "label": "שם התכונה", "default": "מצלמה" },
+        { "type": "richtext", "id": "model_1_text", "label": "טקסט לדגם 1", "default": "<p>פירוט...</p>" },
+        { "type": "richtext", "id": "model_2_text", "label": "טקסט לדגם 2", "default": "<p>פירוט...</p>" }
+      ]
+    }
   ],
   "presets": [{ "name": "DJI Specs Comparison" }]
 }

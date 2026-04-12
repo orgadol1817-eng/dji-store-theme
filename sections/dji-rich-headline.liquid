@@ -51,6 +51,14 @@
       font-size: {{ section.settings.font_size_desktop }}px;
     }
   }
+
+  @media (max-width: 768px) {
+    .dji-headline-container-{{ section.id }} {
+      padding-left: 16px;
+      padding-right: 16px;
+      box-sizing: border-box;
+    }
+  }
 {%- endstyle -%}
 
 <section id="DjiHeadline-{{ section.id }}" class="dji-rich-headline" {{ section.shopify_attributes }}>

@@ -1,0 +1,134 @@
+{%- comment -%}
+  DJI Customizable Title Master - v1.5 "The Sync Master"
+  Author: AI Senior Architect
+  Logi: Background Box Synchronized with Text Size + Responsive XY Nudge + Full Bold Engine
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --bg-section: {{ section.settings.bg_section }};
+    
+    /* מנוע טקסט */
+    --t-color: {{ section.settings.color_text }};
+    --t-size-desktop: {{ section.settings.font_size }}px;
+    --t-size-mobile: {{ section.settings.font_size_mobile }}px;
+    --t-weight: {{ section.settings.font_weight }};
+    --t-letter-spacing: {{ section.settings.letter_spacing }}px;
+
+    /* מנוע רקע עוקב-טקסט */
+    --bg-box: {{ section.settings.color_bg }};
+    --box-padding-y: {{ section.settings.padding_y }}px;
+    --box-padding-x: {{ section.settings.padding_x }}px;
+    --box-radius: {{ section.settings.border_radius }}px;
+
+    /* מנוע מיקום XY */
+    --xy-x: {{ section.settings.horizontal_pos }}%;
+    --xy-y: {{ section.settings.vertical_pos }}%;
+  }
+
+  .dji-v15-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: {{ section.settings.section_height }}px;
+    background-color: var(--bg-section);
+    overflow: hidden;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+    display: flex; /* מאפשר יישור קל פנימי */
+  }
+
+  /* קונטיינר המיקום - המדויק מכולם */
+  .dji-v15-pos-container {
+    position: absolute;
+    top: var(--xy-y);
+    left: var(--xy-x);
+    transform: translate(-50%, -50%);
+    width: auto;
+    z-index: 20;
+    text-align: center; /* ברירת מחדל */
+  }
+
+  /* כרטיסיית הטקסט - המקום שבו הרקע יושב על הכתוב */
+  .dji-v15-text-box {
+    display: inline-flex; /* מבטיח שהרקע יעטוף רק את הטקסט באופן הדוק */
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    
+    /* הגדרות הרקע הסינכרוניות */
+    background-color: var(--bg-box);
+    padding: var(--box-padding-y) var(--box-padding-x);
+    border-radius: var(--box-radius);
+    
+    /* הגדרות הכתוב */
+    font-size: var(--t-size-desktop);
+    font-weight: var(--t-weight);
+    letter-spacing: var(--t-letter-spacing);
+    color: var(--t-color);
+    line-height: 1; /* חשוב לסינכרון הרקע למעלה ולמטה */
+    text-transform: uppercase;
+    
+    {% if section.settings.use_gradient %}
+      background: {{ section.settings.text_gradient }};
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    {% endif %}
+
+    {% if section.settings.enable_glow %}
+      text-shadow: 0 0 15px {{ section.settings.color_text | color_modify: 'alpha', 0.4 }};
+    {% endif %}
+  }
+
+  /* ביטול הפרעות טקסט של שופיפיי */
+  .dji-v15-text-box p { margin: 0; padding: 0; display: inline; color: inherit; font-weight: inherit; line-height: inherit; }
+  .dji-v15-text-box strong { font-weight: 900; color: inherit; }
+
+  @media (max-width: 768px) {
+    .dji-v15-wrapper { min-height: calc({{ section.settings.section_height }}px * 0.7); }
+    .dji-v15-text-box { 
+        font-size: var(--t-size-mobile);
+        padding: calc(var(--box-padding-y) / 1.3) calc(var(--box-padding-x) / 1.3);
+    }
+  }
+{%- endstyle -%}
+
+<section class="dji-v15-wrapper">
+  <div class="dji-v15-pos-container">
+    <div class="dji-v15-text-box">
+      {{ section.settings.title_richtext }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DJI Master Title",
+  "settings": [
+    { "type": "header", "content": "תוכן הכותרת" },
+    { "type": "richtext", "id": "title_richtext", "label": "טקסט הכותרת", "default": "<p>DJI MATRICE 4 SERIES</p>" },
+    
+    { "type": "header", "content": "מיקום XY פלס" },
+    { "type": "range", "id": "section_height", "min": 50, "max": 600, "step": 10, "unit": "px", "label": "גובה הסקשן הכללי", "default": 150 },
+    { "type": "range", "id": "horizontal_pos", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אופקי (X)", "default": 50 },
+    { "type": "range", "id": "vertical_pos", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "מיקום אנכי (Y)", "default": 50 },
+
+    { "type": "header", "content": "מנוע טקסט (Typography)" },
+    { "type": "range", "id": "font_size", "min": 10, "max": 150, "step": 2, "unit": "px", "label": "גודל גופן דסקטופ", "default": 60 },
+    { "type": "range", "id": "font_size_mobile", "min": 10, "max": 80, "step": 1, "unit": "px", "label": "גודל גופן מובייל", "default": 30 },
+    { "type": "range", "id": "font_weight", "min": 100, "max": 900, "step": 100, "label": "עובי גופן (Bold)", "default": 800 },
+    { "type": "range", "id": "letter_spacing", "min": -2, "max": 30, "step": 1, "unit": "px", "label": "ריווח אותיות", "default": 2 },
+    { "type": "color", "id": "color_text", "label": "צבע טקסט", "default": "#ffffff" },
+    { "type": "checkbox", "id": "use_gradient", "label": "השתמש בגרדיאנט טקסט", "default": false },
+    { "type": "color_background", "id": "text_gradient", "label": "גרדיאנט טקסט", "default": "linear-gradient(90deg, #ff9a00 0%, #00d4ff 100%)" },
+    { "type": "checkbox", "id": "enable_glow", "label": "הפעל זוהר (Glow)", "default": true },
+
+    { "type": "header", "content": "מנוע רקע עוקב-טקסט" },
+    { "type": "color", "id": "color_bg", "label": "צבע הרקע", "default": "#111111" },
+    { "type": "range", "id": "padding_y", "min": 0, "max": 150, "step": 2, "unit": "px", "label": "מרחק הרקע מהטקסט (Padding Y)", "default": 10 },
+    { "type": "range", "id": "padding_x", "min": 0, "max": 200, "step": 2, "unit": "px", "label": "מרחק הרקע מהטקסט (Padding X)", "default": 20 },
+    { "type": "range", "id": "border_radius", "min": 0, "max": 50, "step": 1, "unit": "px", "label": "פינות מעוגלות", "default": 4 },
+    { "type": "color", "id": "bg_section", "label": "צבע רקע הסקשן הכללי", "default": "#000000" }
+  ],
+  "presets": [{ "name": "DJI Master Title" }]
+}
+{% endschema %}

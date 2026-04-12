@@ -57,6 +57,34 @@
     background-color: {{ section.settings.text_color }};
     color: #000;
   }
+
+  @media (max-width: 768px) {
+    .dji-hero-{{ section.id }} {
+      height: auto;
+      min-height: 52vh;
+      padding: 28px 0;
+    }
+
+    .dji-hero-{{ section.id }} .dji-hero-content {
+      padding: 0 16px;
+      max-width: 100%;
+    }
+
+    .dji-hero-{{ section.id }} .dji-hero-title {
+      font-size: clamp(2rem, 5.5vw, 2.4rem);
+      margin-bottom: 0.75rem;
+    }
+
+    .dji-hero-{{ section.id }} .dji-hero-subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .dji-hero-{{ section.id }} .dji-hero-button {
+      padding: 10px 26px;
+      font-size: 0.9rem;
+    }
+  }
 {%- endstyle -%}
 
 <section class="dji-hero-{{ section.id }}">

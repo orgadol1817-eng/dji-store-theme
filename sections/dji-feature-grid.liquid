@@ -110,6 +110,35 @@
       padding-bottom: 40px; 
     }
   }
+
+  @media (max-width: 768px) {
+    .dji-bento-{{ section.id }} {
+      padding-left: 16px;
+      padding-right: 16px;
+      padding-top: {{ section.settings.padding_top | times: 0.55 | round }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.55 | round }}px;
+    }
+
+    .dji-bento-{{ section.id }} .dji-bento-grid {
+      gap: 10px;
+      grid-auto-rows: 220px;
+    }
+
+    .dji-bento-{{ section.id }} .card-info {
+      padding: 16px;
+    }
+
+    .dji-bento-{{ section.id }} .card-title {
+      font-size: 18px;
+    }
+
+    .dji-bento-{{ section.id }} .card-arrow {
+      bottom: 14px;
+      right: 14px;
+      width: 22px;
+      height: 22px;
+    }
+  }
 {%- endstyle -%}
 
 <section class="dji-bento-{{ section.id }}">
@@ -121,7 +150,7 @@
         <div class="card-bg-media">
           {%- if block.settings.video_url != blank -%}
             <video autoplay muted loop playsinline poster="{{ block.settings.image | image_url }}">
-              <source src="{{ block.settings.video_url }}" type="video/mp4">
+              <source src="{{ block.settings.video_url | escape }}" type="video/mp4">
             </video>
           {%- elsif block.settings.image != blank -%}
             {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy' }}

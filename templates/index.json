@@ -15,11 +15,11 @@
         "hero_slide_aQTMcW": {
           "type": "hero_slide",
           "settings": {
-            "image": "shopify://shop_images/043f75382ee5ee7b0d078a593c272a0e_origin.jpg",
+            "image": "shopify://shop_images/202604121150.jpg",
             "image_zoom": 100,
             "image_pos_x": 50,
             "image_pos_y": 50,
-            "title": "DJI PRODUCT",
+            "title": "DJI MATRICE 400",
             "subtitle": "Inspiration in Focus",
             "button_label": "קנה עכשיו",
             "link": "",
@@ -40,11 +40,11 @@
         "slide-1": {
           "type": "hero_slide",
           "settings": {
-            "image": "shopify://shop_images/f99f0deb9f72babb62524c4f3c3696ba.jpg",
+            "image": "shopify://shop_images/202604121201.jpg",
             "image_zoom": 100,
             "image_pos_x": 50,
             "image_pos_y": 50,
-            "title": "DJI MATRICE 400",
+            "title": "DJI MATRICE 4 Series",
             "subtitle": "Engineered for Excellence, Designed for Versatility",
             "button_label": "קנה עכשיו",
             "link": "shopify://collections/all",
@@ -65,11 +65,11 @@
         "hero_slide_8kjL6D": {
           "type": "hero_slide",
           "settings": {
-            "image": "shopify://shop_images/2d6d6972f0561f6b08b92afcd8a0ec8d_origin.jpg",
+            "image": "shopify://shop_images/MATRICE_202604121117.jpg",
             "image_zoom": 100,
             "image_pos_x": 50,
             "image_pos_y": 50,
-            "title": "DJI PRODUCT",
+            "title": "DJI MATRICE 350 RTK",
             "subtitle": "Inspiration in Focus",
             "button_label": "קנה עכשיו",
             "link": "",
@@ -90,11 +90,11 @@
         "hero_slide_bNYViM": {
           "type": "hero_slide",
           "settings": {
-            "image": "shopify://shop_images/1e5e6f3d47b73eea4395199f786f8030_origin.jpg",
+            "image": "shopify://shop_images/202604121203.jpg",
             "image_zoom": 100,
             "image_pos_x": 50,
             "image_pos_y": 50,
-            "title": "DJI PRODUCT",
+            "title": "DJI AGRAS T50",
             "subtitle": "Inspiration in Focus",
             "button_label": "קנה עכשיו",
             "link": "",
@@ -112,23 +112,22 @@
             "border_color_2": "#ffffff"
           }
         },
-        "hero_slide_qJ3C7T": {
+        "hero_slide_M3ppTM": {
           "type": "hero_slide",
           "settings": {
-            "image": "shopify://shop_images/d4e8e295ca6f4e4146b744943ea6a9fd.jpg",
             "image_zoom": 100,
             "image_pos_x": 50,
             "image_pos_y": 50,
-            "title": "DJI PRODUCT",
+            "title": "DJI MAVIC 3 Enterprise",
             "subtitle": "Inspiration in Focus",
             "button_label": "קנה עכשיו",
-            "link": "shopify://collections/all",
+            "link": "",
             "show_arrow_1": true,
             "text_color_1": "#ffffff",
             "bg_color_1": "#ffffff",
             "bg_opacity_1": 10,
             "border_color_1": "#ffffff",
-            "secondary_label": "למד עוד",
+            "secondary_label": "סקירה מלאה",
             "secondary_link": "",
             "show_arrow_2": true,
             "text_color_2": "#ffffff",
@@ -143,15 +142,117 @@
         "slide-1",
         "hero_slide_8kjL6D",
         "hero_slide_bNYViM",
-        "hero_slide_qJ3C7T"
+        "hero_slide_M3ppTM"
       ],
       "settings": {
-        "autoplay_speed": 6000,
+        "autoplay_speed": 7000,
         "arrow_icon_color": "#ffffff",
         "arrow_bg_color": "#ffffff",
         "arrow_bg_opacity": 10,
         "arrow_border_color": "#ffffff",
         "arrow_border_width": 1
+      }
+    },
+    "dji_center_carousel_aPhe9D": {
+      "type": "dji-center-carousel",
+      "blocks": {
+        "slide_tAJfaY": {
+          "type": "slide",
+          "settings": {
+            "media_zoom": 100,
+            "media_pos_x": 50,
+            "media_pos_y": 50,
+            "title": "Shot on Osmo 360",
+            "subtitle": "",
+            "text_color": "#ffffff",
+            "btn_bg_color": "#ffffff",
+            "btn_bg_opacity": 0,
+            "btn_border_color": "#ffffff",
+            "text_learn": "Learn More",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_buy": "Buy Now",
+            "link_buy": "",
+            "show_arrow_buy": true
+          }
+        },
+        "slide_yxkUKd": {
+          "type": "slide",
+          "settings": {
+            "media_zoom": 100,
+            "media_pos_x": 50,
+            "media_pos_y": 50,
+            "title": "Shot on Osmo 360",
+            "subtitle": "",
+            "text_color": "#ffffff",
+            "btn_bg_color": "#ffffff",
+            "btn_bg_opacity": 0,
+            "btn_border_color": "#ffffff",
+            "text_learn": "Learn More",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_buy": "Buy Now",
+            "link_buy": "",
+            "show_arrow_buy": true
+          }
+        },
+        "slide_QKWRjm": {
+          "type": "slide",
+          "settings": {
+            "media_zoom": 100,
+            "media_pos_x": 50,
+            "media_pos_y": 50,
+            "title": "Shot on Osmo 360",
+            "subtitle": "",
+            "text_color": "#ffffff",
+            "btn_bg_color": "#ffffff",
+            "btn_bg_opacity": 0,
+            "btn_border_color": "#ffffff",
+            "text_learn": "Learn More",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_buy": "Buy Now",
+            "link_buy": "",
+            "show_arrow_buy": true
+          }
+        },
+        "slide_abHXDh": {
+          "type": "slide",
+          "settings": {
+            "media_zoom": 100,
+            "media_pos_x": 50,
+            "media_pos_y": 50,
+            "title": "Shot on Osmo 360",
+            "subtitle": "",
+            "text_color": "#ffffff",
+            "btn_bg_color": "#ffffff",
+            "btn_bg_opacity": 0,
+            "btn_border_color": "#ffffff",
+            "text_learn": "Learn More",
+            "link_learn": "",
+            "show_arrow_learn": true,
+            "text_buy": "Buy Now",
+            "link_buy": "",
+            "show_arrow_buy": true
+          }
+        }
+      },
+      "block_order": [
+        "slide_tAJfaY",
+        "slide_yxkUKd",
+        "slide_QKWRjm",
+        "slide_abHXDh"
+      ],
+      "name": "DJI Center Mode Carousel",
+      "settings": {
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "slide_gap": -20,
+        "nav_bg_color": "#1a1a1a",
+        "nav_bg_opacity": 30,
+        "nav_icon_color": "#ffffff"
       }
     },
     "premium-composite": {
@@ -211,7 +312,6 @@
         "gp-2": {
           "type": "grid_product",
           "settings": {
-            "image": "shopify://shop_images/6efb1b00647c9b1da4623a9c8591729c_origin.jpg",
             "image_link": "",
             "image_zoom": 100,
             "image_pos_x": 50,
@@ -357,117 +457,12 @@
         "section_title": "",
         "columns_mobile": "1"
       }
-    },
-    "dji_center_carousel_aPhe9D": {
-      "type": "dji-center-carousel",
-      "blocks": {
-        "slide_tAJfaY": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/1ceb244a09ec25edcf285c4ec072310a_75673a70-fcb7-4a99-90f6-26b4cfabafe6.webp",
-            "media_zoom": 100,
-            "media_pos_x": 50,
-            "media_pos_y": 50,
-            "title": "Shot on Osmo 360",
-            "subtitle": "",
-            "text_color": "#ffffff",
-            "btn_bg_color": "#ffffff",
-            "btn_bg_opacity": 0,
-            "btn_border_color": "#ffffff",
-            "text_learn": "Learn More",
-            "link_learn": "",
-            "show_arrow_learn": true,
-            "text_buy": "Buy Now",
-            "link_buy": "",
-            "show_arrow_buy": true
-          }
-        },
-        "slide_yxkUKd": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/043f75382ee5ee7b0d078a593c272a0e_origin.jpg",
-            "media_zoom": 100,
-            "media_pos_x": 50,
-            "media_pos_y": 50,
-            "title": "Shot on Osmo 360",
-            "subtitle": "",
-            "text_color": "#ffffff",
-            "btn_bg_color": "#ffffff",
-            "btn_bg_opacity": 0,
-            "btn_border_color": "#ffffff",
-            "text_learn": "Learn More",
-            "link_learn": "",
-            "show_arrow_learn": true,
-            "text_buy": "Buy Now",
-            "link_buy": "",
-            "show_arrow_buy": true
-          }
-        },
-        "slide_QKWRjm": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/mavic_4_pro.jpg",
-            "media_zoom": 100,
-            "media_pos_x": 50,
-            "media_pos_y": 50,
-            "title": "Shot on Osmo 360",
-            "subtitle": "",
-            "text_color": "#ffffff",
-            "btn_bg_color": "#ffffff",
-            "btn_bg_opacity": 0,
-            "btn_border_color": "#ffffff",
-            "text_learn": "Learn More",
-            "link_learn": "",
-            "show_arrow_learn": true,
-            "text_buy": "Buy Now",
-            "link_buy": "",
-            "show_arrow_buy": true
-          }
-        },
-        "slide_abHXDh": {
-          "type": "slide",
-          "settings": {
-            "media_zoom": 100,
-            "media_pos_x": 50,
-            "media_pos_y": 50,
-            "title": "Shot on Osmo 360",
-            "subtitle": "",
-            "text_color": "#ffffff",
-            "btn_bg_color": "#ffffff",
-            "btn_bg_opacity": 0,
-            "btn_border_color": "#ffffff",
-            "text_learn": "Learn More",
-            "link_learn": "",
-            "show_arrow_learn": true,
-            "text_buy": "Buy Now",
-            "link_buy": "",
-            "show_arrow_buy": true
-          }
-        }
-      },
-      "block_order": [
-        "slide_tAJfaY",
-        "slide_yxkUKd",
-        "slide_QKWRjm",
-        "slide_abHXDh"
-      ],
-      "name": "DJI Center Mode Carousel",
-      "settings": {
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "slide_gap": -20,
-        "nav_bg_color": "#1a1a1a",
-        "nav_bg_opacity": 30,
-        "nav_icon_color": "#ffffff"
-      }
     }
   },
   "order": [
     "hero-slider",
+    "dji_center_carousel_aPhe9D",
     "premium-composite",
-    "bento-grid",
-    "dji_center_carousel_aPhe9D"
+    "bento-grid"
   ]
 }

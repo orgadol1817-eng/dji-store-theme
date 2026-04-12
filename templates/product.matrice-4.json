@@ -25,7 +25,20 @@
             "is_button": false,
             "btn_bg_color": "#0070d5",
             "btn_text_color": "#ffffff",
-            "btn_border_color": "#0070d5"
+            "btn_border_color": "#0070d5",
+            "hide_on_mobile": true
+          }
+        },
+        "nav_link_9wiirk": {
+          "type": "nav_link",
+          "settings": {
+            "link_text": "שאלות נפוצות",
+            "link_url": "",
+            "is_button": false,
+            "btn_bg_color": "#0070d5",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#0070d5",
+            "hide_on_mobile": false
           }
         },
         "nav_link_HTfynj": {
@@ -36,7 +49,8 @@
             "is_button": false,
             "btn_bg_color": "#0070d5",
             "btn_text_color": "#ffffff",
-            "btn_border_color": "#0070d5"
+            "btn_border_color": "#0070d5",
+            "hide_on_mobile": false
           }
         },
         "nav_link_yx3cmJ": {
@@ -47,7 +61,8 @@
             "is_button": false,
             "btn_bg_color": "#0070d5",
             "btn_text_color": "#ffffff",
-            "btn_border_color": "#0070d5"
+            "btn_border_color": "#0070d5",
+            "hide_on_mobile": true
           }
         },
         "nav_link_ydfj4B": {
@@ -58,12 +73,14 @@
             "is_button": true,
             "btn_bg_color": "#0070d5",
             "btn_text_color": "#ffffff",
-            "btn_border_color": "#0070d5"
+            "btn_border_color": "#0070d5",
+            "hide_on_mobile": false
           }
         }
       },
       "block_order": [
         "nav_link_h3RyYB",
+        "nav_link_9wiirk",
         "nav_link_HTfynj",
         "nav_link_yx3cmJ",
         "nav_link_ydfj4B"
@@ -94,10 +111,10 @@
         "enable_loop": true,
         "watch_url": "https://cdn.shopify.com/videos/c/o/v/399030dffb0f4aeb97166a3b9643a82d.mp4",
         "watch_label": "Watch Video",
-        "pre_headline": "Flagship Intelligent Multi-Sensor Compact Drone",
+        "pre_headline": "חכם, עוצמתי וקומפקטי: רחפן הדגל הרב-חיישני למשימות מורכבות",
         "headline": "DJI MATRICE 4 SERIES",
-        "sub_headline": "The Age of Intelligent Flight",
-        "title_size": 85,
+        "sub_headline": "טיסה חכמה ללא פשרות",
+        "title_size": 79,
         "color_pre_title": "#ffffff",
         "color_title": "#ffffff",
         "color_sub": "#ffffff",
@@ -113,13 +130,29 @@
     "intro": {
       "type": "dji-product-intro-text",
       "settings": {
-        "intro_text": "<p><strong>Introducing the DJI Matrice 4 Series, a new compact and intelligent multi-sensor flagship drone series for enterprise industries. The series includes Matrice 4T and Matrice 4E, each equipped with advanced features such as smart detection and measurement with laser range finder. Flight operations are now safer and more reliable with significantly enhanced sensing capabilities. The accessories for the Matrice 4 series have also been significantly upgraded. The Matrice 4T is suitable for a wide range of industries, including electricity, emergency response, public safety, and forestry conservation. The Matrice 4E is designed for geospatial applications such as surveying and mapping, construction, and mining. A new era in intelligent aerial operations begins now.</strong></p>",
-        "blue_text": ",Two Models",
-        "white_text": "Countless Applications",
-        "horizontal_pos": 50,
-        "vertical_pos": 50,
+        "bg_color": "#000000",
+        "section_height": 510,
+        "content_max_width": 1000,
         "text_alignment": "center",
-        "section_height": 330
+        "intro_text": "<p>סדרת הדגל החדשה מבית DJI מגדירה מחדש את המושג \"רחפן חכם\". עם דגמי ה-4T (למשימות תרמיות וביטחון) וה-4E (למיפוי ותשתיות), אתם מצוידים בחיישנים מתקדמים, מד טווח לייזר (עד 1800 מטר) ויכולות זיהוי מבוססות מודלים חכמים. בין אם מדובר באבטחת מתקני חשמל או באיתור נעדרים בלילה – ה-Matrice 4 הוא השותף האמין ביותר שלכם בשטח.</p>",
+        "intro_color": "#cccccc",
+        "intro_size": 18,
+        "intro_size_mobile": 15,
+        "intro_weight": "300",
+        "intro_margin_bottom": 30,
+        "accent_text": "שני דגמים, אינספור משימות.",
+        "accent_color": "#7598c3",
+        "accent_size": 60,
+        "accent_size_mobile": 40,
+        "accent_weight": "900",
+        "main_text": "",
+        "main_text_color": "#ffffff",
+        "main_text_size": 70,
+        "main_text_size_mobile": 38,
+        "main_text_weight": "300",
+        "heading_line_height": "1.1",
+        "horizontal_pos": 50,
+        "vertical_pos": 50
       }
     },
     "buy_area": {
@@ -131,9 +164,10 @@
       "type": "dji-full-width-image",
       "name": "DJI Full-Width Image",
       "settings": {
-        "upper_padding": 65,
-        "lower_padding": 100,
-        "zoom_level": 150,
+        "image": "shopify://shop_images/202604091256.jpg",
+        "upper_padding": 110,
+        "lower_padding": 60,
+        "zoom_level": 100,
         "horizontal_pos": 0,
         "vertical_pos": -6,
         "show_shadow": false,
@@ -142,19 +176,38 @@
     },
     "dji_specs_comparison_znN7ww": {
       "type": "dji-specs-comparison",
+      "blocks": {
+        "spec_row_AxzJcg": {
+          "type": "spec_row",
+          "settings": {
+            "cat_title": "",
+            "model_1_text": "<h5><strong>מצלמה רחבת-זווית:</strong> </h5><h5>חיישן 1/1.3 אינץ' CMOS, עם 48MP אפקטיביים ומפתח צמצם f/1.7. מפיקה תמונות חדות ובהירות גם בתנאי תאורה מאתגרים.</h5><h5><strong>מצלמת זום (Medium Tele):</strong> </h5><h5>חיישן 1/1.3 אינץ' CMOS, עם 48MP אפקטיביים, מפתח צמצם f/2.8 (שווה ערך ל-70 מ\"מ).</h5><h5><strong>מצלמת טלפוטו (Tele Camera):</strong> </h5><h5>חיישן 1/1.5 אינץ' CMOS, עם 48MP אפקטיביים ומפתח צמצם f/2.8 (שווה ערך ל-168 מ\"מ). מושלמת לזיהוי פרטים ממרחקים גדולים.</h5><h5><strong>מד-טווח לייזר (Laser Range Finder):</strong> </h5><h5>טווח מדידה מרשים של עד 1,800 מטרים בדיוק של ±0.2 מ'. מאפשר נעילה על מטרות וקבלת נ\"צ מדויק בזמן אמת.</h5><h5><strong>מצלמה תרמית (Infrared Thermal):</strong> </h5><h5>רזולוציה גבוהה של 640×512, תמיכה במצב High-Res לזיהוי חום רגיש ומדויק – כלי חובה למשימות חילוץ, הצלה ובדיקות תשתית.</h5><h5><strong>תאורת עזר (NIR):</strong> </h5><h5>תאורת אינפרה-אדום ממוקדת לטווח של עד 100 מטר, המאפשרת ראייה וצילום בחושך מוחלט.</h5>",
+            "model_2_text": "<h5><strong>מצלמת מיפוי רחבה:</strong> </h5><h5>חיישן 4/3 CMOS עוצמתי עם 20MP אפקטיביים וצמצם משתנה (f/2.8-f/11). המצלמה כוללת תריס מכני (Mechanical Shutter) – קריטי למיפוי ומדידות פוטוגרמטריות מדויקות ללא עיוותים בזמן טיסה.</h5><h5><strong>מצלמת זום (Medium Tele): </strong></h5><h5>חיישן 1/1.3 אינץ' CMOS, עם 48MP אפקטיביים, מפתח צמצם f/2.8 (שווה ערך ל-70 מ\"מ).</h5><h5><strong>מצלמת טלפוטו (Tele Camera):</strong> </h5><h5>חיישן 1/1.5 אינץ' CMOS, עם 48MP אפקטיביים ומפתח צמצם f/2.8 (שווה ערך ל-168 מ\"מ). לסקירה ויזואלית מקיפה מרחוק.</h5><h5><strong>מד-טווח לייזר (Laser Range Finder):</strong> </h5><h5>טווח מדידה של עד 1,800 מטרים בדיוק גבוה (±0.2 מ'). כלי חיוני למדידת מרחקים וגבהים באתרי בנייה ומכרות.</h5>"
+          }
+        }
+      },
+      "block_order": [
+        "spec_row_AxzJcg"
+      ],
       "name": "DJI Specs Comparison",
       "settings": {
-        "section_height_desktop": 100,
+        "section_height_desktop": 130,
         "horizontal_pos": 50,
         "vertical_pos": 50,
-        "content_max_width": 1300,
-        "card_padding": 70,
-        "model_font_size": 40,
-        "cat_font_size": 17,
-        "details_font_size": 15,
+        "content_max_width": 1200,
+        "card_padding": 75,
+        "titles_nudge_x": 0,
+        "titles_nudge_y": 0,
+        "content_nudge_x": 0,
+        "content_nudge_y": 0,
+        "text_alignment": "right",
+        "para_spacing": 0,
+        "line_height": 2.4,
+        "model_font_size": 60,
+        "cat_font_size": 20,
+        "details_font_size": 17,
         "bg_main": "#000000",
         "bg_card": "#161616",
-        "color_model_name": "#ffffff",
         "color_cat": "#ffffff",
         "color_details": "#ffffffa6",
         "glow_1": "#ff9a00",
@@ -171,30 +224,32 @@
           "settings": {
             "title": "פונקציות תפעול חכמות",
             "text_color": "#ffffff",
-            "video_url": "",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f20a0c8dfacf4d60bbcf87d213a89e95.mp4",
             "card_size": "card-wide",
             "x_pos": 50,
-            "y_pos": 10,
+            "y_pos": 0,
             "text_align": "center"
           }
         },
         "feature_card_TkeyRz": {
           "type": "feature_card",
           "settings": {
-            "title": "הצטיינות בסביבות תאורה חלשה",
+            "title": "הצטיינות בסביבת תאורה חלשה",
             "text_color": "#ffffff",
+            "image": "shopify://shop_images/7c274c10dbb4e800ebab408f24ecfa09.jpg",
             "video_url": "",
             "card_size": "card-standard",
-            "x_pos": 50,
-            "y_pos": 10,
+            "x_pos": 20,
+            "y_pos": 0,
             "text_align": "center"
           }
         },
         "feature_card_hArCa8": {
           "type": "feature_card",
           "settings": {
-            "title": "ראייה חדה ותמונות יציבות",
+            "title": "ראייה חדה ותמונה יציבה",
             "text_color": "#ffffff",
+            "image": "shopify://shop_images/18b8031c115e173d3ba66219a9a2e84b.jpg",
             "video_url": "",
             "card_size": "card-standard",
             "x_pos": 50,
@@ -207,7 +262,7 @@
           "settings": {
             "title": "מיפוי מדויק ביעילות גבוהה",
             "text_color": "#ffffff",
-            "video_url": "",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/d9fc7817f2cf464a9307068a55fdc323.mp4",
             "card_size": "card-wide",
             "x_pos": 50,
             "y_pos": 10,
@@ -239,14 +294,14 @@
         "top_label": "תפעול חכם",
         "headline": "יעילות תפעולית גבוהה",
         "description": "פונקציות הטיסה והצילום החדשות משפרות באופן דרמטי את היעילות והפרודוקטיביות התפעולית.",
-        "headline_size": 80,
+        "headline_size": 60,
         "color_text": "#67bfbe",
         "color_description": "#dddddd",
         "text_alignment": "center",
         "text_offset_x": 0,
         "text_offset_y": 0,
-        "media_type": "image",
-        "video_url": "",
+        "media_type": "video",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/9396a9b864864324b0319e61eba7cde6.mp4",
         "media_width": 90,
         "media_height": 70,
         "media_radius": 12,
@@ -258,6 +313,36 @@
         "media_offset_y": 0
       }
     },
+    "dji_feature_media_6c6Ab3": {
+      "type": "dji-feature-media",
+      "name": "DJI Feature Media Pro",
+      "settings": {
+        "main_title": "עבודה חכמה בשטח",
+        "sub_title": "יעילות מבצעית חסרת פשרות",
+        "description_text": "<p>האלגוריתם המובנה מזהה כלי רכב, כלי שיט ומטרות בזמן משימות חיפוש והצלה או טיסות שגרה. המערכת תומכת בהחלפת מודלים להתאמה מושלמת לכל תרחיש יישום בשטח. בנוסף, היא מאפשרת צילום רשת (Grid) ברזולוציה גבוהה וכוללת יכולות מעקב עוצמתיות לשליטה מלאה בכל רגע.<br/><br/></p>",
+        "media_type": "video_native",
+        "video_native": "shopify://files/videos/98845d83-0db4-42df-a5ec-5297b2b39baf.mp4",
+        "video_url": "",
+        "content_max_width": 1200,
+        "nudge_x": 0,
+        "nudge_y": 0,
+        "header_margin": 80,
+        "media_margin": 60,
+        "main_title_size": 60,
+        "main_title_weight": 800,
+        "main_title_spacing": 2,
+        "sub_title_size": 32,
+        "sub_title_weight": 700,
+        "desc_size": 17,
+        "desc_weight": 300,
+        "desc_line_height": 1.7,
+        "color_bg": "#201e1e",
+        "color_main_title": "#67bfbe",
+        "color_sub_title": "#ffffff",
+        "color_desc": "#a0a0a0",
+        "media_radius": 4
+      }
+    },
     "dji_alternating_features_pca9ie": {
       "type": "dji-alternating-features",
       "blocks": {
@@ -265,8 +350,8 @@
           "type": "feature_row",
           "settings": {
             "layout_direction": "row",
-            "headline": "כותרת תכונה\nחדשה ומדויקת",
-            "description": "<p>פירוט טכני על התכונה של הרחפן. כאן המקום להסביר על היתרונות המקצועיים.</p>",
+            "headline": "מד-טווח לייזר: מדידה מדויקת בזמן אמת",
+            "description": "<p><br/>מד-טווח הלייזר מאפשר מדידה מדויקת ומיידית מהאוויר. באמצעות פעולות פשוטות כמו סימון נקודה (Pin Point), שרטוט קווים וחישוב שטחים, ניתן לבצע משימות מורכבות כמו סימון מטרות לפיקוח או חישוב היקף שריפה במהירות ובקלות. בנוסף, המערכת מאפשרת שיתוף מידע מיידי עם הגורמים הרלוונטיים באמצעות קוד QR באפליקציית DJI Pilot 2 או דרך מערכת הניהול FlightHub 2, מה שמשפר משמעותית את שיתוף הפעולה והיעילות התפעולית בשטח.</p>",
             "headline_size": 40,
             "headline_color": "#8ba0d0",
             "desc_color": "#ffffff",
@@ -274,17 +359,17 @@
             "text_align": "right",
             "offset_x": 0,
             "offset_y": 0,
-            "media_type": "image",
-            "video_url": "",
-            "radius": 0
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/0b887c3482c14d5ca19e081b9e3a8081.mp4",
+            "radius": 8
           }
         },
         "feature_row_D6CYth": {
           "type": "feature_row",
           "settings": {
             "layout_direction": "row-reverse",
-            "headline": "כותרת תכונה\nחדשה ומדויקת",
-            "description": "<p>פירוט טכני על התכונה של הרחפן. כאן המקום להסביר על היתרונות המקצועיים.</p>",
+            "headline": "תיעוד טווחי תצפית וכיסוי שטח",
+            "description": "<p>פליקציית <strong>DJI Pilot 2</strong> מאפשרת סימון מדויק של מרכז התמונה ושטח הכיסוי על גבי המפה בזמן אמת. המערכת מציגה באופן ויזואלי את האזור שנסרק, מה שהופך אותה לכלי חיוני לסיורים, אבטחה ומשימות חילוץ בתנאי שטח מורכבים, באזורים הרריים או במקומות ללא נקודות ציון ברורות.</p>",
             "headline_size": 40,
             "headline_color": "#8ba0d0",
             "desc_color": "#ffffff",
@@ -292,9 +377,9 @@
             "text_align": "right",
             "offset_x": 0,
             "offset_y": 0,
-            "media_type": "image",
-            "video_url": "",
-            "radius": 0
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/12f43e00d19b43c3b5542193dacc8438.mp4",
+            "radius": 8
           }
         }
       },
@@ -316,33 +401,33 @@
         "tab_item_c7fUDn": {
           "type": "tab_item",
           "settings": {
-            "tab_title": "Cruise",
-            "video_url": "",
-            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+            "tab_title": "בקרת שיוט",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/d78609a024ae49fe8f0ad92eac7912b9.mp4",
+            "tab_description": "<p>הפעילו את מצב ה-Cruise כדי להטיס את הרחפן בכיוון קבוע ללא צורך בלחיצה רציפה על הסטיקים. הפיצ'ר מאפשר לכם להתרכז בתצפית ובאיסוף נתונים, והופך טיסות ארוכות טווח לקלות ונינוחות הרבה יותר.</p>"
           }
         },
         "tab_item_hzNjLw": {
           "type": "tab_item",
           "settings": {
-            "tab_title": "FlyTo",
-            "video_url": "",
-            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+            "tab_title": "טיסה ליעד",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/c8c7320ca1bb4692aa44070b3cfc0c58.mp4",
+            "tab_description": "<p>באירועי חירום או באזורי אסון, הרחפן יודע לחשב ולהתאים את מסלול הטיסה והמהירות שלו באופן אוטונומי בהתאם לתנאי הסביבה. המערכת תביא את הרחפן ליעד שהוגדר במהירות ובדיוק מרבי, ללא צורך בהתערבות ידנית של המפעיל.<br/></p>"
           }
         },
         "tab_item_wWKqTk": {
           "type": "tab_item",
           "settings": {
-            "tab_title": "Smart Track",
-            "video_url": "",
-            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+            "tab_title": "מעקב חכם",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f421d72f597d467ca591aedb03b88f61.mp4",
+            "tab_description": "<p>מערכת ה-Smart Track מאפשרת התבייתות מדויקת על אובייקטים עם התאמת זום אוטומטית ומעבר מהיר ונוח בין מטרות שונות. המערכת חכמה מספיק כדי לזהות ולהינעל מחדש על האובייקט באופן אוטומטי, גם אם אבד איתו קשר העין לזמן קצר.</p>"
           }
         },
         "tab_item_RYLyKz": {
           "type": "tab_item",
           "settings": {
-            "tab_title": "POI",
-            "video_url": "",
-            "tab_description": "<p>הסבר על התכונה הזו. יופיע מתחת לסרגל הטאבים.</p>"
+            "tab_title": "נקודת עניין",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/67a4ae1519ed4427ad687c95edfcc28f.mp4",
+            "tab_description": "<p>מצב ה-POI מאפשר ביצוע תצפיות רציפות ויצירת מודלים בתלת-מימד (3D) של מבנים ותשתיות. הרחפן חוגג סביב הנקודה המוגדרת באופן אוטונומי, מה שמשדרג משמעותית את היעילות במשימות של מיפוי הנדסי ותצפיות סטטיות.</p>"
           }
         }
       },
@@ -356,13 +441,41 @@
       "settings": {
         "bg_color": "#201e1e",
         "padding_top": 60,
-        "padding_bottom": 100,
-        "headline": "Efficient Flight, Intelligent Operations",
-        "headline_size": 47,
-        "color_headline": "#ffffff",
+        "padding_bottom": 30,
+        "headline": "מקסימום יעילות בטיסה. ביצועים חכמים בשטח.",
+        "headline_size": 50,
+        "color_headline": "#67bfbe",
         "video_width": 75,
         "media_radius": 12,
         "color_text": "#dddddd"
+      }
+    },
+    "dji_product_intro_text_LtFK7q": {
+      "type": "dji-product-intro-text",
+      "settings": {
+        "bg_color": "#000000",
+        "section_height": 200,
+        "content_max_width": 760,
+        "text_alignment": "center",
+        "intro_text": "",
+        "intro_color": "#cccccc",
+        "intro_size": 17,
+        "intro_size_mobile": 15,
+        "intro_weight": "300",
+        "intro_margin_bottom": 30,
+        "accent_text": "עליונות מבצעית גם בחשיכה מוחלטת",
+        "accent_color": "#7598c3",
+        "accent_size": 58,
+        "accent_size_mobile": 40,
+        "accent_weight": "900",
+        "main_text": "",
+        "main_text_color": "#ffffff",
+        "main_text_size": 20,
+        "main_text_size_mobile": 38,
+        "main_text_weight": "300",
+        "heading_line_height": "1.1",
+        "horizontal_pos": 50,
+        "vertical_pos": 55
       }
     },
     "dji_vertical_navigator_Vz4Rfg": {
@@ -371,46 +484,46 @@
         "feature_pbdPbz": {
           "type": "feature",
           "settings": {
-            "title": "לוק 5: חישה רב-כיוונית מבוססת עדשת עין-דג לתנאי תאורה חלשה (Low-Light Fisheye Omnidirectional Sensing)תיאור:",
-            "description": "סדרת ה-Matrice 4 מצוידת בשישה חיישני ראיית \"עין-דג\" (Fisheye) ברזולוציה גבוהה המותאמים לתאורה חלשה. אלו משפרים משמעותית את יכולות המיקוד הוויזואלי ומניעת המכשולים בתנאי חשיכה. מערך זה מאפשר הימנעות אוטומטית ממכשולים, ניתוב מחדש חכם (Rerouting) וחזרה בטוחה לבסיס בסביבות עירוניות חשוכות.",
-            "media_type": "image",
-            "video_url": ""
+            "title": "מצב סצנת לילה",
+            "description": "סדרת ה-Matrice 4 מציגה שדרוג דרמטי ביכולות צילום הלילה. מערכת ראיית הלילה בצבע (Full-Color) תומכת כעת בשלושה מצבי עבודה וכוללת שתי רמות מתקדמות של הפחתת רעשים דיגיטלית. בזכות השילוב של מסנן IR Cut ותאורת עזר NIR, הרחפן מתגבר בקלות על אתגרי החשיכה ומבטיח זיהוי חד וברור של מטרות – נתון קריטי להצלחת משימות חיפוש והצלה בזמן אמת.",
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/7b4ceba4dc414c2ba8553ae90cead2e0.mp4"
           }
         },
         "feature_7YQejz": {
           "type": "feature",
           "settings": {
-            "title": "בלוק 4: הדמיה תרמית (Thermal Imaging",
-            "description": "ה-Matrice 4T תומך במצב אינפרא-אדום ברזולוציה גבוהה (High-Res), עם רזולוציה של עד 1280 × 1024. בנוסף, הוא מציע רזולוציה אולטרה-גבוהה החושפת פרטי טמפרטורה מזעריים לטובת משימות מורכבות. כל מכשיר עובר כיול דיוק טמפרטורה קפדני ומשתמש בחיישן טמפרטורה מובנה כדי לספק מדידות מדויקות בזמן אמת.",
-            "media_type": "image",
-            "video_url": ""
+            "title": "צילום חכם בתנאי תאורה חלשים",
+            "description": "המצלמות של סדרת ה-Matrice 4 מצוידות במפתחי צמצם רחבים יותר וביכולות צילום חכמות המותאמות לחשיכה. שילוב זה משדרג משמעותית את רמת הביצועים ומאפשר עבודה רציפה, מדויקת ויעילה גם בשעות הדמדומים ובלילה.",
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f6fd650e4bce45a399fba26c6511816e.mp4"
           }
         },
         "feature_VgKViz": {
           "type": "feature",
           "settings": {
-            "title": "בלוק 3 תאורת עזר אינפרא-אדום קרוב (NIR Auxiliary Light)",
-            "description": "דגם ה-Matrice 4T כולל חומרת תאורת NIR חדשה, המאפשרת טווחי הארה של עד 100 מטרים. יכולת זו מבטיחה נראות ברורה של אובייקטים בסביבות חשוכות לחלוטין, מה שהופך את הרחפן לאידיאלי ליישומים כגון הגנה על חיות בר ומשימות אבטחה.",
-            "media_type": "image",
-            "video_url": ""
+            "title": "תאורת עזר NIR (אינפרה-אדום)",
+            "description": "ה-Matrice 4T מצויד בחומרת תאורת NIR חדשנית, המאפשרת טווח הארה עוצמתי של עד 100 מטרים. המערכת מבטיחה ראות ברורה וחדה של אובייקטים גם בסביבות חשוכות לחלוטין, מה שהופך אותה לפתרון אידיאלי ליישומים רגישים כמו הגנה על חיות בר ושמירת טבע.",
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/4c02295554d44a1da1da60fb9dd3102e.mp4"
           }
         },
         "feature_UQWgBP": {
           "type": "feature",
           "settings": {
-            "title": "בלוק 2 צילום חכם בתנאי תאורה חלשה (Smart Low-Light Photo)",
-            "description": "המצלמות בסדרת ה-Matrice 4 מצוידות בצמצמים גדולים יותר וביכולות תאורה חלשה חכמות, המעלות משמעותית את רמת הביצועים ומשפרות את היכולת המבצעית בשעות הדמדומים והלילה.",
-            "media_type": "image",
-            "video_url": ""
+            "title": "דימות תרמי",
+            "description": "ה-Matrice 4T תומך במצב אינפרה-אדום ברזולוציה גבוהה (High-Res Mode), עם איכות תמונה מרשימה של עד 1280 × 1024 פיקסלים. רמת הפירוט הגבוהה (Ultra-High Resolution) מאפשרת לזהות שינויי טמפרטורה זעירים – נתון קריטי להצלחת מגוון רחב של משימות. כל רחפן עובר כיול דיוק קפדני כבר בשלב הייצור וכולל חיישן טמפרטורה מובנה, המספק מדידות מדויקות ונתונים בזמן אמת.",
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/bc6dc80a53e54dc9ae49969223e00e96.mp4"
           }
         },
         "feature_LXG4cV": {
           "type": "feature",
           "settings": {
-            "title": "בלוק 1 מצב סצנת לילה (Night Scene Mode)",
-            "description": "מצב סצנת לילה (Night Scene Mode) \nתיאור:\nסדרת ה-Matrice 4 זכתה לשדרוג משמעותי במצב הלילה. מערכת ראיית הלילה בצבע מלא (Full-color) תומכת כעת בשלושה מצבים וכוללת שתי רמות של הפחתת רעשים משופרת. כשהוא מצויד במסנן IR-Cut ותאורת עזר NIR, הרחפן מתגבר ללא מאמץ על אתגרי החשיכה ומבטיח שמושאי חיפוש והצלה יהיו נראים בבירור.",
-            "media_type": "image",
-            "video_url": ""
+            "title": "חישה היקפית (Fisheye) בתנאי תאורה חלשים",
+            "description": "סדרת ה-Matrice 4 מצוידת בשישה חיישני ראייה מסוג \"עין-דג\" (Fisheye) ברזולוציה גבוהה, המשדרגים משמעותית את יכולות המיקום הוויזואלי וההימנעות ממכשולים בחושך. מערך זה מאפשר עקיפת מכשולים אוטומטית, תכנון מסלול מחדש חכם וחזרה בטוחה הביתה – גם בסביבות עירוניות מאתגרות ובתנאי תאורה מוגבלים.",
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/8683daa48c8847ff8ceea41bc95276ec.mp4"
           }
         }
       },
@@ -424,17 +537,17 @@
       "name": "DJI Vertical Navigator",
       "settings": {
         "bg_color": "#000000",
-        "padding_top": 80,
+        "padding_top": 65,
         "padding_bottom": 80,
         "color_main_headline": "#ffffff",
         "headline_size": 56,
         "color_title_active": "#ffffff",
         "color_title_inactive": "#ffffff4d",
-        "item_title_size": 22,
+        "item_title_size": 18,
         "color_desc": "#ffffffb3",
-        "item_desc_size": 16,
+        "item_desc_size": 14,
         "color_accent": "#ffffff",
-        "item_padding": 25,
+        "item_padding": 17,
         "container_width": 1300,
         "media_height": 60,
         "scale": 100,
@@ -445,6 +558,168 @@
         "autoplay": true,
         "autoplay_speed": 6,
         "loop": true
+      }
+    },
+    "dji_product_intro_text_BJGwqg": {
+      "type": "dji-product-intro-text",
+      "settings": {
+        "bg_color": "#000000",
+        "section_height": 330,
+        "content_max_width": 1000,
+        "text_alignment": "center",
+        "intro_text": "",
+        "intro_color": "#cccccc",
+        "intro_size": 18,
+        "intro_size_mobile": 15,
+        "intro_weight": "300",
+        "intro_margin_bottom": 30,
+        "accent_text": "ראייה חדה מתמיד: שום פרט לא נשאר נסתר",
+        "accent_color": "#7598c3",
+        "accent_size": 58,
+        "accent_size_mobile": 40,
+        "accent_weight": "900",
+        "main_text": "הפרטים הקטנים, בטווחים גדולים",
+        "main_text_color": "#ffffff",
+        "main_text_size": 38,
+        "main_text_size_mobile": 38,
+        "main_text_weight": "400",
+        "heading_line_height": "1.1",
+        "horizontal_pos": 50,
+        "vertical_pos": 50
+      }
+    },
+    "dji_alternating_features_mCL9r6": {
+      "type": "dji-alternating-features",
+      "blocks": {
+        "feature_row_BMtqq4": {
+          "type": "feature_row",
+          "settings": {
+            "layout_direction": "row",
+            "headline": "חושפים את הפרטים שנסתרים מהעין",
+            "description": "<p>כשמדובר בתשתיות קריטיות, \"בערך\" זה לא מספיק. עם ה-Matrice 4, אתם מקבלים עיני נץ שמזהות סדק בבטון או בורג משוחרר ממרחק של 10 מטרים – בלי לסכן את המפעיל ובלי להתקרב לקווי מתח חיים. זו לא רק מצלמה, זו מערכת שמאפשרת לכם לקרוא שעונים ומדדים בתחנות כוח מרחוק, ולהפוך כל סקר תשתיות למהיר, בטוח ומדויק פי 5</p>",
+            "headline_size": 40,
+            "headline_color": "#8ba0d0",
+            "desc_color": "#ffffff",
+            "content_gap": 20,
+            "text_align": "right",
+            "offset_x": 0,
+            "offset_y": 0,
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/37b9e46b21184909ae3fe2a29accc1a6.mp4",
+            "radius": 8
+          }
+        },
+        "feature_row_q9GLDA": {
+          "type": "feature_row",
+          "settings": {
+            "layout_direction": "row-reverse",
+            "headline": "החדות שעוברת כל גבול",
+            "description": "<p>אל תנחשו מה אתם רואים – תדעו. ה-Matrice 4 הופך את המרחק ללא רלוונטי עם חיישן 48MP עוצמתי שמאפשר לכם לזהות פרטים קריטיים ממרחק של רבע קילומטר. בזמן שרחפנים אחרים הופכים לעיוורים בחשיכה, ה-Matrice 4T מצויד בטכנולוגיית IR-Cut המבטיח ביצועים אופטיים עקביים ומבצעיות מלאה 24/7, בכל תנאי תאורה. שליטה מלאה, חדות מקסימלית, אפס הפתעות.</p>",
+            "headline_size": 40,
+            "headline_color": "#8ba0d0",
+            "desc_color": "#ffffff",
+            "content_gap": 20,
+            "text_align": "right",
+            "offset_x": 0,
+            "offset_y": 0,
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/397607c108f3462daa15e9eeef218c72.mp4",
+            "radius": 8
+          }
+        }
+      },
+      "block_order": [
+        "feature_row_BMtqq4",
+        "feature_row_q9GLDA"
+      ],
+      "name": "DJI Alternating Features",
+      "settings": {
+        "bg_color": "#201e1e",
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "row_gap": 100
+      }
+    },
+    "dji_alternating_features_9fE7Md": {
+      "type": "dji-alternating-features",
+      "blocks": {
+        "feature_row_L6qeEw": {
+          "type": "feature_row",
+          "settings": {
+            "layout_direction": "row",
+            "headline": "חדות ללא פשרות, גם בזום מקסימלי",
+            "description": "<p>ערכת הייצוב המשודרגת של ה-Matrice 4 מבטיחה שאובייקטים בקדמת התמונה יישארו יציבים וברורים לחלוטין, גם בזום של 10x ומעלה. בתרחישים של בטיחות הציבור או סקרי תשתיות מורכבים, כל פרט נלכד בחדות, מה שמאפשר פענוח נתונים מדויק ללא הפרעות של רעידות או טשטוש.</p>",
+            "headline_size": 40,
+            "headline_color": "#8ba0d0",
+            "desc_color": "#ffffff",
+            "content_gap": 20,
+            "text_align": "right",
+            "offset_x": 0,
+            "offset_y": 0,
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/def98cd93f494812beb4ee6de1fbf18b.mp4",
+            "radius": 8
+          }
+        },
+        "feature_row_DeJTCU": {
+          "type": "feature_row",
+          "settings": {
+            "layout_direction": "row-reverse",
+            "headline": "ראייה צלולה, יותר מתמיד",
+            "description": "<p>בתנאי אובך, עשן או לחות גבוהה, מערכת ה-Electronic Dehazing של סדרת ה-Matrice 4 מבטיחה ששום דבר לא יסתיר לכם את המטרה. המערכת תומכת בשלושה מצבי פעולה (נמוך, בינוני וגבוה), המאפשרים לכם להתאים את חדות התמונה לתנאי הסביבה ולדרישות המבצעיות שלכם בזמן אמת.</p>",
+            "headline_size": 40,
+            "headline_color": "#8ba0d0",
+            "desc_color": "#ffffff",
+            "content_gap": 20,
+            "text_align": "right",
+            "offset_x": 0,
+            "offset_y": 0,
+            "media_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/ed3a76debe8d4123918eda6a3d290ad6.mp4",
+            "radius": 8
+          }
+        }
+      },
+      "block_order": [
+        "feature_row_L6qeEw",
+        "feature_row_DeJTCU"
+      ],
+      "name": "DJI Alternating Features",
+      "settings": {
+        "bg_color": "#201e1e",
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "row_gap": 100
+      }
+    },
+    "dji_feature_media_KhRbaN": {
+      "type": "dji-feature-media",
+      "name": "DJI Feature Media Pro",
+      "settings": {
+        "main_title": "מיפוי מדויק, מהיר וללא מאמץ",
+        "sub_title": "לכסות שטחים עצומים בזמן שיא. בלי לפספס אף פיקסל.",
+        "description_text": "<p>למה לבזבז ימים בשטח כשאפשר לסיים את המשימה בכמה גיחות בודדות? ה-Matrice 4E הוא מכונת עבודה משומנת שתוכננה למהירות: קצב צילום מטורף של חצי שנייה ומהירות טיסה של 21 מטר לשנייה. אתם מקבלים רצף נתונים מושלם למיפוי ותלת-ממד בזמן שרחפנים אחרים עדיין מנסים להדביק את הקצב. יותר שטח, פחות סוללות, מקסימום רווח.</p>",
+        "media_type": "video_native",
+        "video_native": "shopify://files/videos/7a530960-eb20-4ec5-ac58-70387edf69a6.mp4",
+        "video_url": "",
+        "content_max_width": 1200,
+        "nudge_x": 0,
+        "nudge_y": 0,
+        "header_margin": 80,
+        "media_margin": 60,
+        "main_title_size": 60,
+        "main_title_weight": 800,
+        "main_title_spacing": 2,
+        "sub_title_size": 32,
+        "sub_title_weight": 700,
+        "desc_size": 17,
+        "desc_weight": 300,
+        "desc_line_height": 1.7,
+        "color_bg": "#201e1e",
+        "color_main_title": "#67bfbe",
+        "color_sub_title": "#ffffff",
+        "color_desc": "#a0a0a0",
+        "media_radius": 4
       }
     }
   },
@@ -458,8 +733,14 @@
     "dji_specs_comparison_znN7ww",
     "dji_feature_grid_BNghPJ",
     "dji_video_hero_showcase_dMEMXR",
+    "dji_feature_media_6c6Ab3",
     "dji_alternating_features_pca9ie",
     "dji_interactive_video_tabs_rPx38r",
-    "dji_vertical_navigator_Vz4Rfg"
+    "dji_product_intro_text_LtFK7q",
+    "dji_vertical_navigator_Vz4Rfg",
+    "dji_product_intro_text_BJGwqg",
+    "dji_alternating_features_mCL9r6",
+    "dji_alternating_features_9fE7Md",
+    "dji_feature_media_KhRbaN"
   ]
 }

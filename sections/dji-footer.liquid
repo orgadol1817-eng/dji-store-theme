@@ -2,6 +2,13 @@
   DroX Ultimate Benda-Style Footer (Floating Bottom Bar + Full Mobile Support)
 {%- endcomment -%}
 
+{%- liquid
+  assign footer_logo_mobile_max = section.settings.logo_width | times: 85 | divided_by: 100
+  if footer_logo_mobile_max < 40
+    assign footer_logo_mobile_max = 40
+  endif
+-%}
+
 {%- style -%}
   /* ── Section-level spacing ───────────────────────────────────── */
   #shopify-section-{{ section.id }} {
@@ -160,6 +167,11 @@
       text-align: center;
     }
 
+    .benda-footer-container {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
     .benda-footer-grid {
       grid-template-columns: 1fr;
       gap: 50px;
@@ -173,6 +185,7 @@
       position: static !important;
       align-items: center !important;
       padding-top: 0 !important;
+      width: 100%;
     }
 
     .benda-logo-wrapper {
@@ -182,7 +195,23 @@
       margin-bottom: 20px;
     }
 
-    .benda-social-icons { justify-content: center; }
+    .benda-logo-wrapper img {
+      max-width: {{ footer_logo_mobile_max }}px;
+    }
+
+    .benda-contact-wrapper {
+      align-items: center;
+    }
+
+    .benda-social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     .benda-contact-logo-extra img { margin: 15px auto 0 auto; }
 

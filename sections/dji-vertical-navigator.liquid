@@ -138,11 +138,50 @@
   .dji-media-layer.is-active { opacity: 1; visibility: visible; transform: scale(1); z-index: 2; }
   .dji-media-layer img, .dji-media-layer video { width: 100%; height: 100%; object-fit: cover; }
 
+  @media (min-width: 991px) {
+    .dji-nav-item-mobile-media { display: none !important; }
+  }
+
   @media (max-width: 990px) { 
-    .dji-nav-split { flex-direction: column-reverse; gap: 30px; height: auto; } 
+    .dji-nav-split { flex-direction: column; gap: 30px; height: auto; } 
     .dji-nav-list-side { height: auto; }
-    .dji-nav-media-side { width: 100%; height: 45vh; }
+    .dji-nav-media-side { display: none !important; }
     .dji-nav-item.is-active { flex: 0 0 auto; }
+
+    .dji-nav-item-mobile-media {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      margin-top: 0;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin-top 0.4s ease;
+      pointer-events: none;
+    }
+
+    .dji-nav-item.is-active .dji-nav-item-mobile-media {
+      max-height: 80vh;
+      opacity: 1;
+      margin-top: 15px;
+      pointer-events: auto;
+    }
+
+    .dji-nav-item-mobile-media-inner {
+      border-radius: {{ section.settings.media_radius }}px;
+      overflow: hidden;
+      background-color: #050505;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      position: relative;
+      aspect-ratio: 16 / 9;
+    }
+
+    .dji-nav-item-mobile-media-inner video,
+    .dji-nav-item-mobile-media-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   }
 {%- endstyle -%}
 
@@ -157,6 +196,15 @@
           {%- for block in section.blocks -%}
             <div class="dji-nav-item {% if forloop.first %}is-active{% endif %} js-nav-item" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
               <h3 class="dji-nav-item-title">{{ block.settings.title }}</h3>
+              <div class="dji-nav-item-mobile-media">
+                <div class="dji-nav-item-mobile-media-inner js-mobile-media" data-index="{{ forloop.index0 }}">
+                  {%- if block.settings.media_type == 'video' -%}
+                    <video muted loop playsinline preload="auto"><source src="{{ block.settings.video_url }}" type="video/mp4"></video>
+                  {%- else -%}
+                    {{ block.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy' }}
+                  {%- endif -%}
+                </div>
+              </div>
               <div class="dji-nav-item-desc">{{ block.settings.description }}</div>
             </div>
           {%- endfor -%}
@@ -183,7 +231,7 @@ class DJIVerticalNavigator {
     this.container = document.querySelector(`#DjiNav-${id} .dji-nav-container`);
     if (!this.container) return;
     this.navItems = Array.from(this.container.querySelectorAll('.js-nav-item'));
-    this.mediaLayers = Array.from(this.container.querySelectorAll('.js-media-layer'));
+    this.mediaLayers = Array.from(this.container.querySelectorAll('.dji-nav-media-side .js-media-layer'));
     this.isAutoplay = this.container.dataset.autoplay === 'true';
     this.speed = parseInt(this.container.dataset.speed) * 1000;
     this.currentIndex = 0;
@@ -206,9 +254,22 @@ class DJIVerticalNavigator {
     this.updateMedia(index);
   }
   updateMedia(index) {
-    this.mediaLayers.forEach((layer, i) => {
-      const vid = layer.querySelector('video');
-      if (vid) { if (i === index) { vid.currentTime = 0; vid.play().catch(() => {}); } else vid.pause(); }
+    const isMobile = window.matchMedia('(max-width: 990px)').matches;
+    this.container.querySelectorAll('.dji-nav-media-side .js-media-layer video, .js-mobile-media video').forEach((vid) => {
+      const layer = vid.closest('.js-media-layer, .js-mobile-media');
+      if (!layer || layer.dataset.index === undefined) return;
+      const i = parseInt(layer.dataset.index, 10);
+      const useLayer = isMobile ? layer.classList.contains('js-mobile-media') : layer.classList.contains('js-media-layer');
+      if (!useLayer) {
+        vid.pause();
+        return;
+      }
+      if (i === index) {
+        vid.currentTime = 0;
+        vid.play().catch(() => {});
+      } else {
+        vid.pause();
+      }
     });
   }
   startTimer() { this.timer = setInterval(() => { this.currentIndex = (this.currentIndex + 1) % this.navItems.length; this.goToSlide(this.currentIndex); }, this.speed); }

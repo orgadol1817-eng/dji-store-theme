@@ -38,7 +38,7 @@
     #shopify-section-{{ section.id }} .drox-top-bar__segment--left {
       transform: translateX({{ section.settings.left_segment_offset }}px);
     }
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       #shopify-section-{{ section.id }} .drox-top-bar--suppress-mobile {
         display: none !important;
       }
@@ -388,13 +388,19 @@
   <div class="sh-inner">
 
     <a class="sh-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {%- liquid
+        assign header_logo_file_w = section.settings.logo_width | times: 2
+        assign header_logo_src = "https://cdn.shopify.com/s/files/1/0758/4897/4509/files/logo_drox.png?v=1773919882&width=" | append: header_logo_file_w
+        assign header_logo_height = section.settings.logo_width | times: 40 | divided_by: 120
+      -%}
       <img
-        src="https://cdn.shopify.com/s/files/1/0758/4897/4509/files/logo_drox.png?v=1773919882"
+        src="{{ header_logo_src }}"
         alt="DROX"
         class="header__logo-img"
-        width="120"
-        height="40"
+        width="{{ section.settings.logo_width }}"
+        height="{{ header_logo_height }}"
         loading="eager"
+        fetchpriority="high"
       >
     </a>
 
@@ -621,13 +627,20 @@
 .drox-top-bar__left-label { font-weight: 500; }
 .drox-top-bar__phone-num { font-weight: 600; }
 @media (max-width: 768px) {
-  .drox-top-bar__inner { flex-direction: column; justify-content: center; gap: 8px; padding-left: 4%; padding-right: 4%; }
-  .drox-top-bar__col--links, .drox-top-bar__col--phone { text-align: center; }
-}
-@media (max-width: 767px) {
-  .drox-top-bar__inner { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; align-content: center; gap: 10px; row-gap: 8px; }
+  .drox-top-bar__inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 10px;
+    row-gap: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
   .drox-top-bar__col { flex: 1 1 auto; min-width: 0; max-width: 100%; }
-  .drox-top-bar__col--links { text-align: center; }
+  .drox-top-bar__col--links,
+  .drox-top-bar__col--phone { text-align: center; }
   .drox-top-bar__links-row { justify-content: center; }
 }
 

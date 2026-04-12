@@ -70,6 +70,44 @@
       transform: none !important;
     }
   }
+
+  @media (max-width: 768px) {
+    .dji-alt-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | times: 0.55 | round }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.55 | round }}px;
+    }
+
+    .dji-alt-{{ section.id }} .dji-alt-wrapper {
+      padding: 0 16px;
+      gap: {{ section.settings.row_gap | times: 0.45 | round }}px;
+    }
+
+    .dji-alt-{{ section.id }} .dji-alt-row {
+      flex-direction: column !important;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .dji-alt-{{ section.id }} .dji-alt-media {
+      order: 1;
+      width: 100%;
+    }
+
+    .dji-alt-{{ section.id }} .dji-alt-text {
+      order: 2;
+      width: 100%;
+      transform: none !important;
+      text-align: center !important;
+    }
+
+    .dji-alt-{{ section.id }} .dji-alt-headline {
+      font-size: clamp(1.35rem, 4.2vw, 1.85rem) !important;
+    }
+
+    .dji-alt-{{ section.id }} .dji-alt-desc {
+      font-size: 0.95rem;
+    }
+  }
 {%- endstyle -%}
 
 <section class="dji-alt-{{ section.id }}">
@@ -98,7 +136,7 @@
           {%- if block.settings.media_type == 'video' -%}
             {%- if block.settings.video_url != blank -%}
               <video autoplay muted loop playsinline preload="auto">
-                <source src="{{ block.settings.video_url }}" type="video/mp4">
+                <source src="{{ block.settings.video_url | escape }}" type="video/mp4">
               </video>
             {%- else -%}
                 {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}

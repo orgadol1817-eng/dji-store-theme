@@ -163,12 +163,12 @@
 }
 .dji-hero-slider__dot.is-active { background: #fff; transform: scale(1.5); }
 
-@media (max-width: 749px) {
+@media (max-width: 768px) {
   .dji-hero-slider {
     width: 100%; margin-left: 0; height: auto;
     aspect-ratio: 3 / 4; min-height: 70vh; max-height: 85vh;
   }
-  .dji-hero-slider__content { top: 10%; width: 92%; }
+  .dji-hero-slider__content { top: 10%; width: 100%; max-width: 100%; padding: 0 16px; box-sizing: border-box; }
   .dji-hero-slider__arrow { display: none; }
   .dji-hero-slider__title { font-size: clamp(1.7rem, 7.5vw, 2.6rem); }
   .dji-btn--primary, .dji-btn--secondary { padding: 7px 18px; font-size: 14px; }
@@ -183,9 +183,9 @@
         {%- if block.settings.image != blank -%}
           <picture class="dji-hero-slider__picture">
             {%- if block.settings.image_mobile != blank -%}
-              <source media="(max-width: 749px)" srcset="{{ block.settings.image_mobile | image_url: width: 1600 }}">
+              <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 1600 }}">
             {%- else -%}
-              <source media="(max-width: 749px)" srcset="{{ block.settings.image | image_url: width: 1600 }}">
+              <source media="(max-width: 768px)" srcset="{{ block.settings.image | image_url: width: 1600 }}">
             {%- endif -%}
             <img src="{{ block.settings.image | image_url: width: 3200 }}" 
                  alt="{{ block.settings.title | escape }}" 
@@ -286,8 +286,8 @@
 
   var bP = container.querySelector('.dji-hero-slider__arrow--prev');
   var bN = container.querySelector('.dji-hero-slider__arrow--next');
-  if (bP) bP.addEventListener('click', function () { stopTimer(); prev(); startTimer(); });
-  if (bN) bN.addEventListener('click', function () { stopTimer(); next(); startTimer(); });
+  if (bP) bP.addEventListener('click', function () { stopTimer(); next(); startTimer(); });
+  if (bN) bN.addEventListener('click', function () { stopTimer(); prev(); startTimer(); });
 
   container.addEventListener('mouseenter', stopTimer);
   container.addEventListener('mouseleave', startTimer);
